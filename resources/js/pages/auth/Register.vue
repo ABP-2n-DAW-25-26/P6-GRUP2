@@ -1,3 +1,9 @@
+<script setup lang="ts"></script>
+
+<template>
+    <div />
+</template>
+
 <!-- <script setup lang="ts">
 import { Form, Head } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
