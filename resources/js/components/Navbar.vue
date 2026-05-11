@@ -1,73 +1,147 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const isMobileMenuOpen = ref(false);
+const page = usePage();
+
+function isActive(path: string): boolean {
+  return page.url === path || page.url.startsWith(`${path}/`);
+}
 </script>
+
 <template>
-    <nav
-        class="border-default sticky inset-s-0 top-0 z-20 w-full border-b bg-[#FFFFFF]"
-    >
-        <div
-            class="mx-auto flex max-w-7xl flex-wrap items-center justify-between p-4"
-        >
-            <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img
-                    class="w-90"
-                    src="/storage/FarmaciaSolerLogoLong.jpeg"
-                    alt="Long Logo"
-                />
+  <nav class="sticky top-0 z-30 w-full border-b border-[#DCEEF5] bg-white/95 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
+      <div class="flex min-w-0 items-center gap-5">
+        <a href="/" class="flex items-center">
+          <img class="h-10 w-auto md:h-11 lg:h-12" src="/storage/FarmaciaSolerLogoLong.jpeg" alt="Farmacia Soler" />
+        </a>
+
+        <ul class="hidden items-center gap-1 text-[1.05rem] font-semibold text-[#3F2E05] md:flex lg:gap-2">
+          <li>
+            <a
+              href="/#qui-som"
+              class="rounded-lg px-2 py-2 whitespace-nowrap transition hover:bg-[#E6F5FB] hover:text-[#01617F] lg:px-3"
+            >
+              Qui som
             </a>
-            <div
-                class="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse"
+          </li>
+          <li>
+            <a
+              href="/#farmacies-guardia"
+              class="rounded-lg px-2 py-2 whitespace-nowrap transition hover:bg-[#E6F5FB] hover:text-[#01617F] lg:px-3"
             >
-                <button
-                    type="button"
-                    class="bg-brand hover:bg-brand-strong focus:ring-brand-medium rounded-base box-border border border-transparent px-3 py-2 text-sm leading-5 font-medium text-white shadow-xs focus:ring-4 focus:outline-none"
-                >
-                    Get started
-                </button>
-                <button
-                    type="button"
-                    class="text-body rounded-base hover:bg-neutral-secondary-soft hover:text-heading focus:ring-neutral-tertiary inline-flex h-10 w-10 items-center justify-center p-2 text-sm focus:ring-2 focus:outline-none md:hidden"
-                    aria-controls="navbar-sticky"
-                    :aria-expanded="isMobileMenuOpen"
-                    @click="isMobileMenuOpen = !isMobileMenuOpen"
-                >
-                    <span class="sr-only">Open main menu</span>
-                    <svg
-                        class="h-6 w-6"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-width="2"
-                            d="M5 7h14M5 12h14M5 17h14"
-                        />
-                    </svg>
-                </button>
-            </div>
-            <div
-                :class="[
-                    isMobileMenuOpen ? 'flex' : 'hidden',
-                    'w-full items-center justify-between md:order-1 md:flex md:w-auto',
-                ]"
-                id="navbar-sticky"
+              Farmàcies de guàrdia
+            </a>
+          </li>
+          <li>
+            <Link
+              href="/pedir-cita"
+              :class="[
+                'rounded-lg px-2 py-2 whitespace-nowrap transition lg:px-3',
+                isActive('/pedir-cita') ? 'bg-[#E6F5FB] text-[#01617F]' : 'hover:bg-[#E6F5FB] hover:text-[#01617F]'
+              ]"
             >
-                <ul
-                    class="border-default rounded-base bg-neutral-secondary-soft md:bg-neutral-primary mt-4 flex flex-col border p-4 text-2xl font-medium text-[#4D3701] italic md:mt-0 md:flex-row md:space-x-8 md:border-0 md:p-0 rtl:space-x-reverse"
-                >
-                    <Link href="/pedir-cita"> Demanar cita </Link>
-                    <Link href="/assignments/create"> Demanar encarrec </Link>
-                    <Link href="/contactans"> Contactan’s </Link>
-                </ul>
-            </div>
-        </div>
-    </nav>
+              Demanar cita
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/assignments/create"
+              :class="[
+                'rounded-lg px-2 py-2 whitespace-nowrap transition lg:px-3',
+                isActive('/assignments/create') ? 'bg-[#E6F5FB] text-[#01617F]' : 'hover:bg-[#E6F5FB] hover:text-[#01617F]'
+              ]"
+            >
+              Demanar encàrrec
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/contactans"
+              :class="[
+                'rounded-lg px-2 py-2 whitespace-nowrap transition lg:px-3',
+                isActive('/contactans') ? 'bg-[#E6F5FB] text-[#01617F]' : 'hover:bg-[#E6F5FB] hover:text-[#01617F]'
+              ]"
+            >
+              Contacta’ns
+            </Link>
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          class="flex h-10 w-10 items-center justify-center rounded-md text-[#2A5970] transition hover:bg-[#F1F9FD] md:hidden"
+          @click="isMobileMenuOpen = !isMobileMenuOpen"
+        >
+          <span class="sr-only">Open menu</span>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div v-show="isMobileMenuOpen" class="border-t border-[#DCEEF5] bg-white px-4 py-4 md:hidden">
+      <ul class="flex flex-col gap-2 text-lg font-semibold text-[#3F2E05]">
+        <li>
+          <a
+            href="/#qui-som"
+            class="block rounded-lg px-3 py-2 transition hover:bg-[#E6F5FB] hover:text-[#01617F]"
+            @click="isMobileMenuOpen = false"
+          >
+            Qui som
+          </a>
+        </li>
+        <li>
+          <a
+            href="/#farmacies-guardia"
+            class="block rounded-lg px-3 py-2 transition hover:bg-[#E6F5FB] hover:text-[#01617F]"
+            @click="isMobileMenuOpen = false"
+          >
+            Farmàcies de guàrdia
+          </a>
+        </li>
+        <li>
+          <Link
+            href="/pedir-cita"
+            :class="[
+              'block rounded-lg px-3 py-2 transition',
+              isActive('/pedir-cita') ? 'bg-[#E6F5FB] text-[#01617F]' : 'hover:bg-[#E6F5FB] hover:text-[#01617F]'
+            ]"
+            @click="isMobileMenuOpen = false"
+          >
+            Demanar cita
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/assignments/create"
+            :class="[
+              'block rounded-lg px-3 py-2 transition',
+              isActive('/assignments/create') ? 'bg-[#E6F5FB] text-[#01617F]' : 'hover:bg-[#E6F5FB] hover:text-[#01617F]'
+            ]"
+            @click="isMobileMenuOpen = false"
+          >
+            Demanar encàrrec
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/contactans"
+            :class="[
+              'block rounded-lg px-3 py-2 transition',
+              isActive('/contactans') ? 'bg-[#E6F5FB] text-[#01617F]' : 'hover:bg-[#E6F5FB] hover:text-[#01617F]'
+            ]"
+            @click="isMobileMenuOpen = false"
+          >
+            Contacta’ns
+          </Link>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </template>

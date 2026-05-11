@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import WebAppLayout from '@/layouts/WebAppLayout.vue';
 import { store } from '@/routes/assignments';
-import { show } from '@/routes/users';
-import { Form } from '@inertiajs/vue3';
-import { onMounted } from 'vue';
+// import { show } from '@/routes/users';
+import { Form, Link } from '@inertiajs/vue3';
+import { onMounted, onUnmounted } from 'vue';
 import { ref } from 'vue';
 
-const props = defineProps<{ turnstileSiteKey: string | null }>();
+const props = defineProps<{
+    turnstileSiteKey: string | null;
+    name: string | null;
+    address: string | null;
+    phone_number: number | null;
+    description: string | null;
+}>();
 
 function renderTurnstile() {
     const el = document.querySelector('.cf-turnstile') as HTMLElement | null;
@@ -39,12 +45,19 @@ onMounted(() => {
     document.head.appendChild(s);
 });
 
+onUnmounted(() => {
+    const s = document.getElementById('cf-turnstile-api');
+    if (s) {
+        s.remove();
+    }
+});
+
 const formRef = ref<HTMLFormElement | null>(null);
 const showModal = ref(false);
 
 function onSuccess() {
-    formRef.value?.reset();
     showModal.value = true;
+    formRef.value?.reset();
 }
 </script>
 <template>
@@ -57,7 +70,7 @@ function onSuccess() {
                     Encàrrecs
                 </h1>
             </div>
-            <div class="flex items-start gap-3 pb-5">
+            <div class="flex items-center gap-3 pb-5">
                 <h2
                     class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#00617E] text-3xl leading-none font-extrabold text-white italic"
                 >
@@ -66,6 +79,11 @@ function onSuccess() {
                 <p class="text-lg italic sm:text-xl lg:text-2xl">
                     Demana el que necessitis.
                 </p>
+                <Link
+                    class="ml-auto rounded-lg bg-[#00617E] p-2 text-xl font-bold text-white"
+                    href="/assignments"
+                    >Consultar Encarrecs
+                </Link>
             </div>
             <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
                 <div
@@ -77,7 +95,7 @@ function onSuccess() {
                         method="POST"
                         class="space-y-4"
                         @success="onSuccess"
-                        #default="{ errors, invalid, validate, validating }"
+                        #default="{ errors, validating }"
                     >
                         <div>
                             <label
@@ -122,6 +140,7 @@ function onSuccess() {
                                 >Descripció</label
                             >
                             <textarea
+                                maxlength="500"
                                 rows="8"
                                 name="description"
                                 class="w-full resize-none rounded-2xl border-none bg-gray-200 px-4 py-4 outline-none"
@@ -248,10 +267,31 @@ function onSuccess() {
                         </button>
                     </div>
                     <!-- Body -->
-                    <div class="space-y-4 py-4 md:space-y-6 md:py-6">
+                    <div class="py-4">
+                        <p class="text-body text-1xl leading-relaxed font-bold">
+                            Si us plau, confirmeu la vostra comanda.
+                        </p>
                         <p class="text-body leading-relaxed">
-                            El teu encàrrec s'ha creat correctament. Rebràs un
-                            correu electrònic de confirmació en breu.
+                            <strong>Nom: </strong>{{ props.name }}
+                        </p>
+                        <p class="text-body leading-relaxed">
+                            <strong>Address: </strong>{{ props.address }}
+                        </p>
+                        <p class="text-body leading-relaxed">
+                            <strong>Telefón: </strong>{{ props.phone_number }}
+                        </p>
+                        <p
+                            class="text-body flex items-start gap-2 leading-relaxed"
+                        >
+                            <strong class="shrink-0">Encarrec:</strong>
+                            <span
+                                class="min-w-0 [overflow-wrap:anywhere] break-words whitespace-pre-line"
+                            >
+                                {{ props.description }}
+                            </span>
+                        </p>
+                        <p class="text-body text-1xl leading-relaxed font-bold">
+                            Rebreu una confirmació per correu electrònic.
                         </p>
                     </div>
                     <!-- Footer -->

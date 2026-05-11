@@ -2,11 +2,15 @@
 import { Link } from '@inertiajs/vue3';
 import {
     Globe,
+    GraduationCap,
     HeartPulse,
     LayoutGrid,
     UserCog,
     Mail,
+    ClipboardPen,
     UsersRound,
+    Shield,
+    Pill,
 } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
@@ -24,6 +28,12 @@ import {
 import { admindashboard as dashboard } from '@/routes';
 import { index as usersIndex } from '@/routes/users';
 import { index as mailIndex } from '@/routes/mail';
+import { index as servicesIndex } from '@/routes/services';
+import { index as assignmentsIndex } from '@/routes/adminAssignments';
+import { index as pharmacyguardsIndex } from '@/routes/pharmacyguards';
+import { index as pharmaciesIndex } from '@/routes/pharmacies';
+import { index as workshopsIndex } from '@/routes/workshops';
+
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -41,6 +51,32 @@ const mainNavItems: NavItem[] = [
         title: 'Mail',
         href: mailIndex(),
         icon: Mail,
+    },
+    {
+        title: 'Serveis',
+        href: servicesIndex(),
+        icon: Pill,
+    },
+
+    {
+        title: 'Encarrecs',
+        href: assignmentsIndex(),
+        icon: ClipboardPen,
+    },
+    {
+        title: 'Guardies',
+        href: pharmacyguardsIndex(),
+        icon: Shield,
+    },
+    {
+        title: 'Farmacies',
+        href: pharmaciesIndex(),
+        icon: UserCog,
+    },
+    {
+        title: 'Tallers',
+        href: workshopsIndex(),
+        icon: GraduationCap,
     },
 ];
 

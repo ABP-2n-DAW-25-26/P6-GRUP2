@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" fill="none">
+  <!-- Blue rectangle icon -->
+  <rect x="218" y="8" width="64" height="82" fill="#29ABE2"/>
+
+  <!-- LA ROCHE-POSAY -->
+  <text
+    x="250"
+    y="148"
+    font-family="'Arial', 'Helvetica Neue', sans-serif"
+    font-size="52"
+    font-weight="600"
+    letter-spacing="2"
+    text-anchor="middle"
+    fill="#3D4B5C"
+  >LA ROCHE-POSAY</text>
+
+  <!-- LABORATOIRE PHARMACEUTIQUE -->
+  <text
+    x="250"
+    y="185"
+    font-family="'Arial', 'Helvetica Neue', sans-serif"
+    font-size="22"
+    font-weight="400"
+    letter-spacing="4"
+    text-anchor="middle"
+    fill="#3D4B5C"
+  >LABORATOIRE PHARMACEUTIQUE</text>
+</svg>

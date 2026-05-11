@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\assignments;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -17,9 +18,9 @@ class AssignmentCreated extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
-    {
-        //
+    public function __construct(
+        public readonly array $assignment,
+    ) {
     }
 
     /**

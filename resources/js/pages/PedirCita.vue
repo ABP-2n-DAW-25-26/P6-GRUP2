@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import WebAppLayout from '@/layouts/WebAppLayout.vue'
-import { ref, computed, onMounted, watch } from 'vue'
-import { useForm, usePage, router } from '@inertiajs/vue3'
+import WebAppLayout from '@/layouts/WebAppLayout.vue';
+import { ref, computed, onMounted, watch, onUnmounted } from 'vue';
+import { useForm, usePage, router } from '@inertiajs/vue3';
 import {
     ScanFace,
     Droplet,
@@ -14,74 +14,74 @@ import {
     Apple,
     Pill,
     HeartPulse,
-} from 'lucide-vue-next'
+} from 'lucide-vue-next';
 
 defineOptions({
     layout: WebAppLayout,
-})
+});
 function closeSuccessModal() {
-    showModal.value = false
-    router.visit('/')
+    showModal.value = false;
+    router.visit('/');
 }
 type ServiceItem = {
-    id: number
-    nom: string
-    descripció: string
-    durada: number | string
-    icon: string
-}
+    id: number;
+    nom: string;
+    descripció: string;
+    durada: number | string;
+    icon: string;
+};
 
 type FlashSuccess = {
-    message: string
-    service: number
-    date: string
-    time: string
-    name: string
-    email: string
-}
+    message: string;
+    service: number;
+    date: string;
+    time: string;
+    name: string;
+    email: string;
+};
 
 type CalendarCell = {
-    day: number
-    isCurrentMonth: boolean
-}
+    day: number;
+    isCurrentMonth: boolean;
+};
 
 const props = defineProps<{
-    services: ServiceItem[]
-    turnstileSiteKey: string | null
-}>()
+    services: ServiceItem[];
+    turnstileSiteKey: string | null;
+}>();
 
 const page = usePage<{
     flash?: {
-        success?: FlashSuccess
-    }
-}>()
+        success?: FlashSuccess;
+    };
+}>();
 
-const showConfirmModal = ref(false)
-const showModal = ref(false)
-const isSubmitting = ref(false)
-const bookedTimes = ref<string[]>([])
+const showConfirmModal = ref(false);
+const showModal = ref(false);
+const isSubmitting = ref(false);
+const bookedTimes = ref<string[]>([]);
 
-const today = new Date()
-const todayYear = today.getFullYear()
-const todayMonth = today.getMonth()
-const todayDate = today.getDate()
+const today = new Date();
+const todayYear = today.getFullYear();
+const todayMonth = today.getMonth();
+const todayDate = today.getDate();
 
-const selectedService = ref<number | null>(null)
-const selectedTime = ref('')
-const selectedDate = ref<number | null>(todayDate)
+const selectedService = ref<number | null>(null);
+const selectedTime = ref('');
+const selectedDate = ref<number | null>(todayDate);
 
-const currentYear = ref(todayYear)
-const currentMonth = ref(todayMonth)
-const step = ref(1)
+const currentYear = ref(todayYear);
+const currentMonth = ref(todayMonth);
+const step = ref(1);
 
 const form = useForm<{
-    service_id: number | null
-    customer_name: string
-    customer_phone: string
-    customer_email: string
-    appointment_date: string
-    start_time: string
-    'cf-turnstile-response': string
+    service_id: number | null;
+    customer_name: string;
+    customer_phone: string;
+    customer_email: string;
+    appointment_date: string;
+    start_time: string;
+    'cf-turnstile-response': string;
 }>({
     service_id: null,
     customer_name: '',
@@ -90,7 +90,7 @@ const form = useForm<{
     appointment_date: '',
     start_time: '',
     'cf-turnstile-response': '',
-})
+});
 
 const monthNames = [
     'Gener',
@@ -105,9 +105,9 @@ const monthNames = [
     'Octubre',
     'Novembre',
     'Desembre',
-]
+];
 
-const dayHeaders = ['DL', 'DT', 'DC', 'DJ', 'DV', 'DS', 'DG']
+const dayHeaders = ['DL', 'DT', 'DC', 'DJ', 'DV', 'DS', 'DG'];
 
 const iconsMap: Record<string, any> = {
     ScanFace,
@@ -121,146 +121,171 @@ const iconsMap: Record<string, any> = {
     Apple,
     Pill,
     HeartPulse,
-}
+};
 
-const successData = computed(() => page.props.flash?.success)
+const successData = computed(() => page.props.flash?.success);
 
 const selectedServiceObj = computed(() =>
     props.services.find((s) => s.id === selectedService.value),
-)
+);
 
 const successServiceName = computed(() => {
-    if (!successData.value?.service) return '—'
+    if (!successData.value?.service) return '—';
     return (
         props.services.find((s) => s.id === successData.value?.service)?.nom ??
         '—'
-    )
-})
+    );
+});
 
 const formattedDate = computed(() => {
-    if (!selectedDate.value) return ''
-    return `${currentYear.value}-${String(currentMonth.value + 1).padStart(2, '0')}-${String(selectedDate.value).padStart(2, '0')}`
-})
+    if (!selectedDate.value) return '';
+    return `${currentYear.value}-${String(currentMonth.value + 1).padStart(2, '0')}-${String(selectedDate.value).padStart(2, '0')}`;
+});
 
 const currentMonthLabel = computed(
     () => `${monthNames[currentMonth.value]} ${currentYear.value}`,
-)
+);
 
 const calendarDays = computed<CalendarCell[]>(() => {
-    const year = currentYear.value
-    const month = currentMonth.value
+    const year = currentYear.value;
+    const month = currentMonth.value;
 
-    const firstDay = new Date(year, month, 1)
-    const lastDay = new Date(year, month + 1, 0)
-    const daysInMonth = lastDay.getDate()
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
 
-    let startDow = firstDay.getDay()
-    startDow = (startDow + 6) % 7
+    let startDow = firstDay.getDay();
+    startDow = (startDow + 6) % 7;
 
-    const prevMonthLastDay = new Date(year, month, 0).getDate()
-    const cells: CalendarCell[] = []
+    const prevMonthLastDay = new Date(year, month, 0).getDate();
+    const cells: CalendarCell[] = [];
 
     for (let i = startDow - 1; i >= 0; i--) {
-        cells.push({ day: prevMonthLastDay - i, isCurrentMonth: false })
+        cells.push({ day: prevMonthLastDay - i, isCurrentMonth: false });
     }
 
     for (let d = 1; d <= daysInMonth; d++) {
-        cells.push({ day: d, isCurrentMonth: true })
+        cells.push({ day: d, isCurrentMonth: true });
     }
 
-    const remaining = 42 - cells.length
+    const remaining = 42 - cells.length;
     for (let d = 1; d <= remaining; d++) {
-        cells.push({ day: d, isCurrentMonth: false })
+        cells.push({ day: d, isCurrentMonth: false });
     }
 
-    return cells
-})
+    return cells;
+});
 
-const serviceSchedules = ref<{ day_of_week: number; slots: string[] }[]>([])
+const serviceSchedules = ref<{ day_of_week: number; slots: string[] }[]>([]);
 
 async function fetchSchedule() {
     if (!selectedService.value) {
-        serviceSchedules.value = []
-        return
+        serviceSchedules.value = [];
+        return;
     }
 
     const res = await fetch(
         `/appointments/schedule?service_id=${selectedService.value}`,
-    )
-    serviceSchedules.value = await res.json()
+    );
+    serviceSchedules.value = await res.json();
 }
 
 const availableDaysOfWeek = computed(
     () => new Set(serviceSchedules.value.map((s) => s.day_of_week)),
-)
+);
+
 
 const availableTimes = computed(() => {
-    if (!selectedDate.value) return []
+    if (!selectedDate.value) return [];
 
     const date = new Date(
         currentYear.value,
         currentMonth.value,
         selectedDate.value,
-    )
-    const iso = date.getDay() === 0 ? 7 : date.getDay()
+    );
 
-    const schedule = serviceSchedules.value.find((s) => s.day_of_week === iso)
-    return schedule?.slots ?? []
-})
+    const iso = date.getDay() === 0 ? 7 : date.getDay();
+    const schedule = serviceSchedules.value.find((s) => s.day_of_week === iso);
+
+    if (!schedule) return [];
+
+    let slots = schedule.slots;
+
+    const isToday =
+        currentYear.value === todayYear &&
+        currentMonth.value === todayMonth &&
+        selectedDate.value === todayDate;
+
+    if (isToday) {
+        const now = new Date();
+        const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+        slots = slots.filter((time: string) => {
+            const [h, m] = time.split(':').map(Number);
+            const slotMinutes = h * 60 + m;
+
+            return slotMinutes > currentMinutes;
+        });
+    }
+
+    return slots;
+});
+
+
 
 function isDayAvailable(cell: CalendarCell): boolean {
-    if (!cell.isCurrentMonth) return false
+    if (!cell.isCurrentMonth) return false;
 
     const isPast =
         currentYear.value === todayYear &&
         currentMonth.value === todayMonth &&
-        cell.day < todayDate
+        cell.day < todayDate;
 
-    if (isPast) return false
+    if (isPast) return false;
 
-    const date = new Date(currentYear.value, currentMonth.value, cell.day)
-    const iso = date.getDay() === 0 ? 7 : date.getDay()
+    const date = new Date(currentYear.value, currentMonth.value, cell.day);
+    const iso = date.getDay() === 0 ? 7 : date.getDay();
 
-    return availableDaysOfWeek.value.has(iso)
+    return availableDaysOfWeek.value.has(iso);
 }
 
 function selectDay(cell: CalendarCell) {
-    if (!isDayAvailable(cell)) return
-    selectedDate.value = cell.day
-    selectedTime.value = ''
+    if (!isDayAvailable(cell)) return;
+    selectedDate.value = cell.day;
+    selectedTime.value = '';
 }
 
 function prevMonth() {
     const isCurrentRealMonth =
-        currentYear.value === todayYear && currentMonth.value === todayMonth
+        currentYear.value === todayYear && currentMonth.value === todayMonth;
 
-    if (isCurrentRealMonth) return
+    if (isCurrentRealMonth) return;
 
     if (currentMonth.value === 0) {
-        currentMonth.value = 11
-        currentYear.value--
+        currentMonth.value = 11;
+        currentYear.value--;
     } else {
-        currentMonth.value--
+        currentMonth.value--;
     }
 
-    selectedDate.value = null
-    selectedTime.value = ''
+    selectedDate.value = null;
+    selectedTime.value = '';
 }
 
 function nextMonth() {
     if (currentMonth.value === 11) {
-        currentMonth.value = 0
-        currentYear.value++
+        currentMonth.value = 0;
+        currentYear.value++;
     } else {
-        currentMonth.value++
+        currentMonth.value++;
     }
 
-    selectedDate.value = null
-    selectedTime.value = ''
+    selectedDate.value = null;
+    selectedTime.value = '';
 }
 
 const pdfDownloadUrl = computed(() => {
-    if (!successData.value) return '#'
+    if (!successData.value) return '#';
 
     const params = new URLSearchParams({
         service: String(successData.value.service),
@@ -268,103 +293,118 @@ const pdfDownloadUrl = computed(() => {
         time: successData.value.time,
         name: successData.value.name,
         email: successData.value.email,
-    })
+    });
 
-    return `/appointments/pdf?${params.toString()}`
-})
+    return `/appointments/pdf?${params.toString()}`;
+});
 
 async function fetchBookedTimes() {
     if (!selectedService.value || !selectedDate.value) {
-        bookedTimes.value = []
-        return
+        bookedTimes.value = [];
+        return;
     }
 
     const res = await fetch(
         `/appointments/booked-times?date=${formattedDate.value}&service_id=${selectedService.value}`,
-    )
+    );
 
-    bookedTimes.value = await res.json()
+    bookedTimes.value = await res.json();
+}
+
+function renderTurnstile() {
+    const el = document.querySelector('.cf-turnstile') as HTMLElement | null;
+    const t = (window as any).turnstile;
+    if (!el || !props.turnstileSiteKey || !t) return;
+    el.innerHTML = '';
+    t.render(el, { sitekey: props.turnstileSiteKey, language: 'es' });
 }
 
 function nextStep() {
-    if (step.value < 3) step.value++
+    if (step.value < 3) step.value++;
 
     if (step.value === 3) {
-        if (
-            !props.turnstileSiteKey ||
-            document.getElementById('cf-turnstile-api')
-        ) {
-            return
+        if (!props.turnstileSiteKey) return;
+
+        if (document.getElementById('cf-turnstile-api')) {
+            renderTurnstile();
+            return;
         }
 
-        const s = document.createElement('script')
-        s.id = 'cf-turnstile-api'
-        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
-        s.async = true
-        s.defer = true
-        document.head.appendChild(s)
+        const s = document.createElement('script');
+        s.id = 'cf-turnstile-api';
+        s.src =
+            'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        s.async = true;
+        s.defer = true;
+        s.onload = renderTurnstile;
+        document.head.appendChild(s);
     }
 }
 
 function prevStep() {
-    if (step.value > 1) step.value--
+    if (step.value > 1) step.value--;
 }
 
 function submitReservation() {
-    form.service_id = selectedService.value
-    form.appointment_date = formattedDate.value
-    form.start_time = selectedTime.value
+    form.service_id = selectedService.value;
+    form.appointment_date = formattedDate.value;
+    form.start_time = selectedTime.value;
     form['cf-turnstile-response'] =
         (
             document.querySelector(
                 'input[name="cf-turnstile-response"]',
             ) as HTMLInputElement | null
-        )?.value ?? ''
+        )?.value ?? '';
 
     form.post('/appointments', {
         preserveScroll: true,
         onSuccess: () => {
-            isSubmitting.value = false
-            showConfirmModal.value = false
-            showModal.value = true
+            isSubmitting.value = false;
+            showConfirmModal.value = false;
+            showModal.value = true;
         },
         onError: () => {
-            isSubmitting.value = false
+            isSubmitting.value = false;
         },
-    })
+    });
 }
 
 function confirmReservation() {
-    isSubmitting.value = true
-    submitReservation()
+    isSubmitting.value = true;
+    submitReservation();
 }
 
 watch(selectedService, async () => {
-    selectedDate.value = null
-    selectedTime.value = ''
-    bookedTimes.value = []
-    await fetchSchedule()
-})
+    selectedDate.value = null;
+    selectedTime.value = '';
+    bookedTimes.value = [];
+    await fetchSchedule();
+});
 
 watch([selectedDate, currentMonth, currentYear], async () => {
-    selectedTime.value = ''
-    await fetchBookedTimes()
-})
+    selectedTime.value = '';
+    await fetchBookedTimes();
+});
 
 watch(
     () => page.props.flash?.success,
     (val) => {
-        if (!val) return
-        showModal.value = true
+        if (!val) return;
+        showModal.value = true;
     },
-)
+);
 
 onMounted(async () => {
     if (props.services.length > 0) {
-        selectedService.value = props.services[0].id
-        await fetchSchedule()
+        selectedService.value = props.services[0].id;
+        await fetchSchedule();
     }
-})
+});
+
+onUnmounted(() => {
+    const script = document.getElementById('cf-turnstile-api');
+    if (script) script.remove();
+});
 </script>
 
 <template>
@@ -527,7 +567,9 @@ onMounted(async () => {
                                 >
                                     Hores Disponibles
                                 </h4>
-                                <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                                <div
+                                    class="grid grid-cols-2 gap-2 sm:grid-cols-3"
+                                >
                                     <button
                                         v-for="time in availableTimes"
                                         :key="time"
@@ -644,7 +686,9 @@ onMounted(async () => {
                                     >
                                         Resum de la reserva
                                     </p>
-                                    <div class="space-y-2 text-sm text-slate-600">
+                                    <div
+                                        class="space-y-2 text-sm text-slate-600"
+                                    >
                                         <div class="flex justify-between">
                                             <span>Servei</span>
                                             <span class="font-medium">{{
@@ -672,7 +716,11 @@ onMounted(async () => {
 
                                 <button
                                     @click="showConfirmModal = true"
-                                    :disabled="!selectedDate || !selectedTime || form.processing"
+                                    :disabled="
+                                        !selectedDate ||
+                                        !selectedTime ||
+                                        form.processing
+                                    "
                                     class="w-full rounded-lg bg-[#0f5f7f] py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#0c4a63] disabled:opacity-50"
                                 >
                                     {{
@@ -689,10 +737,14 @@ onMounted(async () => {
                                         data-language="es"
                                     ></div>
                                     <p
-                                        v-if="form.errors['cf-turnstile-response']"
+                                        v-if="
+                                            form.errors['cf-turnstile-response']
+                                        "
                                         class="mt-2 text-sm text-red-600"
                                     >
-                                        {{ form.errors['cf-turnstile-response'] }}
+                                        {{
+                                            form.errors['cf-turnstile-response']
+                                        }}
                                     </p>
                                 </div>
                             </div>
@@ -711,7 +763,10 @@ onMounted(async () => {
                         <button
                             v-if="step < 3"
                             @click="nextStep"
-                            :disabled="(step === 2 && !selectedDate) || (step === 2 && !selectedTime)"
+                            :disabled="
+                                (step === 2 && !selectedDate) ||
+                                (step === 2 && !selectedTime)
+                            "
                             class="ml-auto rounded-lg bg-[#0f5f7f] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#0c4a63] disabled:opacity-50"
                         >
                             Següent →
@@ -733,7 +788,9 @@ onMounted(async () => {
                         Estàs segur que vols confirmar aquesta reserva?
                     </p>
 
-                    <div class="mb-4 space-y-2 rounded-lg bg-gray-100 p-3 text-sm">
+                    <div
+                        class="mb-4 space-y-2 rounded-lg bg-gray-100 p-3 text-sm"
+                    >
                         <div class="flex justify-between">
                             <span>Servei</span>
                             <span class="font-semibold">{{
@@ -772,7 +829,9 @@ onMounted(async () => {
                             :disabled="isSubmitting"
                             class="flex-1 rounded-lg bg-[#0f5f7f] py-2 text-sm text-white disabled:opacity-50"
                         >
-                            {{ isSubmitting ? 'Confirmant...' : 'Sí, confirmar' }}
+                            {{
+                                isSubmitting ? 'Confirmant...' : 'Sí, confirmar'
+                            }}
                         </button>
                     </div>
                 </div>
@@ -784,7 +843,9 @@ onMounted(async () => {
             >
                 <div class="relative w-full max-w-md p-4">
                     <div class="rounded-lg bg-white p-6 shadow-xl">
-                        <div class="flex items-center justify-between border-b pb-4">
+                        <div
+                            class="flex items-center justify-between border-b pb-4"
+                        >
                             <h3 class="text-lg font-semibold text-[#0f5f7f]">
                                 Reserva confirmada
                             </h3>
@@ -796,7 +857,7 @@ onMounted(async () => {
                             </button>
                         </div>
 
-                        <div class="pb-3 pt-4">
+                        <div class="pt-4 pb-3">
                             <p class="text-sm font-medium text-green-600">
                                 {{ successData?.message }}
                             </p>
@@ -824,7 +885,9 @@ onMounted(async () => {
                                 }}</span>
                             </div>
 
-                            <div class="mt-1 space-y-2 border-t border-gray-300 pt-2">
+                            <div
+                                class="mt-1 space-y-2 border-t border-gray-300 pt-2"
+                            >
                                 <div class="flex justify-between">
                                     <span class="text-gray-500">Nom</span>
                                     <span class="font-semibold text-gray-800">{{
@@ -857,7 +920,9 @@ onMounted(async () => {
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                 >
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <path
+                                        d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                    />
                                     <polyline points="7 10 12 15 17 10" />
                                     <line x1="12" y1="15" x2="12" y2="3" />
                                 </svg>

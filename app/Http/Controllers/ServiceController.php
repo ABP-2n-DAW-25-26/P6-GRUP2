@@ -8,13 +8,10 @@ use Inertia\Inertia;
 use App\Http\Resources\ServiceResource;
 use App\Http\Controllers\Controller;
 use App\Models\ServiceAppointment;
-
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Rules\TurnstileRule;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReservationCreated;
-
-
 
 class ServiceController extends Controller
 {
@@ -69,6 +66,15 @@ class ServiceController extends Controller
         ], [
             'cf-turnstile-response.required' => 'Por favor, completa la verificación.',
         ]);
+        $appointmentDateTime = \Carbon\Carbon::parse(
+            $validated['appointment_date'] . ' ' . $validated['start_time']
+        );
+
+        if ($appointmentDateTime->isPast()) {
+            return back()->withErrors([
+                'start_time' => 'No pots reservar una hora passada.',
+            ]);
+        }
         $exists = ServiceAppointment::whereDate('appointment_date', $validated['appointment_date'])
             ->where('service_id', $validated['service_id'])
             ->where('start_time', $validated['start_time'])
@@ -80,25 +86,37 @@ class ServiceController extends Controller
             ]);
         }
 
-        Mail::to($validated['customer_email'])->send(new ReservationCreated());
 
+
+        $service = Service::findOrFail($validated['service_id']);
         ServiceAppointment::create([
             'service_id' => $validated['service_id'],
             'customer_name' => $validated['customer_name'],
             'customer_phone' => $validated['customer_phone'],
             'customer_email' => $validated['customer_email'],
             'appointment_date' => $validated['appointment_date'],
-            'start_time' =>\Carbon\Carbon::parse($validated['start_time'])->format('H:i:s'),
+            'start_time' => \Carbon\Carbon::parse($validated['start_time'])->format('H:i:s'),
             'end_time' => \Carbon\Carbon::parse($validated['start_time'])->addMinutes(Service::find($validated['service_id'])->duration_minutes)->format('H:i'),
             'status' => 'pending',
-          
+
         ]);
+        $mailData = [
+            'name'         => $validated['customer_name'],
+            'email'        => $validated['customer_email'],
+            'service_name' => $service->name,
+            'duration'     => $service->duration_minutes . ' min',
+            'date'         => $validated['appointment_date'],
+            'time'         => $validated['start_time'],
+            'pharmacy'     => 'Farmàcia Soler',
+            'address'      => 'Carrer Nou, 22, 17600 Figueres, Girona',
+            'phone'        => '972 50 02 99',
+        ];
+        Mail::to($validated['customer_email'])->send(new ReservationCreated($mailData));
 
         /*   Inertia::flash([
             'message' => 'Reservació creada amb èxit! Rebràs una confirmació per correu electrònic aviat.',
 
         ]);*/
-
         return to_route('pedir-cita')->with('success', [
             'message' => 'Reservació creada amb èxit! Rebràs una confirmació aviat.',
             'service' => $validated['service_id'],
@@ -191,30 +209,30 @@ class ServiceController extends Controller
         return response()->json($times);
     }
     public function getSchedule(Request $request)
-{
-    $request->validate([
-        'service_id' => 'required|exists:services,id',
-    ]);
+    {
+        $request->validate([
+            'service_id' => 'required|exists:services,id',
+        ]);
 
-    $service = Service::with('schedules')->findOrFail($request->service_id);
+        $service = Service::with('schedules')->findOrFail($request->service_id);
 
-    $schedules = $service->schedules->map(function ($schedule) use ($service) {
-        // Generate time slots from start_time to end_time by duration_minutes
-        $slots = [];
-        $current = \Carbon\Carbon::parse($schedule->start_time);
-        $end = \Carbon\Carbon::parse($schedule->end_time);
+        $schedules = $service->schedules->map(function ($schedule) use ($service) {
+            // Generate time slots from start_time to end_time by duration_minutes
+            $slots = [];
+            $current = \Carbon\Carbon::parse($schedule->start_time);
+            $end = \Carbon\Carbon::parse($schedule->end_time);
 
-        while ($current->copy()->addMinutes($service->duration_minutes)->lte($end)) {
-            $slots[] = $current->format('H:i');
-            $current->addMinutes($service->duration_minutes);
-        }
+            while ($current->copy()->addMinutes($service->duration_minutes)->lte($end)) {
+                $slots[] = $current->format('H:i');
+                $current->addMinutes($service->duration_minutes);
+            }
 
-        return [
-            'day_of_week' => $schedule->day_of_week, 
-            'slots' => $slots,
-        ];
-    });
+            return [
+                'day_of_week' => $schedule->day_of_week,
+                'slots' => $slots,
+            ];
+        });
 
-    return response()->json($schedules);
-}
+        return response()->json($schedules);
+    }
 }

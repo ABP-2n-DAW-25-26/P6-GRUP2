@@ -10,16 +10,23 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+
+
 class ReservationCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public array $data;
+
+
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(array $data)
     {
         //
+        $this->data = $data;
     }
 
     /**
@@ -28,7 +35,8 @@ class ReservationCreated extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reservation Created',
+            subject: 'Confirmació de la teva cita – ' . $this->data['pharmacy'],
+
         );
     }
 
@@ -37,8 +45,9 @@ class ReservationCreated extends Mailable
      */
     public function content(): Content
     {
-        return new Content(
+       return new Content(
             view: 'mail.reservation-created',
+            with: ['data' => $this->data],
         );
     }
 

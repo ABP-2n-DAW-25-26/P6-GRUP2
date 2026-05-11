@@ -18,7 +18,8 @@ class Service extends Model
     ];
     public function schedules()
 {
-    return $this->hasMany(ServiceSchedule::class);
+    return $this->hasMany(ServiceSchedule::class)->orderBy('day_of_week')->orderBy('start_time');
 }
+
 }
 

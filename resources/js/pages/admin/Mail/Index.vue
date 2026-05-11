@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { Form } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Administració del Mail', href: 'admin/mail' },
 ];
 
-import { Form } from '@inertiajs/vue3';
 import { store } from '@/routes/mail';
 
 defineProps<{
