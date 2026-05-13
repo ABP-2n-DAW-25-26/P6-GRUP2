@@ -206,9 +206,10 @@ function deleteService(id: number) {
                                 </div>
                             </td>
 
-                            <td class="p-3 text-gray-600" v-html="service.description">
-                               
-                            </td>
+                            <td
+                                class="p-3 text-gray-600"
+                                v-html="service.description"
+                            ></td>
 
                             <td class="p-3">
                                 {{ service.duration_minutes }} min

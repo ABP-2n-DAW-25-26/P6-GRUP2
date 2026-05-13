@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
-use App\Http\Controllers\Controller;
 use App\Models\Service;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -101,8 +100,7 @@ class AdminServiceController extends Controller
     public function update(UpdateServiceRequest $request, string $id)
     {
         //
-         $validated = $request->validated();
-
+        $validated = $request->validated();
 
         $service = Service::findOrFail($id);
         $service->update($validated);

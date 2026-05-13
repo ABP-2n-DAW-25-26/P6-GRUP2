@@ -69,9 +69,9 @@ const page = usePage<{
 // 5. UI state (modals, step, submitting flag, booked times)
 // ---------------------------------------------------------------------------
 const showConfirmModal = ref(false); // "Are you sure?" modal before sending
-const showModal = ref(false);        // "Reservation confirmed" modal after success
-const isSubmitting = ref(false);     // disables buttons while POST is running
-const step = ref(1);                 // current wizard step (1, 2 or 3)
+const showModal = ref(false); // "Reservation confirmed" modal after success
+const isSubmitting = ref(false); // disables buttons while POST is running
+const step = ref(1); // current wizard step (1, 2 or 3)
 const bookedTimes = ref<string[]>([]); // slots already booked by other users
 
 // ---------------------------------------------------------------------------
@@ -220,6 +220,7 @@ const calendarDays = computed<CalendarCell[]>(() => {
 
     // Leading days of next month to fill the 42-cell grid
     const remaining = 42 - cells.length;
+
     for (let d = 1; d <= remaining; d++) {
         cells.push({ day: d, isCurrentMonth: false });
     }
@@ -235,6 +236,7 @@ const serviceSchedules = ref<{ day_of_week: number; slots: string[] }[]>([]);
 async function fetchSchedule() {
     if (!selectedService.value) {
         serviceSchedules.value = [];
+
         return;
     }
 
@@ -264,6 +266,7 @@ const availableTimes = computed(() => {
     const iso = date.getDay() === 0 ? 7 : date.getDay();
 
     const schedule = serviceSchedules.value.find((s) => s.day_of_week === iso);
+
     if (!schedule) {
         return [];
     }
@@ -282,6 +285,7 @@ const availableTimes = computed(() => {
 
         slots = slots.filter((time: string) => {
             const [h, m] = time.split(':').map(Number);
+
             return h * 60 + m > currentMinutes;
         });
     }
@@ -348,6 +352,7 @@ function isDayAvailable(cell: CalendarCell): boolean {
         // Any slot still in the future? ---> today stays enabled
         return schedule.slots.some((time: string) => {
             const [h, m] = time.split(':').map(Number);
+
             return h * 60 + m > currentMinutes;
         });
     }
@@ -359,6 +364,7 @@ function selectDay(cell: CalendarCell) {
     if (!isDayAvailable(cell)) {
         return;
     }
+
     selectedDate.value = cell.day;
     selectedTime.value = '';
 }
@@ -420,6 +426,7 @@ const pdfDownloadUrl = computed(() => {
 async function fetchBookedTimes() {
     if (!selectedService.value || !selectedDate.value) {
         bookedTimes.value = [];
+
         return;
     }
 
@@ -460,6 +467,7 @@ function nextStep() {
 
         if (document.getElementById('cf-turnstile-api')) {
             renderTurnstile();
+
             return;
         }
 
@@ -542,6 +550,7 @@ watch(
         if (!val) {
             return;
         }
+
         showModal.value = true;
     },
 );
@@ -560,6 +569,7 @@ onMounted(async () => {
 onUnmounted(() => {
     // Clean up the Turnstile script when leaving the page
     const script = document.getElementById('cf-turnstile-api');
+
     if (script) {
         script.remove();
     }
@@ -572,14 +582,19 @@ onUnmounted(() => {
              HEADER (title + hero image)
              ===================================================== -->
         <section class="py-10">
-            <div class="mx-auto grid max-w-6xl items-center gap-8 px-6 md:grid-cols-2">
+            <div
+                class="mx-auto grid max-w-6xl items-center gap-8 px-6 md:grid-cols-2"
+            >
                 <div>
                     <span
-                        class="mb-3 inline-block rounded-full bg-[#e5e7eb] px-3 py-1 text-[10px] font-semibold tracking-widest text-[#604700] uppercase">
+                        class="mb-3 inline-block rounded-full bg-[#e5e7eb] px-3 py-1 text-[10px] font-semibold tracking-widest text-[#604700] uppercase"
+                    >
                         CITA PRÈVIA A FIGUERES
                     </span>
 
-                    <h1 class="mb-3 text-2xl font-bold text-[#0f5f7f] md:text-3xl">
+                    <h1
+                        class="mb-3 text-2xl font-bold text-[#0f5f7f] md:text-3xl"
+                    >
                         Demanar Cita
                     </h1>
 
@@ -592,10 +607,14 @@ onUnmounted(() => {
                 </div>
 
                 <div>
-                    <div class="relative h-[180px] overflow-hidden rounded-xl shadow-md md:h-[220px]">
-                        <img class="h-full w-full object-cover"
+                    <div
+                        class="relative h-[180px] overflow-hidden rounded-xl shadow-md md:h-[220px]"
+                    >
+                        <img
+                            class="h-full w-full object-cover"
                             src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1400&auto=format&fit=crop"
-                            alt="Consulta farmacèutica" />
+                            alt="Consulta farmacèutica"
+                        />
                         <div class="absolute inset-0 bg-[#0f5f7f]/10"></div>
                     </div>
                 </div>
@@ -622,28 +641,47 @@ onUnmounted(() => {
                         </div> -->
                         <div class="mb-8 flex items-center gap-3">
                             <span
-                                class="flex h-8 w-8 items-center justify-center rounded-full bg-[#0f5f7f] text-sm font-bold text-white">1</span>
+                                class="flex h-8 w-8 items-center justify-center rounded-full bg-[#0f5f7f] text-sm font-bold text-white"
+                                >1</span
+                            >
                             <h2 class="text-lg font-bold">
                                 Seleccionar Servei
                             </h2>
                         </div>
 
                         <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            <div v-for="service in props.services" :key="service.id"
-                                @click="selectedService = service.id" :class="[
+                            <div
+                                v-for="service in props.services"
+                                :key="service.id"
+                                @click="selectedService = service.id"
+                                :class="[
                                     'cursor-pointer rounded-xl border p-4 transition',
                                     selectedService === service.id
                                         ? 'border-[#0f5f7f] bg-[#dbeaf4]'
                                         : 'border-transparent bg-[#f3f4f6] hover:border-[#9fbcd3]',
-                                ]">
-                                <div class="mb-2 flex items-center justify-between">
-                                    <component :is="iconsMap[service.icon] || 'div'" class="h-5 w-5 text-[#0f5f7f]" />
-                                    <span class="text-xs font-semibold text-[#604700]">
+                                ]"
+                            >
+                                <div
+                                    class="mb-2 flex items-center justify-between"
+                                >
+                                    <component
+                                        :is="iconsMap[service.icon] || 'div'"
+                                        class="h-5 w-5 text-[#0f5f7f]"
+                                    />
+                                    <span
+                                        class="text-xs font-semibold text-[#604700]"
+                                    >
                                         {{ service.durada }}
                                     </span>
                                 </div>
-                                <h3 class="mb-1 text-base font-bold" v-html="service.nom"></h3>
-                                <div class="text-sm text-slate-600" v-html="service.descripció"></div>
+                                <h3
+                                    class="mb-1 text-base font-bold"
+                                    v-html="service.nom"
+                                ></h3>
+                                <div
+                                    class="text-sm text-slate-600"
+                                    v-html="service.descripció"
+                                ></div>
                             </div>
                         </div>
                     </div>
@@ -654,7 +692,9 @@ onUnmounted(() => {
                     <div v-show="step === 2">
                         <div class="mb-8 flex items-center gap-3">
                             <span
-                                class="flex h-8 w-8 items-center justify-center rounded-full bg-[#0f5f7f] text-sm font-bold text-white">2</span>
+                                class="flex h-8 w-8 items-center justify-center rounded-full bg-[#0f5f7f] text-sm font-bold text-white"
+                                >2</span
+                            >
                             <h2 class="text-lg font-bold">Data i Hora</h2>
                         </div>
 
@@ -662,37 +702,59 @@ onUnmounted(() => {
                             <!-- Calendar -->
                             <div class="rounded-xl bg-[#f3f4f6] p-4">
                                 <!-- Month navigation -->
-                                <div class="mb-3 flex items-center justify-between">
-                                    <button @click="prevMonth" aria-label="Mes anterior" type="button"
-                                        class="rounded-lg p-1.5 text-slate-500 transition hover:bg-white hover:text-[#0f5f7f]">
+                                <div
+                                    class="mb-3 flex items-center justify-between"
+                                >
+                                    <button
+                                        @click="prevMonth"
+                                        aria-label="Mes anterior"
+                                        type="button"
+                                        class="rounded-lg p-1.5 text-slate-500 transition hover:bg-white hover:text-[#0f5f7f]"
+                                    >
                                         <ChevronLeft class="h-5 w-5" />
                                     </button>
-                                    <span class="text-sm font-semibold text-slate-700">{{ currentMonthLabel }}</span>
-                                    <button @click="nextMonth" aria-label="Mes següent" type="button"
-                                        class="rounded-lg p-1.5 text-slate-500 transition hover:bg-white hover:text-[#0f5f7f]">
+                                    <span
+                                        class="text-sm font-semibold text-slate-700"
+                                        >{{ currentMonthLabel }}</span
+                                    >
+                                    <button
+                                        @click="nextMonth"
+                                        aria-label="Mes següent"
+                                        type="button"
+                                        class="rounded-lg p-1.5 text-slate-500 transition hover:bg-white hover:text-[#0f5f7f]"
+                                    >
                                         <ChevronRight class="h-5 w-5" />
                                     </button>
                                 </div>
 
                                 <!-- Weekday headers (DL..DG) -->
                                 <div class="mb-2 grid grid-cols-7">
-                                    <div v-for="h in dayHeaders" :key="h"
-                                        class="py-1 text-center text-xs font-semibold text-slate-400">
+                                    <div
+                                        v-for="h in dayHeaders"
+                                        :key="h"
+                                        class="py-1 text-center text-xs font-semibold text-slate-400"
+                                    >
                                         {{ h }}
                                     </div>
                                 </div>
 
                                 <!-- Day cells -->
                                 <div class="grid grid-cols-7 gap-1">
-                                    <button v-for="(cell, idx) in calendarDays" :key="idx" @click="selectDay(cell)"
-                                        :disabled="!isDayAvailable(cell)" :class="[
+                                    <button
+                                        v-for="(cell, idx) in calendarDays"
+                                        :key="idx"
+                                        @click="selectDay(cell)"
+                                        :disabled="!isDayAvailable(cell)"
+                                        :class="[
                                             'flex h-8 items-center justify-center rounded-lg text-xs transition',
-                                            !cell.isCurrentMonth || !isDayAvailable(cell)
+                                            !cell.isCurrentMonth ||
+                                            !isDayAvailable(cell)
                                                 ? 'cursor-not-allowed text-slate-300'
                                                 : selectedDate === cell.day
-                                                    ? 'bg-[#0f5f7f] font-semibold text-white shadow-sm'
-                                                    : 'text-slate-700 hover:bg-[#dbeaf4] hover:text-[#0f5f7f]',
-                                        ]">
+                                                  ? 'bg-[#0f5f7f] font-semibold text-white shadow-sm'
+                                                  : 'text-slate-700 hover:bg-[#dbeaf4] hover:text-[#0f5f7f]',
+                                        ]"
+                                    >
                                         {{ cell.day }}
                                     </button>
                                 </div>
@@ -700,26 +762,41 @@ onUnmounted(() => {
 
                             <!-- Time-slot list -->
                             <div>
-                                <h3 class="mb-3 text-xs font-bold tracking-widest text-slate-500 uppercase">
+                                <h3
+                                    class="mb-3 text-xs font-bold tracking-widest text-slate-500 uppercase"
+                                >
                                     Hores Disponibles
                                 </h3>
-                                <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                                    <button v-for="time in availableTimes" :key="time" @click="selectedTime = time"
-                                        :disabled="!selectedDate || bookedTimes.includes(time)" :class="[
+                                <div
+                                    class="grid grid-cols-2 gap-2 sm:grid-cols-3"
+                                >
+                                    <button
+                                        v-for="time in availableTimes"
+                                        :key="time"
+                                        @click="selectedTime = time"
+                                        :disabled="
+                                            !selectedDate ||
+                                            bookedTimes.includes(time)
+                                        "
+                                        :class="[
                                             'rounded-lg border py-2 text-xs font-medium transition',
                                             !selectedDate
                                                 ? 'cursor-not-allowed bg-gray-100 text-gray-400'
                                                 : bookedTimes.includes(time)
-                                                    ? 'cursor-not-allowed border-red-300 bg-red-100 text-red-500'
-                                                    : selectedTime === time
-                                                        ? 'border-[#0f5f7f] bg-[#0f5f7f] text-white'
-                                                        : 'border-gray-200 bg-white text-slate-700 hover:border-[#0f5f7f]',
-                                        ]">
+                                                  ? 'cursor-not-allowed border-red-300 bg-red-100 text-red-500'
+                                                  : selectedTime === time
+                                                    ? 'border-[#0f5f7f] bg-[#0f5f7f] text-white'
+                                                    : 'border-gray-200 bg-white text-slate-700 hover:border-[#0f5f7f]',
+                                        ]"
+                                    >
                                         {{ time }}
                                     </button>
                                 </div>
 
-                                <p v-if="form.errors.start_time" class="mt-2 text-xs text-red-500">
+                                <p
+                                    v-if="form.errors.start_time"
+                                    class="mt-2 text-xs text-red-500"
+                                >
                                     {{ form.errors.start_time }}
                                 </p>
                             </div>
@@ -730,7 +807,9 @@ onUnmounted(() => {
                     <div v-show="step === 3">
                         <div class="mb-8 flex items-center gap-3">
                             <span
-                                class="flex h-8 w-8 items-center justify-center rounded-full bg-[#0f5f7f] text-sm font-bold text-white">3</span>
+                                class="flex h-8 w-8 items-center justify-center rounded-full bg-[#0f5f7f] text-sm font-bold text-white"
+                                >3</span
+                            >
                             <h2 class="text-lg font-bold">Dades Personals</h2>
                         </div>
 
@@ -738,41 +817,78 @@ onUnmounted(() => {
                             <!-- Form fields -->
                             <div class="space-y-4">
                                 <div>
-                                    <label for="customer_name" class="mb-1 block text-xs font-semibold text-slate-500">
+                                    <label
+                                        for="customer_name"
+                                        class="mb-1 block text-xs font-semibold text-slate-500"
+                                    >
                                         Nom i Cognoms
                                     </label>
-                                    <input id="customer_name" v-model="form.customer_name" type="text"
-                                        name="customer_name" autocomplete="name" required
+                                    <input
+                                        id="customer_name"
+                                        v-model="form.customer_name"
+                                        type="text"
+                                        name="customer_name"
+                                        autocomplete="name"
+                                        required
                                         class="w-full rounded-lg border border-transparent bg-[#f3f4f6] px-3 py-2.5 text-sm transition outline-none focus:bg-white focus:ring-2 focus:ring-[#0f5f7f]"
-                                        placeholder="Nom i Cognoms" />
-                                    <p v-if="form.errors.customer_name" class="mt-1 text-xs text-red-500">
+                                        placeholder="Nom i Cognoms"
+                                    />
+                                    <p
+                                        v-if="form.errors.customer_name"
+                                        class="mt-1 text-xs text-red-500"
+                                    >
                                         {{ form.errors.customer_name }}
                                     </p>
                                 </div>
 
                                 <div>
-                                    <label for="customer_phone" class="mb-1 block text-xs font-semibold text-slate-500">
+                                    <label
+                                        for="customer_phone"
+                                        class="mb-1 block text-xs font-semibold text-slate-500"
+                                    >
                                         Telèfon
                                     </label>
-                                    <input id="customer_phone" v-model="form.customer_phone" type="tel"
-                                        name="customer_phone" autocomplete="tel" pattern="[0-9]{9}" maxlength="9"
+                                    <input
+                                        id="customer_phone"
+                                        v-model="form.customer_phone"
+                                        type="tel"
+                                        name="customer_phone"
+                                        autocomplete="tel"
+                                        pattern="[0-9]{9}"
+                                        maxlength="9"
                                         required
                                         class="w-full rounded-lg border border-transparent bg-[#f3f4f6] px-3 py-2.5 text-sm transition outline-none focus:bg-white focus:ring-2 focus:ring-[#0f5f7f]"
-                                        placeholder="600 000 000" />
-                                    <p v-if="form.errors.customer_phone" class="mt-1 text-xs text-red-500">
+                                        placeholder="600 000 000"
+                                    />
+                                    <p
+                                        v-if="form.errors.customer_phone"
+                                        class="mt-1 text-xs text-red-500"
+                                    >
                                         {{ form.errors.customer_phone }}
                                     </p>
                                 </div>
 
                                 <div>
-                                    <label for="customer_email" class="mb-1 block text-xs font-semibold text-slate-500">
+                                    <label
+                                        for="customer_email"
+                                        class="mb-1 block text-xs font-semibold text-slate-500"
+                                    >
                                         Correu Electrònic
                                     </label>
-                                    <input id="customer_email" v-model="form.customer_email" type="email"
-                                        name="customer_email" autocomplete="email" required
+                                    <input
+                                        id="customer_email"
+                                        v-model="form.customer_email"
+                                        type="email"
+                                        name="customer_email"
+                                        autocomplete="email"
+                                        required
                                         class="w-full rounded-lg border border-transparent bg-[#f3f4f6] px-3 py-2.5 text-sm transition outline-none focus:bg-white focus:ring-2 focus:ring-[#0f5f7f]"
-                                        placeholder="exemple@mail.com" />
-                                    <p v-if="form.errors.customer_email" class="mt-1 text-xs text-red-500">
+                                        placeholder="exemple@mail.com"
+                                    />
+                                    <p
+                                        v-if="form.errors.customer_email"
+                                        class="mt-1 text-xs text-red-500"
+                                    >
                                         {{ form.errors.customer_email }}
                                     </p>
                                 </div>
@@ -780,14 +896,22 @@ onUnmounted(() => {
 
                             <!-- Summary + submit + captcha -->
                             <div class="space-y-4">
-                                <div class="rounded-xl border border-[#e5e7eb] bg-[#f3f4f6] p-4">
-                                    <p class="mb-3 text-sm font-semibold text-slate-800">
+                                <div
+                                    class="rounded-xl border border-[#e5e7eb] bg-[#f3f4f6] p-4"
+                                >
+                                    <p
+                                        class="mb-3 text-sm font-semibold text-slate-800"
+                                    >
                                         Resum de la reserva
                                     </p>
-                                    <div class="space-y-2 text-sm text-slate-600">
+                                    <div
+                                        class="space-y-2 text-sm text-slate-600"
+                                    >
                                         <div class="flex justify-between">
                                             <span>Servei</span>
-                                            <span class="font-medium">{{ selectedServiceObj?.nom || '—' }}</span>
+                                            <span class="font-medium">{{
+                                                selectedServiceObj?.nom || '—'
+                                            }}</span>
                                         </div>
                                         <div class="flex justify-between">
                                             <span>Data</span>
@@ -801,23 +925,45 @@ onUnmounted(() => {
                                         </div>
                                         <div class="flex justify-between">
                                             <span>Hora</span>
-                                            <span class="font-medium">{{ selectedTime || '—' }}</span>
+                                            <span class="font-medium">{{
+                                                selectedTime || '—'
+                                            }}</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <button @click="showConfirmModal = true"
-                                    :disabled="!selectedDate || !selectedTime || form.processing"
-                                    class="w-full rounded-lg bg-[#0f5f7f] py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#0c4a63] disabled:opacity-50">
-                                    {{ form.processing ? 'Confirmant...' : 'Confirmar Reserva' }}
+                                <button
+                                    @click="showConfirmModal = true"
+                                    :disabled="
+                                        !selectedDate ||
+                                        !selectedTime ||
+                                        form.processing
+                                    "
+                                    class="w-full rounded-lg bg-[#0f5f7f] py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#0c4a63] disabled:opacity-50"
+                                >
+                                    {{
+                                        form.processing
+                                            ? 'Confirmant...'
+                                            : 'Confirmar Reserva'
+                                    }}
                                 </button>
 
                                 <!-- Turnstile widget container -->
                                 <div v-if="props.turnstileSiteKey" class="pt-2">
-                                    <div class="cf-turnstile" :data-sitekey="props.turnstileSiteKey"
-                                        data-language="es"></div>
-                                    <p v-if="form.errors['cf-turnstile-response']" class="mt-2 text-sm text-red-600">
-                                        {{ form.errors['cf-turnstile-response'] }}
+                                    <div
+                                        class="cf-turnstile"
+                                        :data-sitekey="props.turnstileSiteKey"
+                                        data-language="es"
+                                    ></div>
+                                    <p
+                                        v-if="
+                                            form.errors['cf-turnstile-response']
+                                        "
+                                        class="mt-2 text-sm text-red-600"
+                                    >
+                                        {{
+                                            form.errors['cf-turnstile-response']
+                                        }}
                                     </p>
                                 </div>
                             </div>
@@ -826,15 +972,27 @@ onUnmounted(() => {
 
                     <!-- ===== Wizard navigation buttons ===== -->
                     <div class="mt-8 flex items-center justify-between">
-                        <button v-if="step > 1" @click="prevStep" aria-label="Enrere" type="button"
-                            class="rounded-lg border border-[#0f5f7f] px-5 py-2.5 text-sm font-medium text-[#0f5f7f] transition hover:bg-[#e3f2f9]">
+                        <button
+                            v-if="step > 1"
+                            @click="prevStep"
+                            aria-label="Enrere"
+                            type="button"
+                            class="rounded-lg border border-[#0f5f7f] px-5 py-2.5 text-sm font-medium text-[#0f5f7f] transition hover:bg-[#e3f2f9]"
+                        >
                             ← Enrere
                         </button>
 
-                        <button v-if="step < 3" @click="nextStep"
-                            :disabled="(step === 2 && !selectedDate) || (step === 2 && !selectedTime)"
-                            aria-label="Següent" type="button"
-                            class="ml-auto rounded-lg bg-[#0f5f7f] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#0c4a63] disabled:opacity-50">
+                        <button
+                            v-if="step < 3"
+                            @click="nextStep"
+                            :disabled="
+                                (step === 2 && !selectedDate) ||
+                                (step === 2 && !selectedTime)
+                            "
+                            aria-label="Següent"
+                            type="button"
+                            class="ml-auto rounded-lg bg-[#0f5f7f] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#0c4a63] disabled:opacity-50"
+                        >
                             Següent →
                         </button>
                     </div>
@@ -844,7 +1002,10 @@ onUnmounted(() => {
             <!-- =====================================================
                  MODAL - "Are you sure?" before sending
                  ===================================================== -->
-            <div v-if="showConfirmModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            <div
+                v-if="showConfirmModal"
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+            >
                 <div class="w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
                     <h3 class="mb-3 text-lg font-bold text-[#0f5f7f]">
                         Confirmar reserva
@@ -854,10 +1015,14 @@ onUnmounted(() => {
                         Estàs segur que vols confirmar aquesta reserva?
                     </p>
 
-                    <div class="mb-4 space-y-2 rounded-lg bg-gray-100 p-3 text-sm">
+                    <div
+                        class="mb-4 space-y-2 rounded-lg bg-gray-100 p-3 text-sm"
+                    >
                         <div class="flex justify-between">
                             <span>Servei</span>
-                            <span class="font-semibold">{{ selectedServiceObj?.nom || '—' }}</span>
+                            <span class="font-semibold">{{
+                                selectedServiceObj?.nom || '—'
+                            }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span>Data</span>
@@ -871,18 +1036,28 @@ onUnmounted(() => {
                         </div>
                         <div class="flex justify-between">
                             <span>Hora</span>
-                            <span class="font-semibold">{{ selectedTime || '—' }}</span>
+                            <span class="font-semibold">{{
+                                selectedTime || '—'
+                            }}</span>
                         </div>
                     </div>
 
                     <div class="flex gap-3">
-                        <button @click="showConfirmModal = false" :disabled="isSubmitting"
-                            class="flex-1 rounded-lg border border-gray-300 py-2 text-sm">
+                        <button
+                            @click="showConfirmModal = false"
+                            :disabled="isSubmitting"
+                            class="flex-1 rounded-lg border border-gray-300 py-2 text-sm"
+                        >
                             Cancel·lar
                         </button>
-                        <button @click="confirmReservation" :disabled="isSubmitting"
-                            class="flex-1 rounded-lg bg-[#0f5f7f] py-2 text-sm text-white disabled:opacity-50">
-                            {{ isSubmitting ? 'Confirmant...' : 'Sí, confirmar' }}
+                        <button
+                            @click="confirmReservation"
+                            :disabled="isSubmitting"
+                            class="flex-1 rounded-lg bg-[#0f5f7f] py-2 text-sm text-white disabled:opacity-50"
+                        >
+                            {{
+                                isSubmitting ? 'Confirmant...' : 'Sí, confirmar'
+                            }}
                         </button>
                     </div>
                 </div>
@@ -891,15 +1066,24 @@ onUnmounted(() => {
             <!-- =====================================================
                  MODAL - Success (after server responded with flash)
                  ===================================================== -->
-            <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60">
+            <div
+                v-if="showModal"
+                class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60"
+            >
                 <div class="relative w-full max-w-md p-4">
                     <div class="rounded-lg bg-white p-6 shadow-xl">
-                        <div class="flex items-center justify-between border-b pb-4">
+                        <div
+                            class="flex items-center justify-between border-b pb-4"
+                        >
                             <h3 class="text-lg font-semibold text-[#0f5f7f]">
                                 Reserva confirmada
                             </h3>
-                            <button @click="showModal = false" aria-label="Tancar finestra" type="button"
-                                class="text-gray-400 transition hover:text-black">
+                            <button
+                                @click="showModal = false"
+                                aria-label="Tancar finestra"
+                                type="button"
+                                class="text-gray-400 transition hover:text-black"
+                            >
                                 ✕
                             </button>
                         </div>
@@ -910,48 +1094,78 @@ onUnmounted(() => {
                             </p>
                         </div>
 
-                        <div class="mb-4 space-y-2 rounded-lg bg-gray-100 p-3 text-xs">
+                        <div
+                            class="mb-4 space-y-2 rounded-lg bg-gray-100 p-3 text-xs"
+                        >
                             <div class="flex justify-between">
                                 <span class="text-gray-500">Servei</span>
-                                <span class="font-semibold text-gray-800">{{ successServiceName }}</span>
+                                <span class="font-semibold text-gray-800">{{
+                                    successServiceName
+                                }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-500">Data</span>
-                                <span class="font-semibold text-gray-800">{{ successData?.date }}</span>
+                                <span class="font-semibold text-gray-800">{{
+                                    successData?.date
+                                }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-500">Hora</span>
-                                <span class="font-semibold text-gray-800">{{ successData?.time }}</span>
+                                <span class="font-semibold text-gray-800">{{
+                                    successData?.time
+                                }}</span>
                             </div>
 
-                            <div class="mt-1 space-y-2 border-t border-gray-300 pt-2">
+                            <div
+                                class="mt-1 space-y-2 border-t border-gray-300 pt-2"
+                            >
                                 <div class="flex justify-between">
                                     <span class="text-gray-500">Nom</span>
-                                    <span class="font-semibold text-gray-800">{{ successData?.name }}</span>
+                                    <span class="font-semibold text-gray-800">{{
+                                        successData?.name
+                                    }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-gray-500">Correu</span>
-                                    <span class="max-w-[200px] truncate font-semibold text-gray-800">{{
-                                        successData?.email }}</span>
+                                    <span
+                                        class="max-w-[200px] truncate font-semibold text-gray-800"
+                                        >{{ successData?.email }}</span
+                                    >
                                 </div>
                             </div>
                         </div>
 
                         <div class="flex gap-3">
-                            <a :href="pdfDownloadUrl" target="_blank"
-                                class="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#0f5f7f] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#0c4a63]">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <a
+                                :href="pdfDownloadUrl"
+                                target="_blank"
+                                class="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#0f5f7f] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-[#0c4a63]"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-4 w-4 shrink-0"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                    />
                                     <polyline points="7 10 12 15 17 10" />
                                     <line x1="12" y1="15" x2="12" y2="3" />
                                 </svg>
                                 Descarregar PDF
                             </a>
 
-                            <button @click="closeSuccessModal" aria-label="Tancar finestra" type="button"
-                                class="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-600 transition hover:border-gray-400 hover:bg-gray-50">
+                            <button
+                                @click="closeSuccessModal"
+                                aria-label="Tancar finestra"
+                                type="button"
+                                class="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-600 transition hover:border-gray-400 hover:bg-gray-50"
+                            >
                                 Tancar
                             </button>
                         </div>

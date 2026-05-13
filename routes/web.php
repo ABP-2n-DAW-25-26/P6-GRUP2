@@ -31,7 +31,6 @@ Route::get('/appointments/pdf', [ServiceController::class, 'downloadPdf'])->name
 Route::get('/appointments/booked-times', [ServiceController::class, 'getBookedTimes']);
 Route::get('/appointments/schedule', [ServiceController::class, 'getSchedule']);
 
-
 //
 // ADMIN ROUTES
 //

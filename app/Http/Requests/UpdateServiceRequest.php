@@ -24,7 +24,7 @@ class UpdateServiceRequest extends FormRequest
     {
         return [
             //
-             'name' => [
+            'name' => [
                 'required',
                 'string',
                 'max:255',

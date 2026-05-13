@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import {
     Pill,
     HeartPulse,
@@ -17,13 +17,12 @@ import {
     Thermometer,
 } from 'lucide-vue-next';
 import { computed } from 'vue';
+import TiptapEditor from '@/components/TiptapEditor.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { admindashboard as dashboard } from '@/routes';
 
-import TiptapEditor from '@/components/TiptapEditor.vue';
 
-import { Head, Link, useForm } from '@inertiajs/vue3';
 const iconOptions = [
     { value: 'pill', label: 'Medicació', icon: Pill },
     { value: 'heart', label: 'Cor / Salut', icon: HeartPulse },
@@ -119,7 +118,7 @@ const selectedIconComponent = computed(
                                     class="mb-1 block text-sm font-medium text-gray-700"
                                     >Descripció</label
                                 >
-                               <TiptapEditor v-model="form.description" />
+                                <TiptapEditor v-model="form.description" />
                                 <p
                                     v-if="form.errors.description"
                                     class="text-xs text-red-500"
@@ -238,13 +237,13 @@ const selectedIconComponent = computed(
 
                             <div>
                                 <p class="text-xs text-gray-400">Descripció</p>
-                                  <div
-        v-if="form.description"
-        v-html="form.description"
-        class="prose prose-sm max-w-none"
-    ></div>
+                                <div
+                                    v-if="form.description"
+                                    v-html="form.description"
+                                    class="prose prose-sm max-w-none"
+                                ></div>
 
-    <p v-else>—</p>
+                                <p v-else>—</p>
                             </div>
 
                             <div>
