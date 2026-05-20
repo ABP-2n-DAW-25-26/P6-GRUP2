@@ -29,7 +29,7 @@ class EmailsController extends Controller
 
         $emails = $query->get();
 
-        if ($request->ajax() || $request->wantsJson()) {
+        if ($request->expectsJson()) {
             return response()->json($emails);
         }
 
