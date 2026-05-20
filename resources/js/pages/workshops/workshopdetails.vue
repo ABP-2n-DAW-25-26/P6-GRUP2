@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import { computed, onMounted, watch, nextTick, ref } from 'vue';
+import { computed, onMounted, onUnmounted, watch, nextTick, ref } from 'vue';
 import WebAppLayout from '@/layouts/WebAppLayout.vue';
 
 
@@ -86,18 +86,35 @@ function submit() {
             // Re-render turnstile so the user gets a fresh token if they try again
             renderTurnstile();
         },
+        onError: () => onError(),
     });
 }
 
 // ---------------------------------------------------------------------------
 // Turnstile loading & rendering
 // ---------------------------------------------------------------------------
+const turnstileWidgetId = ref<string | null>(null);
+
+// Render the Turnstile widget when the script is loaded and the site key is available
 function renderTurnstile() {
     const el = document.querySelector('.cf-turnstile') as HTMLElement | null;
-    const t = (window as { turnstile?: { render: (el: HTMLElement, opts: Record<string, unknown>) => void } }).turnstile;
+    const t = (window as any).turnstile;
+
     if (!el || !props.turnstileSiteKey || !t) return;
+
     el.innerHTML = '';
-    t.render(el, { sitekey: props.turnstileSiteKey, language: 'ca' });
+    turnstileWidgetId.value = t.render(el, {
+        sitekey: props.turnstileSiteKey,
+        language: 'ca',
+    });
+}
+
+// On error reset the widget so the user can try again without refreshing the page
+function onError() {
+    const t = (window as any).turnstile;
+    if (t && turnstileWidgetId.value) {
+        t.reset(turnstileWidgetId.value);
+    }
 }
 
 onMounted(() => {
@@ -113,8 +130,13 @@ onMounted(() => {
     s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
     s.async = true;
     s.defer = true;
-    s.onload = () => renderTurnstile();
+    s.onload = renderTurnstile;
     document.head.appendChild(s);
+});
+
+// Remove the Turnstile script and widget on unmount to clean up the DOM
+onUnmounted(() => {
+    document.getElementById('cf-turnstile-api')?.remove();
 });
 
 // If the flash arrives later (after the redirect), re-render the widget so
@@ -337,7 +359,7 @@ function closeForm() {
                                     Telèfon (9 dígits) <span class="text-red-500">*</span>
                                 </label>
                                 <input id="phone" v-model="form.phone" type="tel" inputmode="numeric" pattern="[0-9]{9}"
-                                    autocomplete="tel" required
+                                    autocomplete="tel" maxlength="9" required
                                     class="w-full rounded-lg border border-[#D0EAF3] bg-white px-3 py-2 text-sm text-[#0E3C4D] outline-none transition focus:border-[#01617F] focus:ring-2 focus:ring-[#01617F]/20"
                                     :class="{ 'border-red-400 focus:border-red-500 focus:ring-red-200': form.errors.phone }" />
                                 <p v-if="form.errors.phone" class="mt-1 text-xs text-red-600">{{ form.errors.phone }}
