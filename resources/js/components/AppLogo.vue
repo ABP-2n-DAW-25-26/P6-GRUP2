@@ -3,7 +3,7 @@
         class="flex aspect-square size-9 items-center justify-center overflow-hidden rounded-lg border border-sidebar-border/80 bg-sidebar-primary/10 shadow-sm"
     >
         <img
-            src="/storage/FarmaciaSolerLogo.jpg"
+            src="/storage/FarmaciaSolerLogo.svg"
             alt="Farmacia Soler logo"
             class="size-8 rounded object-cover"
         />

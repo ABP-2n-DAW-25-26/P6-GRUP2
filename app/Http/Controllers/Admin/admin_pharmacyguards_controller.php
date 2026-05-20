@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use App\Models\PharmacyGuard;
 
 class admin_pharmacyguards_controller extends Controller
 {
@@ -86,12 +87,7 @@ class admin_pharmacyguards_controller extends Controller
             'pharmacy_id' => ['required', 'exists:pharmacies,id'],
         ]);
 
-        DB::table('pharmacy_guards')->insert([
-            'date' => $validated['date'],
-            'pharmacy_id' => $validated['pharmacy_id'],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        PharmacyGuard::create($validated);
 
         return to_route('pharmacyguards.index')
             ->with('success', 'Guàrdia creada correctament.');

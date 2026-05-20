@@ -68,10 +68,13 @@ function isActive(path: string): boolean {
         >
             <!-- Left: logo + desktop nav -->
             <div class="flex min-w-0 items-center gap-5">
-                <a href="/" class="flex shrink-0 items-center">
+                <a
+                    href="/"
+                    class="flex min-w-0 shrink items-center self-center"
+                >
                     <img
                         class="h-10 w-auto md:h-11 lg:h-12"
-                        src="/storage/FarmaciaSolerLogoLong.jpeg"
+                        src="/storage/FarmaciaSolerLogoLong.webp"
                         alt="Farmacia Soler"
                     />
                 </a>
@@ -213,10 +216,10 @@ function isActive(path: string): boolean {
                 </li>
                 <li>
                     <Link
-                        href="/make-appointment"
+                        href="/appointments/create"
                         :class="[
                             'block rounded-lg px-3 py-2 transition',
-                            isActive('/make-appointment')
+                            isActive('/appointments/create')
                                 ? 'bg-[#E6F5FB] text-[#01617F]/90'
                                 : 'hover:bg-[#E6F5FB] hover:text-[#01617F]/90',
                         ]"

@@ -19,6 +19,8 @@ import {
 } from 'lucide-vue-next';
 import { ref, computed, onMounted, watch, onUnmounted } from 'vue';
 import WebAppLayout from '@/layouts/WebAppLayout.vue';
+import PublicFlashToast from '@/components/PublicFlashToast.vue';
+import ConfirmAppointmentModal from '@/components/ConfirmAppointmentModal.vue';
 
 // ---------------------------------------------------------------------------
 // 2. Layout
@@ -38,8 +40,7 @@ type ServiceItem = {
     icon: string;
 };
 
-type FlashSuccess = {
-    message: string;
+type FlashReservation = {
     service: number;
     date: string;
     time: string;
@@ -62,7 +63,9 @@ const props = defineProps<{
 
 const page = usePage<{
     flash?: {
-        success?: FlashSuccess;
+        success?: string;
+        error?: string;
+        reservation?: FlashReservation;
     };
 }>();
 
@@ -160,7 +163,7 @@ const stepTitles: Record<number, string> = {
 // ---------------------------------------------------------------------------
 // 11. Computed - success modal data
 // ---------------------------------------------------------------------------
-const successData = computed(() => page.props.flash?.success);
+const successData = computed(() => page.props.flash?.reservation);
 
 const successServiceName = computed(() => {
     if (!successData.value?.service) {
@@ -427,6 +430,9 @@ async function fetchBookedTimes() {
 // ---------------------------------------------------------------------------
 // 18. Turnstile
 // ---------------------------------------------------------------------------
+
+const turnstileWidgetId = ref<string | null>(null);
+
 function renderTurnstile() {
     const el = document.querySelector('.cf-turnstile') as HTMLElement | null;
     const t = (window as any).turnstile;
@@ -436,7 +442,18 @@ function renderTurnstile() {
     }
 
     el.innerHTML = '';
-    t.render(el, { sitekey: props.turnstileSiteKey, language: 'es' });
+    turnstileWidgetId.value = t.render(el, {
+        sitekey: props.turnstileSiteKey,
+        language: 'es',
+    });
+}
+
+// On error reset the widget so the user can try again without refreshing the page
+function onError() {
+    const t = (window as any).turnstile;
+    if (t && turnstileWidgetId.value) {
+        t.reset(turnstileWidgetId.value);
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -514,6 +531,8 @@ function submitReservation() {
         },
         onError: () => {
             isSubmitting.value = false;
+            showConfirmModal.value = false;
+            onError();
         },
     });
 }
@@ -544,7 +563,7 @@ watch([selectedDate, currentMonth, currentYear], async () => {
 });
 
 watch(
-    () => page.props.flash?.success,
+    () => page.props.flash?.reservation,
     (val) => {
         if (!val) {
             return;
@@ -590,6 +609,8 @@ onUnmounted(() => {
         <div
             class="relative z-10 mx-auto max-w-6xl px-4 pt-10 pb-16 sm:px-6 lg:px-8"
         >
+            <!-- Flash message -->
+            <PublicFlashToast />
             <!-- Hero -->
             <div class="mb-10 grid items-center gap-8 md:grid-cols-5">
                 <div class="md:col-span-3">
@@ -963,8 +984,26 @@ onUnmounted(() => {
 
                                 <p
                                     v-if="form.errors.start_time"
-                                    class="mt-2 text-xs text-rose-600"
+                                    class="mt-2 flex items-center gap-1 text-xs text-rose-600"
                                 >
+                                    <svg
+                                        class="h-3.5 w-3.5 shrink-0"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="12" y1="8" x2="12" y2="12" />
+                                        <line
+                                            x1="12"
+                                            y1="16"
+                                            x2="12.01"
+                                            y2="16"
+                                        />
+                                    </svg>
                                     {{ form.errors.start_time }}
                                 </p>
                             </div>
@@ -1008,8 +1047,31 @@ onUnmounted(() => {
                                     />
                                     <p
                                         v-if="form.errors.customer_name"
-                                        class="mt-1.5 text-xs text-rose-600"
+                                        class="mt-1.5 flex items-center gap-1 text-xs text-rose-600"
                                     >
+                                        <svg
+                                            class="h-3.5 w-3.5 shrink-0"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <circle cx="12" cy="12" r="10" />
+                                            <line
+                                                x1="12"
+                                                y1="8"
+                                                x2="12"
+                                                y2="12"
+                                            />
+                                            <line
+                                                x1="12"
+                                                y1="16"
+                                                x2="12.01"
+                                                y2="16"
+                                            />
+                                        </svg>
                                         {{ form.errors.customer_name }}
                                     </p>
                                 </div>
@@ -1043,8 +1105,35 @@ onUnmounted(() => {
                                         />
                                         <p
                                             v-if="form.errors.customer_phone"
-                                            class="mt-1.5 text-xs text-rose-600"
+                                            class="mt-1.5 flex items-center gap-1 text-xs text-rose-600"
                                         >
+                                            <svg
+                                                class="h-3.5 w-3.5 shrink-0"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            >
+                                                <circle
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="10"
+                                                />
+                                                <line
+                                                    x1="12"
+                                                    y1="8"
+                                                    x2="12"
+                                                    y2="12"
+                                                />
+                                                <line
+                                                    x1="12"
+                                                    y1="16"
+                                                    x2="12.01"
+                                                    y2="16"
+                                                />
+                                            </svg>
                                             {{ form.errors.customer_phone }}
                                         </p>
                                     </div>
@@ -1073,8 +1162,35 @@ onUnmounted(() => {
                                         />
                                         <p
                                             v-if="form.errors.customer_email"
-                                            class="mt-1.5 text-xs text-rose-600"
+                                            class="mt-1.5 flex items-center gap-1 text-xs text-rose-600"
                                         >
+                                            <svg
+                                                class="h-3.5 w-3.5 shrink-0"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            >
+                                                <circle
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="10"
+                                                />
+                                                <line
+                                                    x1="12"
+                                                    y1="8"
+                                                    x2="12"
+                                                    y2="12"
+                                                />
+                                                <line
+                                                    x1="12"
+                                                    y1="16"
+                                                    x2="12.01"
+                                                    y2="16"
+                                                />
+                                            </svg>
                                             {{ form.errors.customer_email }}
                                         </p>
                                     </div>
@@ -1090,8 +1206,31 @@ onUnmounted(() => {
                                         v-if="
                                             form.errors['cf-turnstile-response']
                                         "
-                                        class="mt-1.5 text-xs text-rose-600"
+                                        class="mt-1.5 flex items-center gap-1 text-xs text-rose-600"
                                     >
+                                        <svg
+                                            class="h-3.5 w-3.5 shrink-0"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <circle cx="12" cy="12" r="10" />
+                                            <line
+                                                x1="12"
+                                                y1="8"
+                                                x2="12"
+                                                y2="12"
+                                            />
+                                            <line
+                                                x1="12"
+                                                y1="16"
+                                                x2="12.01"
+                                                y2="16"
+                                            />
+                                        </svg>
                                         {{
                                             form.errors['cf-turnstile-response']
                                         }}
@@ -1146,12 +1285,10 @@ onUnmounted(() => {
                                             </dd>
                                         </div>
                                     </dl>
-                                    
-                                    
+
                                     <div
-                                        class="border-t border-white/10 px-5 py-4"   
+                                        class="border-t border-white/10 px-5 py-4"
                                     >
-                                    
                                         <button
                                             @click="showConfirmModal = true"
                                             :disabled="
@@ -1233,161 +1370,19 @@ onUnmounted(() => {
         </div>
 
         <!-- ===== Confirm modal ===== -->
-        <transition
-            enter-active-class="transition duration-200 ease-out"
-            enter-from-class="opacity-0"
-            enter-to-class="opacity-100"
-            leave-active-class="transition duration-150 ease-in"
-            leave-from-class="opacity-100"
-            leave-to-class="opacity-0"
-        >
-            <div
-                v-if="showConfirmModal"
-                class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-4 py-6 backdrop-blur-sm"
-                @click.self="!isSubmitting && (showConfirmModal = false)"
-            >
-                <div
-                    class="relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-slate-900/10"
-                >
-                    <div
-                        class="h-1.5 bg-gradient-to-r from-[#00617E] to-[#0a7494]"
-                    ></div>
-                    <div class="flex items-start gap-4 px-6 pt-6 sm:px-8">
-                        <span
-                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#00617E]/10 text-[#00617E]"
-                        >
-                            <svg
-                                class="h-6 w-6"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <path d="M9 11l3 3L22 4" />
-                                <path
-                                    d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-                                />
-                            </svg>
-                        </span>
-                        <div>
-                            <h3 class="text-lg font-bold text-slate-900">
-                                Confirmar la teva reserva
-                            </h3>
-                            <p class="mt-1 text-sm text-slate-500">
-                                Revisa les dades abans d'enviar-les.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="px-6 py-5 sm:px-8">
-                        <dl
-                            class="divide-y divide-slate-100 rounded-xl bg-slate-50 ring-1 ring-slate-200/60"
-                        >
-                            <div class="grid grid-cols-3 gap-4 px-4 py-3">
-                                <dt
-                                    class="text-xs font-semibold tracking-wide text-slate-500 uppercase"
-                                >
-                                    Servei
-                                </dt>
-                                <dd
-                                    class="col-span-2 text-sm font-medium text-slate-900"
-                                >
-                                    {{ selectedServiceObj?.nom || '—' }}
-                                </dd>
-                            </div>
-                            <div class="grid grid-cols-3 gap-4 px-4 py-3">
-                                <dt
-                                    class="text-xs font-semibold tracking-wide text-slate-500 uppercase"
-                                >
-                                    Data
-                                </dt>
-                                <dd
-                                    class="col-span-2 text-sm font-medium text-slate-900"
-                                >
-                                    {{
-                                        selectedDate
-                                            ? `${selectedDate} ${monthNames[currentMonth]} ${currentYear}`
-                                            : '—'
-                                    }}
-                                </dd>
-                            </div>
-                            <div class="grid grid-cols-3 gap-4 px-4 py-3">
-                                <dt
-                                    class="text-xs font-semibold tracking-wide text-slate-500 uppercase"
-                                >
-                                    Hora
-                                </dt>
-                                <dd
-                                    class="col-span-2 text-sm font-medium text-slate-900"
-                                >
-                                    {{ selectedTime || '—' }}
-                                </dd>
-                            </div>
-                        </dl>
-                        <p
-                            class="mt-4 flex items-start gap-2 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-600 ring-1 ring-slate-200/60"
-                        >
-                            <svg
-                                class="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-400"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <circle cx="12" cy="12" r="10" />
-                                <line x1="12" y1="16" x2="12" y2="12" />
-                                <line x1="12" y1="8" x2="12.01" y2="8" />
-                            </svg>
-                            Un cop confirmada, rebràs un correu i podràs
-                            descarregar el PDF de la cita.
-                        </p>
-                    </div>
-                    <div
-                        class="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50/60 px-6 py-4 sm:px-8"
-                    >
-                        <button
-                            @click="showConfirmModal = false"
-                            :disabled="isSubmitting"
-                            type="button"
-                            class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-50"
-                        >
-                            Cancel·lar
-                        </button>
-                        <button
-                            @click="confirmReservation"
-                            :disabled="isSubmitting"
-                            type="button"
-                            class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-br from-[#00617E] to-[#004e66] px-5 py-2 text-sm font-semibold text-white shadow-md shadow-[#00617E]/20 transition hover:shadow-lg hover:shadow-[#00617E]/30 disabled:opacity-50"
-                        >
-                            <svg
-                                v-if="isSubmitting"
-                                class="h-4 w-4 animate-spin"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                            >
-                                <circle
-                                    class="opacity-25"
-                                    cx="12"
-                                    cy="12"
-                                    r="10"
-                                    stroke="currentColor"
-                                    stroke-width="4"
-                                />
-                                <path
-                                    class="opacity-75"
-                                    fill="currentColor"
-                                    d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
-                                />
-                            </svg>
-                            {{ isSubmitting ? 'Confirmant…' : 'Sí, confirmar' }}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </transition>
+        <ConfirmAppointmentModal
+            :show="showConfirmModal"
+            :service-name="selectedServiceObj?.nom || '—'"
+            :date="
+                selectedDate
+                    ? `${selectedDate} ${monthNames[currentMonth]} ${currentYear}`
+                    : '—'
+            "
+            :time="selectedTime || '—'"
+            :is-submitting="isSubmitting"
+            @confirm="confirmReservation"
+            @cancel="showConfirmModal = false"
+        />
 
         <!-- ===== Success modal ===== -->
         <transition
@@ -1429,7 +1424,7 @@ onUnmounted(() => {
                                     Reserva confirmada
                                 </h3>
                                 <p class="text-sm text-slate-500">
-                                    {{ successData?.message }}
+                                    Cita reservada correctament.
                                 </p>
                             </div>
                         </div>

@@ -8,6 +8,7 @@ use App\Http\Requests\GetScheduleRequest;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Mail\ReservationCreated;
 use App\Mail\ReservationCreatedAdmin;
+use App\Models\Email;
 use App\Models\Service;
 use App\Models\ServiceAppointment;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -15,9 +16,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
-use App\Models\Email;
 
-class ServiceController extends Controller
+class AppointmentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,14 +25,14 @@ class ServiceController extends Controller
     public function index()
     {
         // Show the appointment booking form with available services
-        return Inertia::render('PedirCita', [
+        return Inertia::render('Appointments/Create', [
             'turnstileSiteKey' => config('services.turnstile.site_key'),
             'services' => Service::whereHas('schedules')->get()->map(function ($service) {
                 return [
                     'id' => $service->id,
                     'nom' => $service->name,
                     'descripció' => $service->description,
-                    'durada' => $service->duration_minutes . ' min',
+                    'durada' => $service->duration_minutes.' min',
                     'icon' => $service->icon,
                 ];
             }),
@@ -56,7 +56,7 @@ class ServiceController extends Controller
 
         $validated = $request->validated();
         $appointmentDateTime = Carbon::parse(
-            $validated['appointment_date'] . ' ' . $validated['start_time']
+            $validated['appointment_date'].' '.$validated['start_time']
         );
 
         if ($appointmentDateTime->isPast()) {
@@ -94,7 +94,7 @@ class ServiceController extends Controller
             'name' => $validated['customer_name'],
             'email' => $validated['customer_email'],
             'service_name' => $service->name,
-            'duration' => $service->duration_minutes . ' min',
+            'duration' => $service->duration_minutes.' min',
             'date' => $validated['appointment_date'],
             'time' => $validated['start_time'],
             'pharmacy' => 'Farmàcia Soler',
@@ -104,24 +104,28 @@ class ServiceController extends Controller
 
         $activeEmails = Email::where('active', 1)->pluck('email')->toArray();
 
+        $flashKey = 'success';
+        $flashMessage = 'Reservació creada correctament! Rebràs un correu de confirmació.';
+
         try {
             Mail::to($validated['customer_email'])->send(new ReservationCreated($mailData));
-            if (!empty($activeEmails)) {
+            if (! empty($activeEmails)) {
                 Mail::to($activeEmails)->send(new ReservationCreatedAdmin($mailData));
             }
-            $message = 'Reservació creat correctament! Rebràs un correu de confirmació.';
         } catch (\Exception $e) {
-            $message = 'Reservació creada correctament, però no hem pogut enviar el correu.';
+            $flashKey = 'error';
+            $flashMessage = 'Reservació creada, però no hem pogut enviar el correu.';
         }
 
-        return to_route('pedir-cita')->with('success', [
-            'message' => $message,
-            'service' => $validated['service_id'],
-            'date' => $validated['appointment_date'],
-            'time' => $validated['start_time'],
-            'name' => $validated['customer_name'],
-            'email' => $validated['customer_email'],
-        ]);
+        return to_route('appointments.create')
+            ->with($flashKey, $flashMessage)
+            ->with('reservation', [
+                'service' => $validated['service_id'],
+                'date' => $validated['appointment_date'],
+                'time' => $validated['start_time'],
+                'name' => $validated['customer_name'],
+                'email' => $validated['customer_email'],
+            ]);
     }
 
     /**
@@ -165,7 +169,7 @@ class ServiceController extends Controller
         $service = Service::findOrFail($validated['service']);
         $data = [
             'service_name' => $service->name,
-            'duration' => $service->duration_minutes . ' min',
+            'duration' => $service->duration_minutes.' min',
             'date' => $validated['date'],
             'time' => $validated['time'],
             'name' => $validated['name'],
@@ -178,7 +182,7 @@ class ServiceController extends Controller
         $pdf = Pdf::loadView('pdf.appointment', $data)
             ->setPaper('a4', 'portrait');
 
-        $filename = 'cita-' . str_replace(' ', '-', $validated['name']) . '-' . $validated['date'] . '.pdf';
+        $filename = 'cita-'.str_replace(' ', '-', $validated['name']).'-'.$validated['date'].'.pdf';
 
         return $pdf->download($filename);
     }

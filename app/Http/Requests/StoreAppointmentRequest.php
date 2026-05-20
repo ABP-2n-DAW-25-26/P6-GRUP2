@@ -34,6 +34,7 @@ class StoreAppointmentRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
+                'regex:/^[\pL\s\'-]+$/u',
             ],
 
             'customer_phone' => [
@@ -66,9 +67,22 @@ class StoreAppointmentRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'cf-turnstile-response.required' => 'Por favor, completa la verificación.',
-
+            'service_id.required' => 'Has de seleccionar un servei.',
+            'service_id.exists' => 'El servei seleccionat no és vàlid.',
+            'customer_name.required' => 'El nom és obligatori.',
+            'customer_name.string' => 'El nom ha de ser text.',
+            'customer_name.max' => 'El nom no pot tenir més de 255 caràcters.',
+            'customer_name.regex' => 'El nom només pot contenir lletres, espais, apòstrofs i guions.',
+            'customer_phone.required' => 'El telèfon és obligatori.',
             'customer_phone.regex' => 'El telèfon ha de tenir 9 dígits.',
+            'customer_email.required' => 'El correu electrònic és obligatori.',
+            'customer_email.email' => 'El correu electrònic no és vàlid.',
+            'customer_email.max' => 'El correu electrònic no pot tenir més de 255 caràcters.',
+            'appointment_date.required' => 'La data és obligatòria.',
+            'appointment_date.date' => 'La data no és vàlida.',
+            'start_time.required' => 'L\'hora és obligatòria.',
+            'start_time.date_format' => 'El format de l\'hora no és vàlid.',
+            'cf-turnstile-response.required' => 'Si us plau, completa la verificació.',
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Models\ServiceAppointment;
 use App\Models\ServiceSchedule;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+
 // use Inertia\Testing\AssertableInertia as Assert;
 
 uses(RefreshDatabase::class);
@@ -76,7 +77,7 @@ test('appointment fails with invalid phone number', function () {
     $service = bookableService();
     $date = now()->addDays(7)->format('Y-m-d');
 
-    $response = $this->from('/pedir-cita')->post('/appointments', [
+    $response = $this->from('/appointments/create')->post('/appointments', [
         'service_id' => $service->id,
         'customer_name' => 'Joan',
         'customer_phone' => '12345', // too short / wrong prefix
@@ -92,7 +93,7 @@ test('appointment fails for past dates', function () {
     $service = bookableService();
     $past = now()->subDay()->format('Y-m-d');
 
-    $response = $this->from('/pedir-cita')->post('/appointments', [
+    $response = $this->from('/appointments/create')->post('/appointments', [
         'service_id' => $service->id,
         'customer_name' => 'Joan',
         'customer_phone' => '600123123',
@@ -120,7 +121,7 @@ test('appointment fails when the slot is already booked', function () {
         'status' => 'pending',
     ]);
 
-    $response = $this->from('/pedir-cita')->post('/appointments', [
+    $response = $this->from('/appointments/create')->post('/appointments', [
         'service_id' => $service->id,
         'customer_name' => 'Joan',
         'customer_phone' => '600123123',
