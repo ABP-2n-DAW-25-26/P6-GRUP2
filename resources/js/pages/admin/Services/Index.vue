@@ -134,7 +134,7 @@ const totalPages = computed(() =>
     Math.ceil(filteredServices.value.length / perPage),
 );
 
-const hasMore = computed(() => page.value < totalPages.value);
+//const hasMore = computed(() => page.value < totalPages.value);
 
 function changePage(newPage: number) {
     if (newPage < 1 || newPage > totalPages.value) return;
