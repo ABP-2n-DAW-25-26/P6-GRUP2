@@ -116,6 +116,7 @@ function isPast(workshop: Workshop): boolean {
                     <input
                         v-model="searchQuery"
                         type="search"
+                        aria-label="Cerca un taller"
                         placeholder="Cerca un taller..."
                         class="w-full rounded-xl border border-white/20 bg-white/10 py-2.5 pr-4 pl-10 text-sm text-white placeholder-white/40 backdrop-blur-sm transition focus:border-white/40 focus:bg-white/15 focus:outline-none"
                     />
@@ -247,7 +248,7 @@ function isPast(workshop: Workshop): boolean {
                     <div v-if="hasMore" class="mt-10 flex justify-center">
                         <button
                             :disabled="loading"
-                            class="inline-flex items-center gap-2 rounded-xl border border-[#D0EAF3] bg-white px-6 py-2.5 text-sm font-semibold text-[#01617F] shadow-sm transition hover:bg-[#E6F5FB] disabled:opacity-50"
+                            class="inline-flex items-center gap-2 rounded-xl border border-[#D0EAF3] bg-white px-6 py-2.5 text-sm font-semibold text-[#00607e] shadow-sm transition hover:bg-[#E6F5FB] disabled:opacity-50"
                             @click="fetch"
                         >
                             <Icon

@@ -461,7 +461,7 @@ function setNextWeek() {
                         rigorós, proper i de confiança, adaptat a les necessitats
                         de cada persona.
                     </p>
-                    <p class="mt-2 text-xs font-semibold tracking-widest text-[#01617F] uppercase">
+                    <p class="mt-2 text-xs font-semibold tracking-widest text-[#00607e] uppercase">
                         Equip Farmàcia Soler
                     </p>
                 </div>
