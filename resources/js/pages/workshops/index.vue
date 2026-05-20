@@ -61,6 +61,10 @@ function formatDate(dateStr: string): string {
     const d = new Date(dateStr + 'T00:00:00');
     return `${weekDays[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}`;
 }
+
+function isPast(workshop: Workshop): boolean {
+    return new Date(`${workshop.workshop_date}T${workshop.end_time}`) < new Date();
+}
 </script>
 
 <template>
@@ -152,10 +156,12 @@ function formatDate(dateStr: string): string {
                                 :alt="workshop.name"
                                 loading="lazy"
                                 class="h-full w-full object-contain transition duration-500 group-hover:scale-[1.02]"
+                                :class="{ 'opacity-60 grayscale': isPast(workshop) }"
                             />
                             <div
                                 v-else
                                 class="flex h-full w-full flex-col items-center justify-center gap-3 bg-linear-to-br from-[#015873] to-[#01789E]"
+                                :class="{ 'opacity-60 grayscale': isPast(workshop) }"
                             >
                                 <Icon
                                     icon="mdi:school"
@@ -166,6 +172,24 @@ function formatDate(dateStr: string): string {
                                 <p class="text-sm font-medium text-white/50">
                                     {{ workshop.name }}
                                 </p>
+                            </div>
+
+                            <!-- Status badge -->
+                            <div class="absolute top-3 left-3">
+                                <span
+                                    v-if="isPast(workshop)"
+                                    class="flex items-center gap-1 rounded-full bg-black/55 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur-sm"
+                                >
+                                    <Icon icon="mdi:check-circle-outline" width="12" height="12" />
+                                    Finalitzat
+                                </span>
+                                <span
+                                    v-else
+                                    class="flex items-center gap-1 rounded-full bg-emerald-500 px-2.5 py-1 text-xs font-semibold text-white shadow-sm"
+                                >
+                                    <Icon icon="mdi:clock-outline" width="12" height="12" />
+                                    Properament
+                                </span>
                             </div>
                         </div>
 
@@ -195,7 +219,6 @@ function formatDate(dateStr: string): string {
                                 <span
                                     class="flex items-center gap-1 text-xs text-[#335B69]"
                                 >
-                                    >
                                     <Icon
                                         icon="mdi:clock-outline"
                                         class="text-[#01617F]"
@@ -207,7 +230,6 @@ function formatDate(dateStr: string): string {
                                 <span
                                     class="flex items-center gap-1 text-xs text-[#335B69]"
                                 >
-                                    >
                                     <Icon
                                         icon="mdi:account-group"
                                         class="text-[#01617F]"
@@ -216,21 +238,6 @@ function formatDate(dateStr: string): string {
                                     />
                                     {{ workshop.max_attendees ?? '∞' }}
                                 </span>
-                                <span
-                                    v-if="
-                                        new Date(
-                                            `${workshop.workshop_date}T${workshop.end_time}`,
-                                        ) < new Date()
-                                    "
-                                    class="mt-0.5 ml-auto flex w-full items-center gap-1 rounded-full bg-red-50 px-2 py-0.5 text-xs font-semibold text-red-500"
-                                >
-                                    Finalitzat
-                                </span>
-                                <span
-                                    v-else
-                                    class="mt-0.5 ml-auto flex w-full items-center gap-1 rounded-full bg-green-50 px-2 py-0.5 text-xs font-semibold text-green-500"
-                                    >Properament</span
-                                >
                             </div>
                         </div>
                     </Link>
