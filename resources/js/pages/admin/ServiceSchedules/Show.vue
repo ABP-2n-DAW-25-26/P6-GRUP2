@@ -8,7 +8,7 @@ import {
     ShieldCheck,
     ScanFace,
 } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 
 // ICON MAP
@@ -63,7 +63,32 @@ function closeDeleteModal() {
 }
 
 const schedules = ref<Schedule[]>([...props.service.schedules]);
+// PAGINATION
+const page = ref(1);
+const perPage = 10;
 
+const visibleSchedules = computed(() => {
+    const start = (page.value - 1) * perPage;
+    const end = start + perPage;
+
+    return schedules.value.slice(start, end);
+});
+
+const totalPages = computed(() =>
+    Math.ceil(schedules.value.length / perPage),
+);
+
+function changePage(newPage: number) {
+    if (newPage < 1 || newPage > totalPages.value) return;
+
+    page.value = newPage;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+    });
+}
+// DELETE SCHEDULE
 function deleteSchedule() {
     if (!selectedSchedule.value) {
         return;
@@ -88,34 +113,24 @@ function deleteSchedule() {
 
 <template>
     <AppLayout>
+
         <Head :title="props.service.name" />
 
         <div class="space-y-6 p-6">
             <!-- HEADER -->
-            <div
-                class="flex items-start gap-4 rounded-xl border bg-white p-6 shadow"
-            >
-                <component
-                    v-if="props.service.icon && iconMap[props.service.icon]"
-                    :is="iconMap[props.service.icon]"
-                    class="h-6 w-6 text-blue-600"
-                />
+            <div class="flex items-start gap-4 rounded-xl border bg-white p-6 shadow">
+                <component v-if="props.service.icon && iconMap[props.service.icon]" :is="iconMap[props.service.icon]"
+                    class="h-6 w-6 text-blue-600" />
 
                 <div class="flex-1">
                     <h1 class="text-2xl font-bold">{{ props.service.name }}</h1>
-                    <div
-                        class="text-sm text-gray-500"
-                        v-html="props.service.description"
-                    ></div>
+                    <div class="text-sm text-gray-500" v-html="props.service.description"></div>
                     <p class="text-xs text-gray-400">
                         Durada: {{ props.service.duration_minutes }} min
                     </p>
                 </div>
 
-                <Link
-                    :href="`/admin/services/${props.service.id}/edit`"
-                    class="rounded border px-4 py-2"
-                >
+                <Link :href="`/admin/services/${props.service.id}/edit`" class="rounded border px-4 py-2">
                     Editar
                 </Link>
             </div>
@@ -124,10 +139,8 @@ function deleteSchedule() {
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold">Horaris</h2>
 
-                <Link
-                    :href="`/admin/service-schedules/create?service_id=${props.service.id}`"
-                    class="flex items-center gap-2 rounded bg-blue-400 px-4 py-2 text-white"
-                >
+                <Link :href="`/admin/service-schedules/create?service_id=${props.service.id}`"
+                    class="flex items-center gap-2 rounded bg-blue-400 px-4 py-2 text-white">
                     <CalendarPlus class="h-4 w-4" />
                     Nou horari
                 </Link>
@@ -150,26 +163,42 @@ function deleteSchedule() {
                 </thead>
 
                 <tbody>
-                    <tr v-for="s in schedules" :key="s.id" class="border-t">
+                    <tr v-for="s in visibleSchedules" :key="s.id" class="border-t">
                         <td class="p-3">{{ daysOfWeek[s.day_of_week] }}</td>
                         <td class="p-3">{{ s.start_time }}</td>
                         <td class="p-3">{{ s.end_time }}</td>
                         <td class="p-3 text-right">
-                            <button
-                                @click="openDeleteModal(s)"
-                                aria-label="Eliminar horari"
-                            >
+                            <button @click="openDeleteModal(s)" aria-label="Eliminar horari">
                                 <Trash2 class="h-4 w-4 text-red-500" />
                             </button>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <!-- PAGINATION -->
+            <div v-if="totalPages > 1" class="flex items-center justify-between border-t border-gray-200 bg-white p-4">
+                <span class="text-sm text-gray-500">
+                    Pàgina {{ page }} de {{ totalPages }}
+                </span>
+
+                <div class="flex gap-2">
+                    <button type="button" @click="changePage(page - 1)" :disabled="page <= 1"
+                        class="rounded border border-gray-300 px-3 py-1 hover:bg-gray-100 disabled:opacity-30">
+                       Anterior &lt;
+                    </button>
+
+                    <button type="button" class="rounded bg-gray-200 px-3 py-1 text-black">
+                        {{ page }}
+                    </button>
+
+                    <button type="button" @click="changePage(page + 1)" :disabled="page >= totalPages"
+                        class="rounded border border-gray-300 px-3 py-1 hover:bg-gray-100 disabled:opacity-30">
+                       Següent &gt;
+                    </button>
+                </div>
+            </div>
             <!-- DELETE MODAL -->
-            <div
-                v-if="showDeleteModal"
-                class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-            >
+            <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
                 <div class="w-full max-w-md space-y-4 rounded-xl bg-white p-6">
                     <div class="flex items-center justify-between">
                         <h2 class="text-lg font-bold">Eliminar horari</h2>
@@ -187,17 +216,12 @@ function deleteSchedule() {
                     </p>
 
                     <div class="flex justify-end gap-3 pt-4">
-                        <button
-                            @click="closeDeleteModal"
-                            class="rounded border px-4 py-2"
-                        >
+                        <button @click="closeDeleteModal" class="rounded border px-4 py-2">
                             Cancel·lar
                         </button>
 
-                        <button
-                            @click="deleteSchedule"
-                            class="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700"
-                        >
+                        <button @click="deleteSchedule"
+                            class="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700">
                             Eliminar
                         </button>
                     </div>
