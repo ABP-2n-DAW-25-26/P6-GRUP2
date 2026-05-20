@@ -150,18 +150,18 @@ function changePage(newPage: number) {
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-
         <Head title="Gestió de serveis" />
 
         <div class="space-y-6 p-6">
             <!-- HEADER -->
-            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div
+                class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+            >
                 <div>
                     <h1 class="text-2xl font-bold">Gestió de Serveis</h1>
                     <p class="text-sm text-gray-500">
                         Administra tots els serveis disponibles
                     </p>
-
                 </div>
 
                 <div class="flex items-center gap-3">
@@ -169,13 +169,23 @@ function changePage(newPage: number) {
                         Cercar servei
                     </label>
 
-                    <input id="search-services" name="search" :value="search" @input="handleSearch" type="text"
-                        placeholder="Cercar servei..." autocomplete="off"
-                        class="rounded-lg border px-4 py-2 focus:ring focus:ring-blue-200" />
+                    <input
+                        id="search-services"
+                        name="search"
+                        :value="search"
+                        @input="handleSearch"
+                        type="text"
+                        placeholder="Cercar servei..."
+                        autocomplete="off"
+                        class="rounded-lg border px-4 py-2 focus:ring focus:ring-blue-200"
+                    />
 
-                    <Link :href="`/admin/services/create`"
+                    <Link
+                        :href="`/admin/services/create`"
                         class="flex items-center gap-2 rounded-lg px-4 py-2 text-white"
-                        style="background-color: #2563eb" aria-label="Crear nou servei">
+                        style="background-color: #2563eb"
+                        aria-label="Crear nou servei"
+                    >
                         <Plus class="h-4 w-4" />
                         Nou servei
                     </Link>
@@ -195,20 +205,31 @@ function changePage(newPage: number) {
                     </thead>
 
                     <tbody>
-                        <tr v-for="service in visibleServices" :key="service.id" class="border-t hover:bg-gray-50">
+                        <tr
+                            v-for="service in visibleServices"
+                            :key="service.id"
+                            class="border-t hover:bg-gray-50"
+                        >
                             <td class="p-3">
                                 <div class="flex items-center gap-2">
-                                    <component v-if="
-                                        service.icon &&
-                                        iconMap[service.icon]
-                                    " :is="iconMap[service.icon]" class="h-5 w-5 text-blue-600" />
+                                    <component
+                                        v-if="
+                                            service.icon &&
+                                            iconMap[service.icon]
+                                        "
+                                        :is="iconMap[service.icon]"
+                                        class="h-5 w-5 text-blue-600"
+                                    />
                                     <span class="font-medium">
                                         {{ service.name }}
                                     </span>
                                 </div>
                             </td>
 
-                            <td class="p-3 text-gray-600" v-html="service.description"></td>
+                            <td
+                                class="p-3 text-gray-600"
+                                v-html="service.description"
+                            ></td>
 
                             <td class="p-3">
                                 {{ service.duration_minutes }} min
@@ -216,20 +237,31 @@ function changePage(newPage: number) {
 
                             <td class="p-3">
                                 <div class="flex flex-wrap justify-end gap-2">
-                                    <Link :href="`/admin/services/${service.id}`" class="rounded p-2 hover:bg-green-100"
-                                        aria-label="Gestionar horaris del servei">
-                                        <CalendarPlus class="h-4 w-4 text-blue-600" />
+                                    <Link
+                                        :href="`/admin/services/${service.id}`"
+                                        class="rounded p-2 hover:bg-green-100"
+                                        aria-label="Gestionar horaris del servei"
+                                    >
+                                        <CalendarPlus
+                                            class="h-4 w-4 text-blue-600"
+                                        />
                                     </Link>
 
-                                    <Link :href="`/admin/services/${service.id}/edit`"
-                                        class="rounded p-2 hover:bg-orange-100" aria-label="Editar servei">
-                                        <SquarePen class="h-4 w-4 text-orange-600" />
+                                    <Link
+                                        :href="`/admin/services/${service.id}/edit`"
+                                        class="rounded p-2 hover:bg-orange-100"
+                                        aria-label="Editar servei"
+                                    >
+                                        <SquarePen
+                                            class="h-4 w-4 text-orange-600"
+                                        />
                                     </Link>
 
-
-
-                                    <button @click="openDeleteModal(service)" class="rounded p-2 hover:bg-red-100"
-                                        aria-label="Eliminar servei">
+                                    <button
+                                        @click="openDeleteModal(service)"
+                                        class="rounded p-2 hover:bg-red-100"
+                                        aria-label="Eliminar servei"
+                                    >
                                         <Trash2 class="h-4 w-4 text-red-600" />
                                     </button>
                                 </div>
@@ -237,40 +269,59 @@ function changePage(newPage: number) {
                         </tr>
                     </tbody>
                 </table>
-
             </div>
             <!-- PAGINATION -->
-            <div v-if="totalPages > 1" class="flex items-center justify-between border-t border-gray-200 p-4">
+            <div
+                v-if="totalPages > 1"
+                class="flex items-center justify-between border-t border-gray-200 p-4"
+            >
                 <span class="text-sm text-gray-500">
                     Pàgina {{ page }} de {{ totalPages }}
                 </span>
 
                 <div class="flex gap-2">
-                    <button type="button" @click="changePage(page - 1)" :disabled="page <= 1"
-                        class="rounded border border-gray-300 px-3 py-1 hover:bg-gray-100 disabled:opacity-30">
-                       Anterior &lt;
+                    <button
+                        type="button"
+                        @click="changePage(page - 1)"
+                        :disabled="page <= 1"
+                        class="rounded border border-gray-300 px-3 py-1 hover:bg-gray-100 disabled:opacity-30"
+                    >
+                        Anterior &lt;
                     </button>
 
-                    <button type="button" class="rounded bg-gray-200 px-3 py-1 text-black">
+                    <button
+                        type="button"
+                        class="rounded bg-gray-200 px-3 py-1 text-black"
+                    >
                         {{ page }}
                     </button>
 
-                    <button type="button" @click="changePage(page + 1)" :disabled="page >= totalPages"
-                        class="rounded border border-gray-300 px-3 py-1 hover:bg-gray-100 disabled:opacity-30">
-                       Següent &gt;
+                    <button
+                        type="button"
+                        @click="changePage(page + 1)"
+                        :disabled="page >= totalPages"
+                        class="rounded border border-gray-300 px-3 py-1 hover:bg-gray-100 disabled:opacity-30"
+                    >
+                        Següent &gt;
                     </button>
                 </div>
             </div>
-
         </div>
 
         <!-- DELETE MODAL -->
-        <div v-show="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+        <div
+            v-show="showDeleteModal"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+        >
             <div class="w-full max-w-md space-y-4 rounded-xl bg-white p-6">
                 <div class="flex items-center justify-between">
                     <h2 class="text-lg font-bold">Eliminar servei</h2>
 
-                    <button @click="showDeleteModal = false" aria-label="Tancar finestra" type="button">
+                    <button
+                        @click="showDeleteModal = false"
+                        aria-label="Tancar finestra"
+                        type="button"
+                    >
                         <span aria-hidden="true">✕</span>
                     </button>
                 </div>
@@ -284,12 +335,17 @@ function changePage(newPage: number) {
                 </p>
 
                 <div class="flex justify-end gap-3 pt-4">
-                    <button @click="showDeleteModal = false" class="rounded border px-4 py-2">
+                    <button
+                        @click="showDeleteModal = false"
+                        class="rounded border px-4 py-2"
+                    >
                         Cancel·lar
                     </button>
 
-                    <button @click="deleteService(selectedService.id)"
-                        class="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700">
+                    <button
+                        @click="deleteService(selectedService.id)"
+                        class="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+                    >
                         Eliminar definitivament
                     </button>
                 </div>
