@@ -8,29 +8,29 @@ vi.mock('@/layouts/AppLayout.vue', () => ({
     },
 }));
 
-vi.mock('@inertiajs/vue3', async (importOriginal) => {
-    const actual = await importOriginal<typeof import('@inertiajs/vue3')>();
+vi.mock('@inertiajs/vue3', async () => ({
+    Link: {
+        template: '<a><slot /></a>',
+    },
 
-    return {
-        ...actual,
-        Link: { template: '<a><slot/></a>' },
-        useForm: () => ({
-            active: 0,
-            patch: vi.fn(),
-        }),
-    };
-});
+    useForm: () => ({
+        active: 0,
+        patch: vi.fn(),
+    }),
+}));
 
 describe('ajax filter test', () => {
     it('calls fetch when filter changes', async () => {
         globalThis.fetch = vi.fn(() =>
             Promise.resolve({
                 json: () => Promise.resolve([]),
-            } as Response),
-        );
+            }),
+        ) as any;
 
         const wrapper = mount(EmailsIndex, {
-            props: { emails: [] },
+            props: {
+                emails: [],
+            },
         });
 
         await wrapper.get('select').setValue('Actiu');
