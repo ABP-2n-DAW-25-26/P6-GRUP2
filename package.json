@@ -10,7 +10,9 @@
         "format:check": "prettier --check resources/",
         "lint": "eslint . --fix",
         "lint:check": "eslint .",
-        "types:check": "vue-tsc --noEmit"
+        "types:check": "vue-tsc --noEmit",
+        "test": "vitest run",
+        "test:watch": "vitest"
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",
@@ -36,6 +38,7 @@
         "eslint-plugin-import": "^2.32.0",
         "eslint-plugin-vue": "^9.32.0",
         "jsdom": "^29.1.1",
+        "happy-dom": "^20.9.0",
         "leaflet": "^1.9.4",
         "playwright": "^1.60.0",
         "prettier": "^3.4.2",

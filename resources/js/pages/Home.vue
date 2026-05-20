@@ -354,41 +354,44 @@ function setNextWeek() {
                 class="mx-auto flex max-w-7xl flex-col items-center gap-8 px-6 py-16 md:h-130 md:flex-row md:gap-0 md:py-0"
             >
                 <!-- Left: text -->
-                <div class="z-10 flex flex-col gap-6 text-white md:w-1/2">
+                <div class="z-10 flex flex-col gap-6 text-white md:w-1/2 md:pr-12">
                     <p
                         class="text-xs font-semibold tracking-[0.22em] text-white/60 uppercase"
                     >
                         Figueres · Carrer Nou, 22
                     </p>
                     <h1 class="text-4xl leading-tight font-bold lg:text-5xl">
-                        La teva farmàcia<br />de confiança
+                        Som la teva farmàcia<br />de confiança
                     </h1>
                     <p class="max-w-sm text-base leading-relaxed text-white/75">
-                        Més de 80 anys cuidant la teva salut. Vine a visitar-nos
-                        o demana la teva cita en línia.
+                        Amb més de vuit dècades d'història, la farmàcia continua
+                        essent un referent de proximitat i servei a Figueres i a
+                        la comarca, combinant experiència i atenció personalitzada.
                     </p>
-                    <div class="flex flex-wrap gap-3">
+                    <div class="grid grid-cols-2 gap-3">
                         <a
                             href="/appointments/create"
-                            class="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-[#015873] shadow-lg transition hover:bg-[#E6F5FB]"
+                            class="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-[#015873] shadow-lg transition hover:bg-[#E6F5FB]"
                         >
-                            <Icon
-                                icon="mdi:calendar-clock"
-                                width="18"
-                                height="18"
-                            />
-                            Demanar cita
+                            📅 Demana la teva cita
                         </a>
                         <a
-                            href="/#pharmacies-guards"
-                            class="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
+                            href="/workshops"
+                            class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 px-4 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
                         >
-                            <Icon
-                                icon="mdi:hospital-building"
-                                width="18"
-                                height="18"
-                            />
-                            Farmàcies de guàrdia
+                            🎓 Tallers i esdeveniments
+                        </a>
+                        <a
+                            href="/assignments/create"
+                            class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 px-4 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
+                        >
+                            📦 Fes un encàrrec
+                        </a>
+                        <a
+                            href="/#pharmacy-guards"
+                            class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 px-4 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
+                        >
+                            🏥 Guàrdies avui
                         </a>
                     </div>
                 </div>
@@ -442,13 +445,24 @@ function setNextWeek() {
                     <h2
                         class="text-center text-2xl font-bold md:text-left md:text-4xl"
                     >
-                        ¿Quí som?
+                        Qui som?
                     </h2>
-                    <p>
-                        Som la Farmàcia Soler de Figueres, ens trobem a la Font
-                        lluminosa, Carrer Nou num. 22. Som una farmacia amb 80
-                        anys d’història i amb més de 150 anys oberta. Actualment
-                        som la 3a generació.
+                    <p class="text-sm leading-relaxed text-[#335B69]">
+                        Benvinguts a la Farmàcia Soler, un espai dedicat a la
+                        salut, el benestar i l’atenció personalitzada. Som una
+                        farmàcia amb més de 80 anys donant servei a Figueres i
+                        l’Alt Empordà, amb tres generacions de la família Soler
+                        al vostre costat.
+                    </p>
+                    <p class="text-sm leading-relaxed text-[#335B69]">
+                        El nostre equip de farmacèutics, tècnics i auxiliars
+                        treballa cada dia amb vocació de servei i compromís
+                        professional per oferir un assessorament farmacèutic
+                        rigorós, proper i de confiança, adaptat a les necessitats
+                        de cada persona.
+                    </p>
+                    <p class="mt-2 text-xs font-semibold tracking-widest text-[#01617F] uppercase">
+                        Equip Farmàcia Soler
                     </p>
                 </div>
             </Card>

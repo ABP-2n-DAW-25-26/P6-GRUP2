@@ -40,7 +40,7 @@ class Workshop extends Model
             ->where('is_active', true)
             ->orderBy('workshop_date', 'desc')
             ->orderBy('start_time', 'desc')
-            ->paginate(6)
+            ->paginate(3)
             ->through(fn(Workshop $workshop) => [
                 'id' => $workshop->id,
                 'name' => $workshop->name,

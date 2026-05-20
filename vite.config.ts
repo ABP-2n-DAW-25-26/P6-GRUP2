@@ -7,6 +7,11 @@ import { defineConfig } from 'vite';
 import path from 'path';
 
 export default defineConfig({
+    test: {
+        environment: 'happy-dom',
+        globals: true,
+        include: ['resources/js/**/*.test.ts', 'resources/js/**/*.test.js', 'tests/Vitest/**/*.test.ts', 'tests/Vitest/**/*.test.js'],
+    },
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.ts'],
