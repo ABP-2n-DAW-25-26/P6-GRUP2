@@ -15,6 +15,7 @@ function getInertiaPage(string $url): array
 }
 
 test('loads the create assignment component', function () {
+    
     $page = getInertiaPage('http://localhost/assignments/create');
     expect($page['component'])->toBe('Assignments/Create');
 });
