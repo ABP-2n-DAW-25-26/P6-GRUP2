@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\Pharmacy;
 use App\Http\Controllers\Admin\admin_pharmacies_controller;
-use Illuminate\Http\Request;
+use App\Models\Pharmacy;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
 use Tests\TestCase;
 
 uses(TestCase::class, RefreshDatabase::class);

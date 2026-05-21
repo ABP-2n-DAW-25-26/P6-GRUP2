@@ -1,6 +1,6 @@
 <?php
 
-$dom = new \DOMDocument();
+$dom = new DOMDocument;
 
 test('assignment dom contains expected elements', function () {
 
@@ -10,15 +10,15 @@ test('assignment dom contains expected elements', function () {
         <div id="map" class="z-0 h-80 w-full md:h-full"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(0px, 0px, 0px);"></div></div>
     ';
 
-    $dom = new DOMDocument();
+    $dom = new DOMDocument;
 
     @$dom->loadHTML(
-        '<?xml encoding="UTF-8">' . $html
+        '<?xml encoding="UTF-8">'.$html
     );
 
     expect(
         $dom->getElementById('address')->textContent
-    )->toContain("Obrir al mapa");
+    )->toContain('Obrir al mapa');
 
     expect(
         $dom->getElementById('farmacianame')
