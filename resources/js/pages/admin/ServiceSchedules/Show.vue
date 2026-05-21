@@ -1,24 +1,8 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import { CalendarPlus, Trash2 } from 'lucide-vue-next';
-import {
-    Pill,
-    HeartPulse,
-    FlaskConical,
-    ShieldCheck,
-    ScanFace,
-} from 'lucide-vue-next';
 import { ref, computed } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-
-// ICON MAP
-const iconMap: Record<string, any> = {
-    pill: Pill,
-    heart: HeartPulse,
-    flask: FlaskConical,
-    shield: ShieldCheck,
-    scan: ScanFace,
-};
 
 const daysOfWeek: Record<number, string> = {
     1: 'Dilluns',
