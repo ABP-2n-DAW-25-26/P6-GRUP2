@@ -27,3 +27,7 @@ yarn-error.log
 /.vscode
 /.zed
 .claude
+
+# Documentation and presentation outputs
+outputs/
+*.docx
