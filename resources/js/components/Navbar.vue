@@ -193,7 +193,7 @@ function isActive(path: string): boolean {
                 </li>
                 <li>
                     <a
-                        href="/#pharmacies-guards"
+                        href="/#pharmacy-guards"
                         class="block rounded-lg px-3 py-2 transition hover:bg-[#E6F5FB] hover:text-[#01617F]/90"
                         @click="isMobileMenuOpen = false"
                     >
