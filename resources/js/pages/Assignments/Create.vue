@@ -21,8 +21,8 @@ function renderTurnstile() {
     const t = (window as any).turnstile;
 
     if (!el || !props.turnstileSiteKey || !t) {
-return;
-}
+        return;
+    }
 
     el.innerHTML = '';
     turnstileWidgetId.value = t.render(el, {
@@ -43,8 +43,8 @@ function onError() {
 // Load Turnstile script on mount and render the widget, and remove it on unmount
 onMounted(() => {
     if (!props.turnstileSiteKey) {
-return;
-}
+        return;
+    }
 
     if (document.getElementById('cf-turnstile-api')) {
         renderTurnstile();

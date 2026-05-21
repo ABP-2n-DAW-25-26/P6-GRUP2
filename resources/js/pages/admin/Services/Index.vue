@@ -105,8 +105,8 @@ const totalPages = computed(() =>
 
 function changePage(newPage: number) {
     if (newPage < 1 || newPage > totalPages.value) {
-return;
-}
+        return;
+    }
 
     page.value = newPage;
 

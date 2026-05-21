@@ -27,8 +27,8 @@ const filteredWorkshops = computed(() => {
     const q = searchQuery.value.trim().toLowerCase();
 
     if (!q) {
-return props.workshops.data;
-}
+        return props.workshops.data;
+    }
 
     return props.workshops.data.filter(
         (w) =>
