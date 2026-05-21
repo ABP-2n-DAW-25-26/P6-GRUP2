@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Rules\TurnstileRule;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -31,7 +30,7 @@ class StoreWorkshopInscriptionRequest extends FormRequest
                 'email',
                 'max:255',
                 Rule::unique('workshop_inscriptions', 'email')
-                    ->where(fn($q) => $q->where('workshop_id', $workshopId)),
+                    ->where(fn ($q) => $q->where('workshop_id', $workshopId)),
             ],
 
             'phone' => [

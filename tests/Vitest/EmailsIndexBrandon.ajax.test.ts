@@ -1,3 +1,4 @@
+// @vitest-environment nodeF
 import { describe, it, expect } from 'vitest';
 
 const baseUrl = 'http://localhost';
@@ -15,12 +16,16 @@ const updateCookieJar = (response: Response) => {
             : []);
 
     for (const cookie of setCookie) {
-        if (!cookie) continue;
+        if (!cookie) {
+continue;
+}
 
         const [pair] = cookie.split(';');
         const index = pair.indexOf('=');
 
-        if (index === -1) continue;
+        if (index === -1) {
+continue;
+}
 
         const name = pair.slice(0, index).trim();
         const value = pair.slice(index + 1).trim();

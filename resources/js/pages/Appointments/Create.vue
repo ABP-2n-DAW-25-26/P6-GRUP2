@@ -18,9 +18,9 @@ import {
     Check,
 } from 'lucide-vue-next';
 import { ref, computed, onMounted, watch, onUnmounted } from 'vue';
-import WebAppLayout from '@/layouts/WebAppLayout.vue';
-import PublicFlashToast from '@/components/PublicFlashToast.vue';
 import ConfirmAppointmentModal from '@/components/ConfirmAppointmentModal.vue';
+import PublicFlashToast from '@/components/PublicFlashToast.vue';
+import WebAppLayout from '@/layouts/WebAppLayout.vue';
 
 // ---------------------------------------------------------------------------
 // 2. Layout
@@ -391,6 +391,7 @@ const isAtCurrentMonth = computed(
 // PDF link is only valid when the backend actually sent every field we need.
 const hasPdfData = computed(() => {
     const d = successData.value;
+
     return !!(d && d.service && d.date && d.time && d.name && d.email);
 });
 
@@ -451,6 +452,7 @@ function renderTurnstile() {
 // On error reset the widget so the user can try again without refreshing the page
 function onError() {
     const t = (window as any).turnstile;
+
     if (t && turnstileWidgetId.value) {
         t.reset(turnstileWidgetId.value);
     }
@@ -502,6 +504,7 @@ function prevStep() {
 function pickService(id: number) {
     if (selectedService.value === id) {
         nextStep();
+
         return;
     }
 

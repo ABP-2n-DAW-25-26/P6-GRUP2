@@ -27,7 +27,7 @@ defineProps<{
                         class="inline-flex items-center justify-center"
                     >
                         <img
-                            src="/storage/FarmaciaSolerLogoLong.svg"
+                            src="/storage/FarmaciaSolerLogoLong.webp"
                             alt="Farmacia Soler"
                             class="h-14 w-auto rounded-lg border border-[#dbeaf4] bg-card p-1.5 shadow-sm"
                         />

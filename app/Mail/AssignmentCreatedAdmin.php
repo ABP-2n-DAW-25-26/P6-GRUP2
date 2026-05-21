@@ -18,8 +18,7 @@ class AssignmentCreatedAdmin extends Mailable
      */
     public function __construct(
         public readonly array $assignment,
-    ) {
-    }
+    ) {}
 
     /**
      * Get the message envelope.

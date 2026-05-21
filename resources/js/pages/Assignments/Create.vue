@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Form, Link } from '@inertiajs/vue3';
 import { onMounted, onUnmounted, ref } from 'vue';
+import PublicFlashToast from '@/components/PublicFlashToast.vue';
 import WebAppLayout from '@/layouts/WebAppLayout.vue';
 import { store } from '@/routes/assignments';
-import PublicFlashToast from '@/components/PublicFlashToast.vue';
 
 const props = defineProps<{
     turnstileSiteKey: string | null;
@@ -20,7 +20,9 @@ function renderTurnstile() {
     const el = document.querySelector('.cf-turnstile') as HTMLElement | null;
     const t = (window as any).turnstile;
 
-    if (!el || !props.turnstileSiteKey || !t) return;
+    if (!el || !props.turnstileSiteKey || !t) {
+        return;
+    }
 
     el.innerHTML = '';
     turnstileWidgetId.value = t.render(el, {
@@ -32,6 +34,7 @@ function renderTurnstile() {
 // On error reset the widget so the user can try again without refreshing the page
 function onError() {
     const t = (window as any).turnstile;
+
     if (t && turnstileWidgetId.value) {
         t.reset(turnstileWidgetId.value);
     }
@@ -39,10 +42,13 @@ function onError() {
 
 // Load Turnstile script on mount and render the widget, and remove it on unmount
 onMounted(() => {
-    if (!props.turnstileSiteKey) return;
+    if (!props.turnstileSiteKey) {
+        return;
+    }
 
     if (document.getElementById('cf-turnstile-api')) {
         renderTurnstile();
+
         return;
     }
 

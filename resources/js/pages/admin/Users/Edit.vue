@@ -8,20 +8,31 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import {
-    create as usersCreate,
+    edit as usersEdit,
     index as usersIndex,
-    store as usersStore,
+    update as usersUpdate,
 } from '@/routes/users';
+
+type User = {
+    id: number;
+    name: string;
+    email: string;
+    role?: string | null;
+};
+
+const props = defineProps<{
+    user: User;
+}>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: "Administració d'usuaris", href: usersIndex().url },
-    { title: 'Crear usuari', href: usersCreate().url },
+    { title: props.user.name, href: usersEdit(props.user.id).url },
 ];
 </script>
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <Head title="Crear usuari" />
+        <Head :title="`Editar: ${user.name}`" />
 
         <div
             class="relative flex h-full flex-1 flex-col gap-4 overflow-x-auto p-4 md:p-6"
@@ -33,7 +44,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                 class="pointer-events-none absolute bottom-0 left-0 h-56 w-56 rounded-full bg-secondary/60 blur-3xl"
             ></div>
 
-            <!--  header -->
+            <!-- header -->
             <div
                 class="relative overflow-hidden rounded-2xl border border-sidebar-border/70 bg-gradient-to-br from-background via-background to-muted/60 p-7 shadow-sm"
             >
@@ -56,11 +67,12 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <h1
                             class="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
                         >
-                            Crear nou usuari
+                            Editar usuari
                         </h1>
                         <p class="mt-2 max-w-xl text-sm text-muted-foreground">
-                            Dona d'alta un nou perfil amb rol d'admin o
-                            superadmin.
+                            Modifica la informació de
+                            <strong>{{ user.name }}</strong
+                            >.
                         </p>
                     </div>
                 </div>
@@ -70,8 +82,8 @@ const breadcrumbs: BreadcrumbItem[] = [
                 class="relative rounded-2xl border border-sidebar-border/70 bg-background/95 p-6 shadow-sm"
             >
                 <Form
-                    v-bind="usersStore.form()"
-                    :reset-on-success="['password', 'password_confirmation']"
+                    :action="usersUpdate(user.id).url"
+                    method="put"
                     v-slot="{ errors, processing }"
                     class="grid gap-5"
                 >
@@ -81,6 +93,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                             id="name"
                             type="text"
                             name="name"
+                            :default-value="user.name"
                             required
                             autofocus
                             placeholder="Nom complet"
@@ -94,6 +107,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                             id="email"
                             type="email"
                             name="email"
+                            :default-value="user.email"
                             required
                             placeholder="email@exemple.com"
                         />
@@ -108,34 +122,45 @@ const breadcrumbs: BreadcrumbItem[] = [
                             required
                             class="w-full rounded-xl border border-sidebar-border/80 bg-background px-3 py-2 text-sm shadow-xs transition focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none"
                         >
-                            <option value="admin" selected>Admin</option>
-                            <option value="superadmin">Superadmin</option>
+                            <option
+                                value="admin"
+                                :selected="user.role === 'admin'"
+                            >
+                                Admin
+                            </option>
+                            <option
+                                value="superadmin"
+                                :selected="user.role === 'superadmin'"
+                            >
+                                Superadmin
+                            </option>
                         </select>
                         <InputError :message="errors.role" />
                     </div>
 
                     <div class="grid gap-2">
-                        <Label for="password">Contrasenya</Label>
+                        <Label for="password">Nova contrasenya</Label>
                         <PasswordInput
                             id="password"
                             name="password"
-                            required
                             autocomplete="new-password"
-                            placeholder="Contrasenya"
+                            placeholder="Deixa buit per no canviar"
                         />
+                        <p class="text-xs text-muted-foreground">
+                            Deixa buit per mantenir la contrasenya actual.
+                        </p>
                         <InputError :message="errors.password" />
                     </div>
 
                     <div class="grid gap-2">
                         <Label for="password_confirmation"
-                            >Confirmar contrasenya</Label
+                            >Confirmar nova contrasenya</Label
                         >
                         <PasswordInput
                             id="password_confirmation"
                             name="password_confirmation"
-                            required
                             autocomplete="new-password"
-                            placeholder="Repeteix la contrasenya"
+                            placeholder="Repeteix la nova contrasenya"
                         />
                         <InputError :message="errors.password_confirmation" />
                     </div>
@@ -149,7 +174,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                             :disabled="processing"
                             class="bg-primary text-primary-foreground hover:bg-primary/90"
                         >
-                            {{ processing ? 'Creant...' : 'Crear usuari' }}
+                            {{ processing ? 'Guardant...' : 'Guardar canvis' }}
                         </Button>
                     </div>
                 </Form>

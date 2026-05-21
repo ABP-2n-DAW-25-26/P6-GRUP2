@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useForm, Link } from '@inertiajs/vue3';
+import { ListFilter, Plus, Trash2 } from 'lucide-vue-next';
 import { ref, watch } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
-import { Trash2 } from 'lucide-vue-next';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Administració dels Correus', href: 'admin/emails' },
@@ -75,124 +75,232 @@ const handleChange = (emailId: number) => {
 </script>
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="p-3 sm:p-6">
+        <div
+            class="relative flex h-full flex-1 flex-col gap-6 overflow-x-auto p-4 md:p-6"
+        >
+            <!-- Decorative blurred gradients -->
             <div
-                class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
-            >
-                <div>
-                    <h1 class="mb-2 text-2xl font-semibold">
-                        Configuració Correus
-                    </h1>
-                    <p class="text-sm text-muted-foreground">
-                        Configura a on s'enviarà el correu de part admin, quan
-                        un usuari crea un encàrrec o un reserva.
-                    </p>
-                    <p class="text-sm text-muted-foreground">
-                        Correus actius: {{ selectedEmailIds.length }}/3
-                    </p>
-                </div>
-                <Link
-                    href="/admin/emails/create"
-                    class="rounded-md bg-blue-600 px-4 py-2 text-lg font-medium text-white hover:bg-blue-700"
-                >
-                    Crear
-                </Link>
-            </div>
-
-            <div class="mb-4 flex flex-col gap-2 sm:flex-row">
-                <input
-                    v-model="search"
-                    @input="doSearch"
-                    type="text"
-                    placeholder="Cercar correu..."
-                    class="w-full rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-700 sm:w-auto"
-                />
-                <select
-                    @change="handleFilterChange"
-                    class="w-full rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-700 sm:w-auto"
-                >
-                    <option>Tot</option>
-                    <option>Actiu</option>
-                    <option>Inactiu</option>
-                </select>
-            </div>
-
+                class="pointer-events-none absolute top-0 right-8 h-56 w-56 rounded-full bg-gradient-to-br from-primary/20 to-muted/70 blur-3xl"
+            ></div>
             <div
-                v-if="displayedEmails && displayedEmails.length > 0"
-                class="overflow-hidden overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm"
+                class="pointer-events-none absolute bottom-10 left-0 h-64 w-64 rounded-full bg-gradient-to-tr from-secondary/60 to-primary/10 blur-3xl"
+            ></div>
+
+            <!-- Header -->
+            <div
+                class="relative overflow-hidden rounded-2xl border border-sidebar-border/70 bg-gradient-to-br from-background via-background to-muted/60 p-7 shadow-sm"
             >
-                <table class="w-full text-left text-sm">
-                    <thead class="border-b border-slate-200 bg-slate-50">
-                        <tr>
-                            <th
-                                class="px-3 py-2 font-semibold text-slate-700 sm:px-6 sm:py-3"
-                            >
-                                Correu
-                            </th>
-                            <!-- <th class="px-6 py-3 font-semibold text-slate-700">
-                                Estat
-                            </th> -->
-                            <th
-                                class="px-3 py-2 font-semibold text-slate-700 sm:px-6 sm:py-3"
-                            >
-                                Accions
-                            </th>
-                            <th
-                                class="px-3 py-2 font-semibold text-slate-700 sm:px-6 sm:py-3"
-                            >
-                                Selecciona
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-200">
-                        <tr
-                            v-for="email in displayedEmails"
-                            :key="email.id"
-                            class="hover:bg-slate-50"
+                <div
+                    class="pointer-events-none absolute -top-12 -right-12 h-40 w-40 rounded-full bg-primary/10 blur-2xl"
+                ></div>
+
+                <div
+                    class="relative flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+                >
+                    <div>
+                        <p
+                            class="inline-flex items-center gap-2 rounded-full border border-sidebar-border/70 bg-background/80 px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-muted-foreground uppercase shadow-xs backdrop-blur"
                         >
-                            <td
-                                class="px-3 py-2 text-slate-800 sm:px-6 sm:py-4"
+                            <span
+                                class="inline-block h-1.5 w-1.5 rounded-full bg-primary"
+                            ></span>
+                            Farmacia Soler
+                        </p>
+                        <h1
+                            class="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
+                        >
+                            Administració dels Correus
+                        </h1>
+                        <p class="mt-2 max-w-xl text-sm text-muted-foreground">
+                            Gestiona els correus electrònics associats a les
+                            notificacions de la farmàcia.
+                        </p>
+                        <p class="mt-2 max-w-xl text-sm text-muted-foreground">
+                            Correus actius:
+                            <span class="text-primary">
+                                {{ selectedEmailIds.length }}/3
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Card -->
+            <div
+                class="relative rounded-2xl border border-sidebar-border/70 bg-background/95 p-6 shadow-sm"
+            >
+                <!-- Toolbar -->
+                <div
+                    class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center"
+                >
+                    <input
+                        v-model="search"
+                        @input="doSearch"
+                        type="text"
+                        placeholder="Cercar correu..."
+                        class="w-full rounded-xl border border-sidebar-border/80 bg-background px-4 py-2 text-sm shadow-xs transition focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none sm:max-w-xs"
+                    />
+
+                    <div class="relative w-full sm:w-auto">
+                        <span
+                            class="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground"
+                        >
+                            <ListFilter class="h-4 w-4" />
+                        </span>
+                        <select
+                            @change="handleFilterChange"
+                            class="w-full appearance-none rounded-xl border border-sidebar-border/80 bg-background py-2 pr-9 pl-9 text-sm shadow-xs transition focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none sm:w-auto"
+                        >
+                            <option>Tot</option>
+                            <option>Actiu</option>
+                            <option>Inactiu</option>
+                        </select>
+                        <span
+                            class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
                             >
-                                {{ email.email }}
-                            </td>
-                            <!-- <td class="px-6 py-4 text-slate-600">
-                                {{ email.active === 1 ? 'Actiu' : 'Inactiu' }}
-                            </td> -->
-                            <td class="px-3 py-2 sm:px-6 sm:py-4">
-                                <Link
-                                    :href="`/admin/emails/${email.id}`"
-                                    method="delete"
-                                    as="button"
-                                    preserve-scroll
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </span>
+                    </div>
+
+                    <Link
+                        href="/admin/emails/create"
+                        class="group inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto"
+                    >
+                        <Plus
+                            class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90"
+                        />
+                        Crear correu
+                    </Link>
+                </div>
+
+                <!-- Table -->
+                <div
+                    class="overflow-hidden rounded-2xl border border-sidebar-border/70"
+                >
+                    <div class="overflow-x-auto">
+                        <table
+                            class="min-w-full divide-y divide-sidebar-border/70 text-sm"
+                        >
+                            <thead
+                                class="bg-muted/50 backdrop-blur supports-[backdrop-filter]:bg-muted/100"
+                            >
+                                <tr>
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-semibold uppercase"
+                                    >
+                                        Correu
+                                    </th>
+
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-semibold uppercase"
+                                    >
+                                        Estat
+                                    </th>
+
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-semibold uppercase"
+                                    >
+                                        Accions
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr
+                                    v-for="(email, index) in displayedEmails"
+                                    :key="email.id"
+                                    :class="[
+                                        index % 2 === 0
+                                            ? 'bg-background'
+                                            : 'bg-muted/30',
+                                        'border-t border-sidebar-border/60 transition hover:bg-muted/60',
+                                    ]"
                                 >
-                                    <Trash2
-                                        class="h-4 w-4 text-slate-500 hover:text-red-500"
-                                    />
-                                </Link>
-                            </td>
-                            <td class="px-3 py-2 sm:px-6 sm:py-4">
-                                <input
-                                    type="checkbox"
-                                    :disabled="
-                                        selectedEmailIds.length >= 3 &&
-                                        !selectedEmailIds.includes(email.id)
+                                    <td
+                                        class="px-6 py-4 font-medium text-foreground"
+                                    >
+                                        {{ email.email }}
+                                    </td>
+
+                                    <td class="px-6 py-4">
+                                        <span
+                                            :class="
+                                                email.active === 1
+                                                    ? 'border-green-200 bg-green-50 text-green-700'
+                                                    : 'border-zinc-200 bg-zinc-100 text-zinc-600'
+                                            "
+                                            class="inline-flex rounded-full border px-3 py-1 text-xs font-semibold"
+                                        >
+                                            {{
+                                                email.active === 1
+                                                    ? 'Actiu'
+                                                    : 'Inactiu'
+                                            }}
+                                        </span>
+                                    </td>
+
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-4">
+                                            <Link
+                                                :href="`/admin/emails/${email.id}`"
+                                                method="delete"
+                                                as="button"
+                                                preserve-scroll
+                                                class="transition hover:scale-105"
+                                            >
+                                                <Trash2
+                                                    class="h-4 w-4 text-muted-foreground hover:text-red-500"
+                                                />
+                                            </Link>
+
+                                            <input
+                                                type="checkbox"
+                                                :disabled="
+                                                    selectedEmailIds.length >=
+                                                        3 &&
+                                                    !selectedEmailIds.includes(
+                                                        email.id,
+                                                    )
+                                                "
+                                                :id="`email-${email.id}`"
+                                                :value="email.id"
+                                                v-model="selectedEmailIds"
+                                                @change="handleChange(email.id)"
+                                                class="h-4 w-4 rounded border-sidebar-border text-primary focus:ring-primary"
+                                            />
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr
+                                    v-if="
+                                        displayedEmails &&
+                                        displayedEmails.length === 0
                                     "
-                                    :id="`email-${email.id}`"
-                                    :value="email.id"
-                                    v-model="selectedEmailIds"
-                                    @change="handleChange(email.id)"
-                                    class="h-4 w-4 text-blue-600"
-                                />
-                                <label
-                                    :for="`email-${email.id}`"
-                                    class="sr-only"
                                 >
-                                    Seleccionar {{ email.email }}
-                                </label>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                    <td
+                                        colspan="3"
+                                        class="px-6 py-12 text-center text-sm text-muted-foreground"
+                                    >
+                                        No s'han trobat correus.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </AppLayout>

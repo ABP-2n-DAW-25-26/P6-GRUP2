@@ -1,24 +1,8 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import { CalendarPlus, Trash2 } from 'lucide-vue-next';
-import {
-    Pill,
-    HeartPulse,
-    FlaskConical,
-    ShieldCheck,
-    ScanFace,
-} from 'lucide-vue-next';
 import { ref, computed } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-
-// ICON MAP
-const iconMap: Record<string, any> = {
-    pill: Pill,
-    heart: HeartPulse,
-    flask: FlaskConical,
-    shield: ShieldCheck,
-    scan: ScanFace,
-};
 
 const daysOfWeek: Record<number, string> = {
     1: 'Dilluns',
@@ -74,12 +58,12 @@ const visibleSchedules = computed(() => {
     return schedules.value.slice(start, end);
 });
 
-const totalPages = computed(() =>
-    Math.ceil(schedules.value.length / perPage),
-);
+const totalPages = computed(() => Math.ceil(schedules.value.length / perPage));
 
 function changePage(newPage: number) {
-    if (newPage < 1 || newPage > totalPages.value) return;
+    if (newPage < 1 || newPage > totalPages.value) {
+        return;
+    }
 
     page.value = newPage;
 
@@ -110,121 +94,266 @@ function deleteSchedule() {
     });
 }
 </script>
-
 <template>
     <AppLayout>
-
         <Head :title="props.service.name" />
 
-        <div class="space-y-6 p-6">
-            <!-- HEADER -->
-            <div class="flex items-start gap-4 rounded-xl border bg-white p-6 shadow">
-                <component v-if="props.service.icon && iconMap[props.service.icon]" :is="iconMap[props.service.icon]"
-                    class="h-6 w-6 text-blue-600" />
+        <div
+            class="relative flex h-full flex-1 flex-col gap-6 overflow-x-auto p-4 md:p-6"
+        >
+            <!-- Decorative blurred gradients -->
+            <div
+                class="pointer-events-none absolute top-0 right-8 h-56 w-56 rounded-full bg-gradient-to-br from-primary/20 to-muted/70 blur-3xl"
+            ></div>
+            <div
+                class="pointer-events-none absolute bottom-10 left-0 h-64 w-64 rounded-full bg-gradient-to-tr from-secondary/60 to-primary/10 blur-3xl"
+            ></div>
 
-                <div class="flex-1">
-                    <h1 class="text-2xl font-bold">{{ props.service.name }}</h1>
-                    <div class="text-sm text-gray-500" v-html="props.service.description"></div>
-                    <p class="text-xs text-gray-400">
-                        Durada: {{ props.service.duration_minutes }} min
-                    </p>
-                </div>
+            <!-- Header -->
+            <div
+                class="relative rounded-2xl border border-sidebar-border/70 bg-gradient-to-br from-background to-muted/70 p-7 shadow-sm"
+            >
+                <div
+                    class="flex flex-col gap-5 md:flex-row md:items-start md:justify-between"
+                >
+                    <div class="flex items-start gap-4">
+                        <div>
+                            <p
+                                class="text-xs font-semibold tracking-[0.18em] text-muted-foreground uppercase"
+                            >
+                                Farmacia Soler
+                            </p>
 
-                <Link :href="`/admin/services/${props.service.id}/edit`" class="rounded border px-4 py-2">
-                    Editar
-                </Link>
-            </div>
+                            <h1
+                                class="mt-1 text-3xl font-semibold tracking-tight text-foreground"
+                            >
+                                {{ props.service.name }}
+                            </h1>
 
-            <!-- SCHEDULES -->
-            <div class="flex items-center justify-between">
-                <h2 class="text-lg font-semibold">Horaris</h2>
+                            <div
+                                class="mt-2 max-w-2xl text-sm text-muted-foreground"
+                                v-html="props.service.description"
+                            ></div>
 
-                <Link :href="`/admin/service-schedules/create?service_id=${props.service.id}`"
-                    class="flex items-center gap-2 rounded bg-blue-400 px-4 py-2 text-white">
-                    <CalendarPlus class="h-4 w-4" />
-                    Nou horari
-                </Link>
-            </div>
-
-            <!-- EMPTY -->
-            <div v-if="schedules.length === 0" class="text-gray-400">
-                No hi ha horaris encara
-            </div>
-
-            <!-- TABLE -->
-            <table v-else class="w-full rounded border bg-white">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th class="p-3 text-left">Dia</th>
-                        <th class="p-3 text-left">Inici</th>
-                        <th class="p-3 text-left">Fi</th>
-                        <th></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr v-for="s in visibleSchedules" :key="s.id" class="border-t">
-                        <td class="p-3">{{ daysOfWeek[s.day_of_week] }}</td>
-                        <td class="p-3">{{ s.start_time }}</td>
-                        <td class="p-3">{{ s.end_time }}</td>
-                        <td class="p-3 text-right">
-                            <button @click="openDeleteModal(s)" aria-label="Eliminar horari">
-                                <Trash2 class="h-4 w-4 text-red-500" />
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <!-- PAGINATION -->
-            <div v-if="totalPages > 1" class="flex items-center justify-between border-t border-gray-200 bg-white p-4">
-                <span class="text-sm text-gray-500">
-                    Pàgina {{ page }} de {{ totalPages }}
-                </span>
-
-                <div class="flex gap-2">
-                    <button type="button" @click="changePage(page - 1)" :disabled="page <= 1"
-                        class="rounded border border-gray-300 px-3 py-1 hover:bg-gray-100 disabled:opacity-30">
-                       Anterior &lt;
-                    </button>
-
-                    <button type="button" class="rounded bg-gray-200 px-3 py-1 text-black">
-                        {{ page }}
-                    </button>
-
-                    <button type="button" @click="changePage(page + 1)" :disabled="page >= totalPages"
-                        class="rounded border border-gray-300 px-3 py-1 hover:bg-gray-100 disabled:opacity-30">
-                       Següent &gt;
-                    </button>
-                </div>
-            </div>
-            <!-- DELETE MODAL -->
-            <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                <div class="w-full max-w-md space-y-4 rounded-xl bg-white p-6">
-                    <div class="flex items-center justify-between">
-                        <h2 class="text-lg font-bold">Eliminar horari</h2>
-                        <button @click="closeDeleteModal">✕</button>
+                            <p
+                                class="mt-3 inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"
+                            >
+                                {{ props.service.duration_minutes }} minuts
+                            </p>
+                        </div>
                     </div>
 
-                    <p class="text-gray-600">
-                        Estàs segur que vols eliminar aquest horari?
+                    <Link
+                        :href="`/admin/services/${props.service.id}/edit`"
+                        class="inline-flex items-center rounded-xl border border-sidebar-border bg-background px-4 py-2 text-sm transition hover:bg-muted"
+                    >
+                        Editar servei
+                    </Link>
+                </div>
+            </div>
+
+            <!-- Schedules -->
+            <div
+                class="relative rounded-2xl border border-sidebar-border/70 bg-background/95 p-6 shadow-sm"
+            >
+                <!-- Toolbar -->
+                <div
+                    class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center"
+                >
+                    <div>
+                        <h2 class="text-lg font-semibold text-foreground">
+                            Horaris
+                        </h2>
+
+                        <p class="text-sm text-muted-foreground">
+                            Gestiona els horaris disponibles del servei.
+                        </p>
+                    </div>
+
+                    <Link
+                        :href="`/admin/service-schedules/create?service_id=${props.service.id}`"
+                        class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto"
+                    >
+                        <CalendarPlus class="mr-2 h-4 w-4" />
+                        Nou horari
+                    </Link>
+                </div>
+
+                <!-- Empty -->
+                <div
+                    v-if="schedules.length === 0"
+                    class="rounded-2xl border border-dashed border-sidebar-border/70 bg-muted/20 px-6 py-12 text-center text-sm text-muted-foreground"
+                >
+                    No hi ha horaris encara.
+                </div>
+
+                <!-- Table -->
+                <div
+                    v-else
+                    class="overflow-hidden rounded-2xl border border-sidebar-border/70"
+                >
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm">
+                            <thead class="bg-muted/80">
+                                <tr>
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-semibold uppercase"
+                                    >
+                                        Dia
+                                    </th>
+
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-semibold uppercase"
+                                    >
+                                        Inici
+                                    </th>
+
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-semibold uppercase"
+                                    >
+                                        Fi
+                                    </th>
+
+                                    <th
+                                        class="px-6 py-4 text-right text-xs font-semibold uppercase"
+                                    >
+                                        Accions
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr
+                                    v-for="(s, index) in visibleSchedules"
+                                    :key="s.id"
+                                    :class="[
+                                        index % 2 === 0
+                                            ? 'bg-background'
+                                            : 'bg-muted/30',
+                                        'border-t border-sidebar-border/60 transition hover:bg-muted/60',
+                                    ]"
+                                >
+                                    <!-- Day -->
+                                    <td
+                                        class="px-6 py-4 font-medium text-foreground"
+                                    >
+                                        {{ daysOfWeek[s.day_of_week] }}
+                                    </td>
+
+                                    <!-- Start -->
+                                    <td class="px-6 py-4 text-muted-foreground">
+                                        {{ s.start_time }}
+                                    </td>
+
+                                    <!-- End -->
+                                    <td class="px-6 py-4 text-muted-foreground">
+                                        {{ s.end_time }}
+                                    </td>
+
+                                    <!-- Actions -->
+                                    <td class="px-6 py-4">
+                                        <div class="flex justify-end">
+                                            <button
+                                                @click="openDeleteModal(s)"
+                                                aria-label="Eliminar horari"
+                                                class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-red-50 hover:text-red-600"
+                                            >
+                                                <Trash2 class="h-4 w-4" />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div
+                    v-if="totalPages > 1"
+                    class="mt-5 flex items-center justify-between text-sm"
+                >
+                    <span class="text-muted-foreground">
+                        Pàgina {{ page }} de {{ totalPages }}
+                    </span>
+
+                    <div class="flex gap-2">
+                        <button
+                            type="button"
+                            @click="changePage(page - 1)"
+                            :disabled="page <= 1"
+                            class="rounded-lg border border-sidebar-border bg-background px-3 py-1.5 transition hover:bg-muted disabled:opacity-40"
+                        >
+                            Anterior
+                        </button>
+
+                        <button
+                            type="button"
+                            @click="changePage(page + 1)"
+                            :disabled="page >= totalPages"
+                            class="rounded-lg border border-sidebar-border bg-background px-3 py-1.5 transition hover:bg-muted disabled:opacity-40"
+                        >
+                            Següent
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Modal -->
+        <div
+            v-if="showDeleteModal"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+        >
+            <div
+                class="w-full max-w-md rounded-2xl border border-sidebar-border/70 bg-background p-6 shadow-xl"
+            >
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold text-foreground">
+                        Eliminar horari
+                    </h2>
+
+                    <button
+                        @click="closeDeleteModal"
+                        class="rounded-lg p-1 text-muted-foreground transition hover:bg-muted"
+                    >
+                        ✕
+                    </button>
+                </div>
+
+                <p class="mt-4 text-sm text-muted-foreground">
+                    Estàs segur que vols eliminar aquest horari?
+                </p>
+
+                <div
+                    v-if="selectedSchedule"
+                    class="mt-4 rounded-xl border border-sidebar-border/70 bg-muted/20 p-4"
+                >
+                    <p class="font-medium text-foreground">
+                        {{ daysOfWeek[selectedSchedule.day_of_week] }}
                     </p>
 
-                    <p class="font-semibold" v-if="selectedSchedule">
-                        {{ daysOfWeek[selectedSchedule.day_of_week] }} —
-                        {{ selectedSchedule.start_time }} →
+                    <p class="mt-1 text-sm text-muted-foreground">
+                        {{ selectedSchedule.start_time }}
+                        →
                         {{ selectedSchedule.end_time }}
                     </p>
+                </div>
 
-                    <div class="flex justify-end gap-3 pt-4">
-                        <button @click="closeDeleteModal" class="rounded border px-4 py-2">
-                            Cancel·lar
-                        </button>
+                <div class="mt-6 flex justify-end gap-3">
+                    <button
+                        @click="closeDeleteModal"
+                        class="rounded-xl border border-sidebar-border px-4 py-2 text-sm transition hover:bg-muted"
+                    >
+                        Cancel·lar
+                    </button>
 
-                        <button @click="deleteSchedule"
-                            class="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700">
-                            Eliminar
-                        </button>
-                    </div>
+                    <button
+                        @click="deleteSchedule"
+                        class="rounded-xl bg-red-600 px-4 py-2 text-sm text-white transition hover:bg-red-700"
+                    >
+                        Eliminar
+                    </button>
                 </div>
             </div>
         </div>

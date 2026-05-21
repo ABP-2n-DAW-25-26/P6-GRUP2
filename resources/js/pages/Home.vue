@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
 import { Icon } from '@iconify/vue';
+import { Head } from '@inertiajs/vue3';
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Swiper from 'swiper';
@@ -20,6 +20,7 @@ onMounted(async () => {
 
     // Set Week
     selectedDate.week.value = date.getDay() - 1;
+
     for (let i = 0; i < week.length; i++) {
         week[i].id.value =
             selectedDate.week.value + i < 7
@@ -139,6 +140,7 @@ const week = [
 async function getPharmacyInfo(day: number, month: number, year: number) {
     const reponse = await fetch(`/pharmacyguard/${year}-${month}-${day}`);
     const data = await reponse.json();
+
     if (data.success) {
         pharmacy.name.value = data.response.name;
         pharmacy.description.value = data.response.description;
@@ -161,11 +163,14 @@ async function getPharmacyInfo(day: number, month: number, year: number) {
 function setDays() {
     const maxDay = getMaxDay();
     let count = 0;
+
     for (let i = 0; i < week.length; i++) {
         week[i].num.value = selectedDate.day.value + count;
+
         if (week[i].num.value > maxDay) {
             week[i].num.value -= maxDay;
         }
+
         count++;
     }
 }
@@ -206,13 +211,19 @@ function getNextMonth(): number {
 // Function Set Previous Month
 function setPreviousMonth() {
     setMonth.num = getPreviousMonth();
-    if (setMonth.num == 11) setPreviousYear();
+
+    if (setMonth.num == 11) {
+        setPreviousYear();
+    }
 }
 
 // Function Set Next Month
 function setNextMonth() {
     setMonth.num = getNextMonth();
-    if (setMonth.num == 0) setNextYear();
+
+    if (setMonth.num == 0) {
+        setNextYear();
+    }
 }
 
 /// Year
@@ -268,6 +279,7 @@ function checkDoubleMonth(): boolean {
             return true;
         }
     }
+
     return false;
 }
 
@@ -297,27 +309,36 @@ function setPreviousWeek() {
     if (week[0].num.value < 8) {
         setPreviousMonth();
     }
+
     const limitDay = getMaxDay();
+
     for (let i = 0; i < week.length; i++) {
         if ((week[i].num.value -= 7) < 1) {
             week[i].num.value += limitDay;
         }
+
         if (week[i].num.value == 1) {
             setMonthName();
+
             if (checkDoubleYear()) {
                 setYearName();
             }
         }
     }
+
     if (setMonth.double || week[6].num.value == limitDay) {
         setMonthName();
-        if (setYear.double) setYearName();
+
+        if (setYear.double) {
+            setYearName();
+        }
     }
 }
 
 // Button Set Next Week
 function setNextWeek() {
     const limitDay = getMaxDay();
+
     for (let i = 0; i < week.length; i++) {
         if ((week[i].num.value += 7) > limitDay) {
             if ((week[i].num.value -= limitDay) == 1) {
@@ -325,11 +346,13 @@ function setNextWeek() {
                 setYearName();
             }
         }
+
         if (week[i].num.value == 8 && setMonth.double) {
             setNextMonth();
             setMonthName();
         }
     }
+
     if (week[0].num.value == 1) {
         setNextMonth();
         setMonthName();
@@ -354,7 +377,9 @@ function setNextWeek() {
                 class="mx-auto flex max-w-7xl flex-col items-center gap-8 px-6 py-16 md:h-130 md:flex-row md:gap-0 md:py-0"
             >
                 <!-- Left: text -->
-                <div class="z-10 flex flex-col gap-6 text-white md:w-1/2 md:pr-12">
+                <div
+                    class="z-10 flex flex-col gap-6 text-white md:w-1/2 md:pr-12"
+                >
                     <p
                         class="text-xs font-semibold tracking-[0.22em] text-white/60 uppercase"
                     >
@@ -366,7 +391,8 @@ function setNextWeek() {
                     <p class="max-w-sm text-base leading-relaxed text-white/75">
                         Amb més de vuit dècades d'història, la farmàcia continua
                         essent un referent de proximitat i servei a Figueres i a
-                        la comarca, combinant experiència i atenció personalitzada.
+                        la comarca, combinant experiència i atenció
+                        personalitzada.
                     </p>
                     <div class="grid grid-cols-2 gap-3">
                         <a
@@ -458,10 +484,12 @@ function setNextWeek() {
                         El nostre equip de farmacèutics, tècnics i auxiliars
                         treballa cada dia amb vocació de servei i compromís
                         professional per oferir un assessorament farmacèutic
-                        rigorós, proper i de confiança, adaptat a les necessitats
-                        de cada persona.
+                        rigorós, proper i de confiança, adaptat a les
+                        necessitats de cada persona.
                     </p>
-                    <p class="mt-2 text-xs font-semibold tracking-widest text-[#01617F] uppercase">
+                    <p
+                        class="mt-2 text-xs font-semibold tracking-widest text-[#00607e] uppercase"
+                    >
                         Equip Farmàcia Soler
                     </p>
                 </div>

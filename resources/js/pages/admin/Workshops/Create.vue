@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Form, Head, Link } from '@inertiajs/vue3';
+import { QuillEditor } from '@vueup/vue-quill';
 import { computed, ref } from 'vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
@@ -7,7 +8,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
-import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import {
     create as workshopsCreate,
@@ -49,6 +49,7 @@ function toWebp(file: File): Promise<Blob> {
 const handlePhotoChange = async (event: Event): Promise<void> => {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
+
     if (file) {
         const converted = await toWebp(file);
         selectedPhoto.value = new File([converted], 'photo.webp', {
@@ -65,34 +66,48 @@ const handlePhotoChange = async (event: Event): Promise<void> => {
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Crear taller" />
-
         <div
-            class="relative flex h-full flex-1 flex-col gap-4 overflow-x-auto p-4 md:p-6"
+            class="relative flex h-full flex-1 flex-col gap-6 overflow-x-auto p-4 md:p-6"
         >
+            <!-- Decorative blurred gradients -->
             <div
-                class="pointer-events-none absolute top-0 right-8 h-48 w-48 rounded-full bg-muted/70 blur-3xl"
+                class="pointer-events-none absolute top-0 right-8 h-56 w-56 rounded-full bg-gradient-to-br from-primary/20 to-muted/70 blur-3xl"
             ></div>
             <div
-                class="pointer-events-none absolute bottom-0 left-0 h-56 w-56 rounded-full bg-secondary/60 blur-3xl"
+                class="pointer-events-none absolute bottom-10 left-0 h-64 w-64 rounded-full bg-gradient-to-tr from-secondary/60 to-primary/10 blur-3xl"
             ></div>
 
+            <!--  header -->
             <div
-                class="relative rounded-2xl border border-sidebar-border/70 bg-gradient-to-br from-background to-muted/70 p-7 shadow-sm"
+                class="relative overflow-hidden rounded-2xl border border-sidebar-border/70 bg-gradient-to-br from-background via-background to-muted/60 p-7 shadow-sm"
             >
-                <p
-                    class="text-xs font-semibold tracking-[0.18em] text-muted-foreground uppercase"
+                <div
+                    class="pointer-events-none absolute -top-12 -right-12 h-40 w-40 rounded-full bg-primary/10 blur-2xl"
+                ></div>
+
+                <div
+                    class="relative flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
                 >
-                    Farmacia Soler
-                </p>
-                <h1
-                    class="mt-2 text-3xl font-semibold tracking-tight text-foreground"
-                >
-                    Crear taller
-                </h1>
-                <p class="mt-2 text-sm text-muted-foreground">
-                    Defineix la informació bàsica, la data i la capacitat del
-                    nou taller.
-                </p>
+                    <div>
+                        <p
+                            class="inline-flex items-center gap-2 rounded-full border border-sidebar-border/70 bg-background/80 px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-muted-foreground uppercase shadow-xs backdrop-blur"
+                        >
+                            <span
+                                class="inline-block h-1.5 w-1.5 rounded-full bg-primary"
+                            ></span>
+                            Farmacia Soler
+                        </p>
+                        <h1
+                            class="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
+                        >
+                            Crear nou taller
+                        </h1>
+                        <p class="mt-2 max-w-xl text-sm text-muted-foreground">
+                            Defineix la informació bàsica, la data i la
+                            capacitat del nou taller.
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <div

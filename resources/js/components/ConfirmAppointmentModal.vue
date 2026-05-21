@@ -30,7 +30,9 @@ const emit = defineEmits<{
             <div
                 class="relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-slate-900/10"
             >
-                <div class="h-1.5 bg-gradient-to-r from-[#00617E] to-[#0a7494]"></div>
+                <div
+                    class="h-1.5 bg-gradient-to-r from-[#00617E] to-[#0a7494]"
+                ></div>
 
                 <div class="flex items-start gap-4 px-6 pt-6 sm:px-8">
                     <span
@@ -46,7 +48,9 @@ const emit = defineEmits<{
                             stroke-linejoin="round"
                         >
                             <path d="M9 11l3 3L22 4" />
-                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                            <path
+                                d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+                            />
                         </svg>
                     </span>
                     <div>
@@ -60,21 +64,49 @@ const emit = defineEmits<{
                 </div>
 
                 <div class="px-6 py-5 sm:px-8">
-                    <dl class="divide-y divide-slate-100 rounded-xl bg-slate-50 ring-1 ring-slate-200/60">
+                    <dl
+                        class="divide-y divide-slate-100 rounded-xl bg-slate-50 ring-1 ring-slate-200/60"
+                    >
                         <div class="grid grid-cols-3 gap-4 px-4 py-3">
-                            <dt class="text-xs font-semibold tracking-wide text-slate-500 uppercase">Servei</dt>
-                            <dd class="col-span-2 text-sm font-medium text-slate-900">{{ serviceName }}</dd>
+                            <dt
+                                class="text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                            >
+                                Servei
+                            </dt>
+                            <dd
+                                class="col-span-2 text-sm font-medium text-slate-900"
+                            >
+                                {{ serviceName }}
+                            </dd>
                         </div>
                         <div class="grid grid-cols-3 gap-4 px-4 py-3">
-                            <dt class="text-xs font-semibold tracking-wide text-slate-500 uppercase">Data</dt>
-                            <dd class="col-span-2 text-sm font-medium text-slate-900">{{ date }}</dd>
+                            <dt
+                                class="text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                            >
+                                Data
+                            </dt>
+                            <dd
+                                class="col-span-2 text-sm font-medium text-slate-900"
+                            >
+                                {{ date }}
+                            </dd>
                         </div>
                         <div class="grid grid-cols-3 gap-4 px-4 py-3">
-                            <dt class="text-xs font-semibold tracking-wide text-slate-500 uppercase">Hora</dt>
-                            <dd class="col-span-2 text-sm font-medium text-slate-900">{{ time }}</dd>
+                            <dt
+                                class="text-xs font-semibold tracking-wide text-slate-500 uppercase"
+                            >
+                                Hora
+                            </dt>
+                            <dd
+                                class="col-span-2 text-sm font-medium text-slate-900"
+                            >
+                                {{ time }}
+                            </dd>
                         </div>
                     </dl>
-                    <p class="mt-4 flex items-start gap-2 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-600 ring-1 ring-slate-200/60">
+                    <p
+                        class="mt-4 flex items-start gap-2 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-600 ring-1 ring-slate-200/60"
+                    >
                         <svg
                             class="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-400"
                             viewBox="0 0 24 24"
@@ -88,11 +120,14 @@ const emit = defineEmits<{
                             <line x1="12" y1="16" x2="12" y2="12" />
                             <line x1="12" y1="8" x2="12.01" y2="8" />
                         </svg>
-                        Un cop confirmada, rebràs un correu i podràs descarregar el PDF de la cita.
+                        Un cop confirmada, rebràs un correu i podràs descarregar
+                        el PDF de la cita.
                     </p>
                 </div>
 
-                <div class="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50/60 px-6 py-4 sm:px-8">
+                <div
+                    class="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50/60 px-6 py-4 sm:px-8"
+                >
                     <button
                         type="button"
                         :disabled="isSubmitting"
@@ -113,8 +148,19 @@ const emit = defineEmits<{
                             viewBox="0 0 24 24"
                             fill="none"
                         >
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z" />
+                            <circle
+                                class="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                stroke-width="4"
+                            />
+                            <path
+                                class="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
+                            />
                         </svg>
                         {{ isSubmitting ? 'Confirmant…' : 'Sí, confirmar' }}
                     </button>

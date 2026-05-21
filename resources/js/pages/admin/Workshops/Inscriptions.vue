@@ -1,78 +1,136 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { Plus, SquarePen, Trash2, Users } from 'lucide-vue-next';
-import { computed, ref } from 'vue';
+import { ArrowLeft, Trash2, Users } from 'lucide-vue-next';
+import { computed, ref, watch } from 'vue';
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
-import {
-    create as workshopsCreate,
-    destroy as workshopsDestroy,
-    edit as workshopsEdit,
-    index as workshopsIndex,
-} from '@/routes/workshops';
-
-const workshopToDelete = ref<number | null>(null);
-
-function deleteWorkshop(id: number) {
-    workshopToDelete.value = id;
-}
-
-function confirmDelete() {
-    if (workshopToDelete.value === null) {
-        return;
-    }
-
-    useForm({}).delete(workshopsDestroy(workshopToDelete.value).url);
-    workshopToDelete.value = null;
-}
-
-function cancelDelete() {
-    workshopToDelete.value = null;
-}
+import { index as workshopsIndex } from '@/routes/workshops';
 
 type Workshop = {
     id: number;
     name: string;
-    description: string;
-    photo_path: string | null;
     workshop_date: string;
     start_time: string;
     end_time: string;
     max_attendees: number | null;
-    is_active: boolean;
+};
+
+type Inscription = {
+    id: number;
+    workshop_id: number;
+    name: string;
+    email: string;
+    phone: string | null;
+    created_at: string;
 };
 
 const props = defineProps<{
-    workshops: Workshop[];
+    workshop: Workshop;
+    inscriptions: Inscription[];
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Tallers', href: workshopsIndex().url },
+    {
+        title: `Inscripcions: ${props.workshop.name}`,
+        href: `/admin/workshops/${props.workshop.id}/inscriptions`,
+    },
 ];
 
 const searchQuery = ref('');
+const inscriptionToDelete = ref<number | null>(null);
+// PAGINATION
+const currentPage = ref(1);
+const perPage = 10;
 
-const filteredWorkshops = computed(() => {
+const visibleInscriptions = computed(() => {
+    const start = (currentPage.value - 1) * perPage;
+    const end = start + perPage;
+
+    return filteredInscriptions.value.slice(start, end);
+});
+
+const totalPages = computed(() =>
+    Math.ceil(filteredInscriptions.value.length / perPage),
+);
+
+function changePage(newPage: number) {
+    if (newPage < 1 || newPage > totalPages.value) {
+        return;
+    }
+
+    currentPage.value = newPage;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+    });
+}
+
+const filteredInscriptions = computed(() => {
     const query = searchQuery.value.trim().toLowerCase();
 
     if (!query) {
-        return props.workshops;
+        return props.inscriptions;
     }
 
-    return props.workshops.filter((workshop) => {
+    return props.inscriptions.filter((inscription) => {
         return (
-            workshop.name.toLowerCase().includes(query) ||
-            workshop.description.toLowerCase().includes(query)
+            inscription.name.toLowerCase().includes(query) ||
+            inscription.email.toLowerCase().includes(query) ||
+            (inscription.phone ?? '').toLowerCase().includes(query)
         );
     });
 });
+watch(searchQuery, () => {
+    currentPage.value = 1;
+});
+function askDelete(id: number) {
+    inscriptionToDelete.value = id;
+}
 
-const formatTime = (time: string) => time.slice(0, 5);
+function cancelDelete() {
+    inscriptionToDelete.value = null;
+}
+
+function confirmDelete() {
+    if (inscriptionToDelete.value === null) {
+        return;
+    }
+
+    const url = `/admin/workshops/${props.workshop.id}/inscriptions/${inscriptionToDelete.value}`;
+
+    useForm({}).delete(url, {
+        preserveScroll: true,
+        onFinish: () => {
+            inscriptionToDelete.value = null;
+        },
+    });
+}
+
+const formatTime = (time: string) => (time ? time.slice(0, 5) : '');
+
+const formatDate = (date: string) =>
+    new Date(date).toLocaleDateString('ca-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    });
+
+const formatDateTime = (date: string) =>
+    new Date(date).toLocaleString('ca-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    });
 </script>
+
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <Head title="Tallers" />
+        <Head :title="`Inscripcions · ${workshop.name}`" />
 
         <div
             class="relative flex h-full flex-1 flex-col gap-6 overflow-x-auto p-4 md:p-6"
@@ -85,7 +143,7 @@ const formatTime = (time: string) => time.slice(0, 5);
                 class="pointer-events-none absolute bottom-10 left-0 h-64 w-64 rounded-full bg-gradient-to-tr from-secondary/60 to-primary/10 blur-3xl"
             ></div>
 
-            <!--  header -->
+            <!-- Header -->
             <div
                 class="relative overflow-hidden rounded-2xl border border-sidebar-border/70 bg-gradient-to-br from-background via-background to-muted/60 p-7 shadow-sm"
             >
@@ -108,11 +166,38 @@ const formatTime = (time: string) => time.slice(0, 5);
                         <h1
                             class="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
                         >
-                            Administració de tallers
+                            Inscripcions del taller
                         </h1>
                         <p class="mt-2 max-w-xl text-sm text-muted-foreground">
-                            Gestió dels tallers programats de la farmàcia.
+                            <span class="font-medium text-foreground">{{
+                                workshop.name
+                            }}</span>
+                            · {{ formatDate(workshop.workshop_date) }} ·
+                            {{ formatTime(workshop.start_time) }} -
+                            {{ formatTime(workshop.end_time) }}
                         </p>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="inline-flex items-center gap-2 rounded-xl border border-sidebar-border/70 bg-background/80 px-4 py-2 text-sm font-medium shadow-xs"
+                        >
+                            <Users class="h-4 w-4 text-primary" />
+                            <span>
+                                {{ inscriptions.length }}
+                                <span class="text-muted-foreground">
+                                    / {{ workshop.max_attendees ?? '∞' }}
+                                </span>
+                            </span>
+                        </div>
+
+                        <Link
+                            :href="workshopsIndex().url"
+                            class="inline-flex items-center gap-2 rounded-xl border border-sidebar-border/70 bg-background px-4 py-2 text-sm font-medium shadow-xs transition hover:bg-muted"
+                        >
+                            <ArrowLeft class="h-4 w-4" />
+                            Tornar
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -128,19 +213,9 @@ const formatTime = (time: string) => time.slice(0, 5);
                     <input
                         v-model="searchQuery"
                         type="search"
-                        placeholder="Cerca per nom o descripció"
+                        placeholder="Cerca per nom, email o telèfon"
                         class="w-full rounded-xl border border-sidebar-border/80 bg-background px-4 py-2 text-sm shadow-xs transition focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none sm:max-w-xs"
                     />
-
-                    <Link
-                        :href="workshopsCreate().url"
-                        class="group inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto"
-                    >
-                        <Plus
-                            class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90"
-                        />
-                        Crear taller
-                    </Link>
                 </div>
 
                 <!-- Table -->
@@ -154,33 +229,23 @@ const formatTime = (time: string) => time.slice(0, 5);
                                     <th
                                         class="px-6 py-4 text-left text-xs font-semibold uppercase"
                                     >
-                                        Taller
+                                        Nom
                                     </th>
-
                                     <th
                                         class="px-6 py-4 text-left text-xs font-semibold uppercase"
                                     >
-                                        Data
+                                        Email
                                     </th>
-
                                     <th
                                         class="px-6 py-4 text-left text-xs font-semibold uppercase"
                                     >
-                                        Horari
+                                        Telèfon
                                     </th>
-
                                     <th
                                         class="px-6 py-4 text-left text-xs font-semibold uppercase"
                                     >
-                                        Places
+                                        Inscrit el
                                     </th>
-
-                                    <th
-                                        class="px-6 py-4 text-left text-xs font-semibold uppercase"
-                                    >
-                                        Estat
-                                    </th>
-
                                     <th
                                         class="px-6 py-4 text-right text-xs font-semibold uppercase"
                                     >
@@ -192,9 +257,9 @@ const formatTime = (time: string) => time.slice(0, 5);
                             <tbody>
                                 <tr
                                     v-for="(
-                                        workshop, index
-                                    ) in filteredWorkshops"
-                                    :key="workshop.id"
+                                        inscription, index
+                                    ) in visibleInscriptions"
+                                    :key="inscription.id"
                                     :class="[
                                         index % 2 === 0
                                             ? 'bg-background'
@@ -202,108 +267,61 @@ const formatTime = (time: string) => time.slice(0, 5);
                                         'border-t border-sidebar-border/60 transition hover:bg-muted/60',
                                     ]"
                                 >
-                                    <!-- Workshop -->
                                     <td class="px-6 py-4">
-                                        <div class="flex items-start gap-3">
+                                        <div class="flex items-center gap-3">
                                             <div
-                                                class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary"
+                                                class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary"
                                             >
                                                 {{
-                                                    workshop.name
+                                                    inscription.name
                                                         .charAt(0)
                                                         .toUpperCase()
                                                 }}
                                             </div>
-
-                                            <div>
-                                                <div
-                                                    class="font-medium text-foreground"
-                                                >
-                                                    {{ workshop.name }}
-                                                </div>
-
-                                                <div
-                                                    class="mt-1 max-w-xs text-xs text-muted-foreground"
-                                                    v-html="
-                                                        workshop.description
-                                                    "
-                                                ></div>
+                                            <div
+                                                class="font-medium text-foreground"
+                                            >
+                                                {{ inscription.name }}
                                             </div>
                                         </div>
                                     </td>
 
-                                    <!-- Date -->
                                     <td class="px-6 py-4 text-muted-foreground">
-                                        {{
-                                            new Date(
-                                                workshop.workshop_date,
-                                            ).toLocaleDateString('ca-ES')
-                                        }}
-                                    </td>
-
-                                    <!-- Time -->
-                                    <td class="px-6 py-4 text-muted-foreground">
-                                        {{ formatTime(workshop.start_time) }}
-                                        -
-                                        {{ formatTime(workshop.end_time) }}
-                                    </td>
-
-                                    <!-- Max -->
-                                    <td class="px-6 py-4 text-muted-foreground">
-                                        {{
-                                            workshop.max_attendees ??
-                                            'Sense límit'
-                                        }}
-                                    </td>
-
-                                    <!-- Status -->
-                                    <td class="px-6 py-4">
-                                        <span
-                                            :class="
-                                                workshop.is_active
-                                                    ? 'border-green-200 bg-green-50 text-green-700'
-                                                    : 'border-zinc-200 bg-zinc-100 text-zinc-600'
-                                            "
-                                            class="inline-flex rounded-full border px-3 py-1 text-xs font-semibold"
+                                        <a
+                                            :href="`mailto:${inscription.email}`"
+                                            class="hover:text-primary hover:underline"
                                         >
-                                            {{
-                                                workshop.is_active
-                                                    ? 'Actiu'
-                                                    : 'Inactiu'
-                                            }}
-                                        </span>
+                                            {{ inscription.email }}
+                                        </a>
                                     </td>
 
-                                    <!-- Actions -->
+                                    <td class="px-6 py-4 text-muted-foreground">
+                                        <span v-if="inscription.phone">
+                                            {{ inscription.phone }}
+                                        </span>
+                                        <span v-else class="text-xs italic"
+                                            >—</span
+                                        >
+                                    </td>
+
+                                    <td class="px-6 py-4 text-muted-foreground">
+                                        {{
+                                            formatDateTime(
+                                                inscription.created_at,
+                                            )
+                                        }}
+                                    </td>
+
                                     <td class="px-6 py-4">
                                         <div
                                             class="flex items-center justify-end gap-2"
                                         >
-                                            <Link
-                                                :href="`/admin/workshops/${workshop.id}/inscriptions`"
-                                                class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-blue-50 hover:text-blue-600"
-                                                aria-label="Veure inscripcions"
-                                            >
-                                                <Users class="h-4 w-4" />
-                                            </Link>
-
-                                            <Link
-                                                :href="
-                                                    workshopsEdit(workshop.id)
-                                                        .url
-                                                "
-                                                class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-orange-50 hover:text-orange-600"
-                                                aria-label="Editar taller"
-                                            >
-                                                <SquarePen class="h-4 w-4" />
-                                            </Link>
-
                                             <button
                                                 type="button"
                                                 class="inline-flex cursor-pointer items-center rounded-lg p-2 text-muted-foreground transition hover:bg-red-50 hover:text-red-600"
-                                                aria-label="Eliminar taller"
+                                                aria-label="Eliminar inscripció"
                                                 @click="
-                                                    deleteWorkshop(workshop.id)
+                                                    askDelete(inscription.id)
                                                 "
                                             >
                                                 <Trash2 class="h-4 w-4" />
@@ -313,25 +331,55 @@ const formatTime = (time: string) => time.slice(0, 5);
                                 </tr>
 
                                 <!-- Empty -->
-                                <tr v-if="filteredWorkshops.length === 0">
+                                <tr v-if="filteredInscriptions.length === 0">
                                     <td
-                                        colspan="6"
+                                        colspan="5"
                                         class="px-6 py-12 text-center text-sm text-muted-foreground"
                                     >
-                                        Encara no hi ha tallers registrats.
+                                        Encara no hi ha inscripcions per a
+                                        aquest taller.
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+                <!-- Pagination -->
+                <div
+                    v-if="totalPages > 1"
+                    class="mt-5 flex items-center justify-between text-sm"
+                >
+                    <span class="text-muted-foreground">
+                        Pàgina {{ currentPage }} de {{ totalPages }}
+                    </span>
+
+                    <div class="flex gap-2">
+                        <button
+                            type="button"
+                            @click="changePage(currentPage - 1)"
+                            :disabled="currentPage <= 1"
+                            class="rounded-lg border border-sidebar-border bg-background px-3 py-1.5 transition hover:bg-muted disabled:opacity-40"
+                        >
+                            Anterior
+                        </button>
+
+                        <button
+                            type="button"
+                            @click="changePage(currentPage + 1)"
+                            :disabled="currentPage >= totalPages"
+                            class="rounded-lg border border-sidebar-border bg-background px-3 py-1.5 transition hover:bg-muted disabled:opacity-40"
+                        >
+                            Següent
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
         <ConfirmDeleteDialog
-            :open="workshopToDelete !== null"
-            title="Eliminar taller"
-            description="Segur que vols eliminar aquest taller? Aquesta acció no es pot desfer."
+            :open="inscriptionToDelete !== null"
+            title="Eliminar inscripció"
+            description="Segur que vols eliminar aquesta inscripció? Aquesta acció no es pot desfer."
             @confirm="confirmDelete"
             @cancel="cancelDelete"
         />

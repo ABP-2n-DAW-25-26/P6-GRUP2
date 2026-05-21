@@ -50,6 +50,10 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(funct
     Route::resource('pharmacies', admin_pharmacies_controller::class);
 
     Route::resource('services', AdminServiceController::class);
+    Route::get('workshops/{workshop}/inscriptions', [admin_workshops_controller::class, 'inscriptions'])
+        ->name('workshops.inscriptions');
+    Route::delete('workshops/{workshop}/inscriptions/{inscription}', [admin_workshops_controller::class, 'destroyInscription'])
+        ->name('workshops.inscriptions.destroy');
     Route::resource('workshops', admin_workshops_controller::class);
     Route::resource('adminAssignments', AdminAssignmentsController::class);
     Route::resource('service-schedules', ServiceScheduleController::class);

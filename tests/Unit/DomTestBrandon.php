@@ -1,31 +1,26 @@
 <?php
 
-$dom = new \DOMDocument();
+function getInertiaPage(string $url): array
+{
+    $dom = new DOMDocument;
+    @$dom->loadHTML('<?xml encoding="UTF-8">'.file_get_contents($url));
 
-test('assignment dom contains expected elements', function () {
+    foreach ($dom->getElementsByTagName('script') as $script) {
+        if ($script instanceof DOMElement && $script->getAttribute('data-page') === 'app') {
+            return json_decode($script->textContent, true);
+        }
+    }
 
-    $html = '
-        <h1>Demana el teu encàrrec</h1>
-        <input id="name" />
-        <textarea id="description"></textarea>
-        <button type="submit">Enviar encàrrec</button>
-    ';
+    return [];
+}
 
-    $dom = new DOMDocument();
+test('loads the create assignment component', function () {
 
-    @$dom->loadHTML(
-        '<?xml encoding="UTF-8">' . $html
-    );
+    $page = getInertiaPage('http://localhost/assignments/create');
+    expect($page['component'])->toBe('Assignments/Create');
+});
 
-    expect(
-        $dom->getElementsByTagName('h1')->item(0)->textContent
-    )->toContain('Demana el teu encàrrec');
-
-    expect(
-        $dom->getElementById('description')
-    )->not->toBeNull();
-
-    expect(
-        $dom->getElementById('name')
-    )->not->toBeNull();
+test('has name, address, phone_number and description props', function () {
+    $page = getInertiaPage('http://localhost/assignments/create');
+    expect($page['props'])->toHaveKeys(['name', 'address', 'phone_number', 'description']);
 });

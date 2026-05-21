@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
 import Footer from '@/components/Footer.vue';
 import Navbar from '@/components/Navbar.vue';
-import { Icon } from '@iconify/vue';
 </script>
 
 <template>

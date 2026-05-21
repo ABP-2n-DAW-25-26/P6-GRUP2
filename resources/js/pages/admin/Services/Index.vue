@@ -1,44 +1,11 @@
 <script setup lang="ts">
 import { Link, Head, useForm } from '@inertiajs/vue3';
-import { SquarePen, Trash2, Plus, CalendarPlus } from 'lucide-vue-next';
-import {
-    Pill,
-    HeartPulse,
-    FlaskConical,
-    ShieldCheck,
-    ScanFace,
-    Droplet,
-    Activity,
-    Stethoscope,
-    Syringe,
-    Microscope,
-    Apple,
-    Brain,
-    Bandage,
-    Thermometer,
-} from 'lucide-vue-next';
+import { CalendarPlus, Plus, SquarePen, Trash2 } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
+import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { admindashboard as dashboard } from '@/routes';
-
-// ICON MAP
-const iconMap: Record<string, any> = {
-    pill: Pill,
-    heart: HeartPulse,
-    flask: FlaskConical,
-    shield: ShieldCheck,
-    scan: ScanFace,
-    droplet: Droplet,
-    activity: Activity,
-    stethoscope: Stethoscope,
-    syringe: Syringe,
-    microscope: Microscope,
-    apple: Apple,
-    brain: Brain,
-    bandage: Bandage,
-    thermometer: Thermometer,
-};
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Administració de serveis', href: dashboard().url },
@@ -137,7 +104,9 @@ const totalPages = computed(() =>
 // const hasMore = computed(() => page.value < totalPages.value);
 
 function changePage(newPage: number) {
-    if (newPage < 1 || newPage > totalPages.value) return;
+    if (newPage < 1 || newPage > totalPages.value) {
+        return;
+    }
 
     page.value = newPage;
 
@@ -147,28 +116,62 @@ function changePage(newPage: number) {
     });
 }
 </script>
-
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Gestió de serveis" />
 
-        <div class="space-y-6 p-6">
-            <!-- HEADER -->
+        <div
+            class="relative flex h-full flex-1 flex-col gap-6 overflow-x-auto p-4 md:p-6"
+        >
+            <!-- Decorative blurred gradients -->
             <div
-                class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+                class="pointer-events-none absolute top-0 right-8 h-56 w-56 rounded-full bg-gradient-to-br from-primary/20 to-muted/70 blur-3xl"
+            ></div>
+            <div
+                class="pointer-events-none absolute bottom-10 left-0 h-64 w-64 rounded-full bg-gradient-to-tr from-secondary/60 to-primary/10 blur-3xl"
+            ></div>
+
+            <!--  header -->
+            <div
+                class="relative overflow-hidden rounded-2xl border border-sidebar-border/70 bg-gradient-to-br from-background via-background to-muted/60 p-7 shadow-sm"
             >
-                <div>
-                    <h1 class="text-2xl font-bold">Gestió de Serveis</h1>
-                    <p class="text-sm text-gray-500">
-                        Administra tots els serveis disponibles
-                    </p>
+                <div
+                    class="pointer-events-none absolute -top-12 -right-12 h-40 w-40 rounded-full bg-primary/10 blur-2xl"
+                ></div>
+
+                <div
+                    class="relative flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+                >
+                    <div>
+                        <p
+                            class="inline-flex items-center gap-2 rounded-full border border-sidebar-border/70 bg-background/80 px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-muted-foreground uppercase shadow-xs backdrop-blur"
+                        >
+                            <span
+                                class="inline-block h-1.5 w-1.5 rounded-full bg-primary"
+                            ></span>
+                            Farmacia Soler
+                        </p>
+                        <h1
+                            class="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
+                        >
+                            Administració de serveis
+                        </h1>
+                        <p class="mt-2 max-w-xl text-sm text-muted-foreground">
+                            Administra tots els serveis disponibles de la
+                            farmàcia.
+                        </p>
+                    </div>
                 </div>
+            </div>
 
-                <div class="flex items-center gap-3">
-                    <label for="search-services" class="sr-only">
-                        Cercar servei
-                    </label>
-
+            <!-- Main Card -->
+            <div
+                class="relative rounded-2xl border border-sidebar-border/70 bg-background/95 p-6 shadow-sm"
+            >
+                <!-- Toolbar -->
+                <div
+                    class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center"
+                >
                     <input
                         id="search-services"
                         name="search"
@@ -177,179 +180,174 @@ function changePage(newPage: number) {
                         type="text"
                         placeholder="Cercar servei..."
                         autocomplete="off"
-                        class="rounded-lg border px-4 py-2 focus:ring focus:ring-blue-200"
+                        class="w-full rounded-xl border border-sidebar-border/80 bg-background px-4 py-2 text-sm shadow-xs transition focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none sm:max-w-xs"
                     />
 
                     <Link
                         :href="`/admin/services/create`"
-                        class="flex items-center gap-2 rounded-lg px-4 py-2 text-white"
-                        style="background-color: #2563eb"
-                        aria-label="Crear nou servei"
+                        class="group inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto"
                     >
-                        <Plus class="h-4 w-4" />
+                        <Plus
+                            class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90"
+                        />
                         Nou servei
                     </Link>
                 </div>
-            </div>
 
-            <!-- TABLE -->
-            <div class="overflow-hidden rounded-xl border bg-white shadow">
-                <table class="w-full text-sm">
-                    <thead class="bg-gray-100 text-gray-600">
-                        <tr>
-                            <th class="p-3 text-left">Servei</th>
-                            <th class="p-3 text-left">Descripció</th>
-                            <th class="p-3 text-left">Durada</th>
-                            <th class="p-3 text-right">Accions</th>
-                        </tr>
-                    </thead>
+                <!-- Table -->
+                <div
+                    class="overflow-hidden rounded-2xl border border-sidebar-border/70"
+                >
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm">
+                            <thead class="bg-muted/80">
+                                <tr>
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-semibold uppercase"
+                                    >
+                                        Servei
+                                    </th>
 
-                    <tbody>
-                        <tr
-                            v-for="service in visibleServices"
-                            :key="service.id"
-                            class="border-t hover:bg-gray-50"
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-semibold uppercase"
+                                    >
+                                        Descripció
+                                    </th>
+
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-semibold uppercase"
+                                    >
+                                        Durada
+                                    </th>
+
+                                    <th
+                                        class="px-6 py-4 text-right text-xs font-semibold uppercase"
+                                    >
+                                        Accions
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr
+                                    v-for="(service, index) in visibleServices"
+                                    :key="service.id"
+                                    :class="[
+                                        index % 2 === 0
+                                            ? 'bg-background'
+                                            : 'bg-muted/30',
+                                        'border-t border-sidebar-border/60 transition hover:bg-muted/60',
+                                    ]"
+                                >
+                                    <!-- Service -->
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <span
+                                                class="font-medium text-foreground"
+                                            >
+                                                {{ service.name }}
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    <!-- Description -->
+                                    <td class="px-6 py-4 text-muted-foreground">
+                                        <div
+                                            class="max-w-md"
+                                            v-html="service.description"
+                                        ></div>
+                                    </td>
+
+                                    <!-- Duration -->
+                                    <td class="px-6 py-4 text-muted-foreground">
+                                        {{ service.duration_minutes }}
+                                        min
+                                    </td>
+
+                                    <!-- Actions -->
+                                    <td class="px-6 py-4">
+                                        <div class="flex justify-end gap-2">
+                                            <Link
+                                                :href="`/admin/services/${service.id}`"
+                                                class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-blue-50 hover:text-blue-600"
+                                                aria-label="Gestionar horaris"
+                                            >
+                                                <CalendarPlus class="h-4 w-4" />
+                                            </Link>
+
+                                            <Link
+                                                :href="`/admin/services/${service.id}/edit`"
+                                                class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-orange-50 hover:text-orange-600"
+                                                aria-label="Editar servei"
+                                            >
+                                                <SquarePen class="h-4 w-4" />
+                                            </Link>
+
+                                            <button
+                                                @click="
+                                                    openDeleteModal(service)
+                                                "
+                                                class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-red-50 hover:text-red-600"
+                                                aria-label="Eliminar servei"
+                                            >
+                                                <Trash2 class="h-4 w-4" />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Empty -->
+                                <tr v-if="visibleServices.length === 0">
+                                    <td
+                                        colspan="4"
+                                        class="px-6 py-12 text-center text-sm text-muted-foreground"
+                                    >
+                                        No hi ha serveis disponibles.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div
+                    v-if="totalPages > 1"
+                    class="mt-5 flex items-center justify-between text-sm"
+                >
+                    <span class="text-muted-foreground">
+                        Pàgina {{ page }} de {{ totalPages }}
+                    </span>
+
+                    <div class="flex gap-2">
+                        <button
+                            type="button"
+                            @click="changePage(page - 1)"
+                            :disabled="page <= 1"
+                            class="rounded-lg border border-sidebar-border bg-background px-3 py-1.5 transition hover:bg-muted disabled:opacity-40"
                         >
-                            <td class="p-3">
-                                <div class="flex items-center gap-2">
-                                    <component
-                                        v-if="
-                                            service.icon &&
-                                            iconMap[service.icon]
-                                        "
-                                        :is="iconMap[service.icon]"
-                                        class="h-5 w-5 text-blue-600"
-                                    />
-                                    <span class="font-medium">
-                                        {{ service.name }}
-                                    </span>
-                                </div>
-                            </td>
+                            Anterior
+                        </button>
 
-                            <td
-                                class="p-3 text-gray-600"
-                                v-html="service.description"
-                            ></td>
-
-                            <td class="p-3">
-                                {{ service.duration_minutes }} min
-                            </td>
-
-                            <td class="p-3">
-                                <div class="flex flex-wrap justify-end gap-2">
-                                    <Link
-                                        :href="`/admin/services/${service.id}`"
-                                        class="rounded p-2 hover:bg-green-100"
-                                        aria-label="Gestionar horaris del servei"
-                                    >
-                                        <CalendarPlus
-                                            class="h-4 w-4 text-blue-600"
-                                        />
-                                    </Link>
-
-                                    <Link
-                                        :href="`/admin/services/${service.id}/edit`"
-                                        class="rounded p-2 hover:bg-orange-100"
-                                        aria-label="Editar servei"
-                                    >
-                                        <SquarePen
-                                            class="h-4 w-4 text-orange-600"
-                                        />
-                                    </Link>
-
-                                    <button
-                                        @click="openDeleteModal(service)"
-                                        class="rounded p-2 hover:bg-red-100"
-                                        aria-label="Eliminar servei"
-                                    >
-                                        <Trash2 class="h-4 w-4 text-red-600" />
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- PAGINATION -->
-            <div
-                v-if="totalPages > 1"
-                class="flex items-center justify-between border-t border-gray-200 p-4"
-            >
-                <span class="text-sm text-gray-500">
-                    Pàgina {{ page }} de {{ totalPages }}
-                </span>
-
-                <div class="flex gap-2">
-                    <button
-                        type="button"
-                        @click="changePage(page - 1)"
-                        :disabled="page <= 1"
-                        class="rounded border border-gray-300 px-3 py-1 hover:bg-gray-100 disabled:opacity-30"
-                    >
-                        Anterior &lt;
-                    </button>
-
-                    <button
-                        type="button"
-                        class="rounded bg-gray-200 px-3 py-1 text-black"
-                    >
-                        {{ page }}
-                    </button>
-
-                    <button
-                        type="button"
-                        @click="changePage(page + 1)"
-                        :disabled="page >= totalPages"
-                        class="rounded border border-gray-300 px-3 py-1 hover:bg-gray-100 disabled:opacity-30"
-                    >
-                        Següent &gt;
-                    </button>
+                        <button
+                            type="button"
+                            @click="changePage(page + 1)"
+                            :disabled="page >= totalPages"
+                            class="rounded-lg border border-sidebar-border bg-background px-3 py-1.5 transition hover:bg-muted disabled:opacity-40"
+                        >
+                            Següent
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- DELETE MODAL -->
-        <div
-            v-show="showDeleteModal"
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-        >
-            <div class="w-full max-w-md space-y-4 rounded-xl bg-white p-6">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-bold">Eliminar servei</h2>
-
-                    <button
-                        @click="showDeleteModal = false"
-                        aria-label="Tancar finestra"
-                        type="button"
-                    >
-                        <span aria-hidden="true">✕</span>
-                    </button>
-                </div>
-
-                <p class="text-gray-600">
-                    Estàs segur que vols eliminar el servei:
-                </p>
-
-                <p class="font-semibold break-words">
-                    {{ selectedService.name }}
-                </p>
-
-                <div class="flex justify-end gap-3 pt-4">
-                    <button
-                        @click="showDeleteModal = false"
-                        class="rounded border px-4 py-2"
-                    >
-                        Cancel·lar
-                    </button>
-
-                    <button
-                        @click="deleteService(selectedService.id)"
-                        class="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700"
-                    >
-                        Eliminar definitivament
-                    </button>
-                </div>
-            </div>
-        </div>
+        <ConfirmDeleteDialog
+            :open="showDeleteModal"
+            title="Eliminar servei"
+            :description="`Segur que vols eliminar el servei &quot;${selectedService.name}&quot;? Aquesta acció no es pot desfer.`"
+            @confirm="deleteService(selectedService.id)"
+            @cancel="showDeleteModal = false"
+        />
     </AppLayout>
 </template>

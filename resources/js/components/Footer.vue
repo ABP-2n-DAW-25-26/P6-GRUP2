@@ -47,11 +47,11 @@ import { Link } from '@inertiajs/vue3';
 
                 <!-- Navigation -->
                 <div>
-                    <h3
+                    <h2
                         class="mb-4 text-xs font-semibold tracking-widest text-white/40 uppercase"
                     >
                         Navegació
-                    </h3>
+                    </h2>
                     <ul class="flex flex-col gap-2 text-sm text-white/70">
                         <li>
                             <a
@@ -62,7 +62,7 @@ import { Link } from '@inertiajs/vue3';
                         </li>
                         <li>
                             <a
-                                href="/#farmacies-guardia"
+                                href="/#pharmacy-guards"
                                 class="transition hover:text-white"
                                 >Farmàcies de guàrdia</a
                             >
@@ -100,11 +100,11 @@ import { Link } from '@inertiajs/vue3';
 
                 <!-- Horaris -->
                 <div>
-                    <h3
+                    <h2
                         class="mb-4 text-xs font-semibold tracking-widest text-white/40 uppercase"
                     >
                         Horaris
-                    </h3>
+                    </h2>
                     <ul class="flex flex-col gap-2 text-sm text-white/70">
                         <li class="flex justify-between gap-4">
                             <span>Dilluns – Dissabte</span>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 import {
     Globe,
     GraduationCap,
@@ -13,6 +14,7 @@ import {
     Pill,
     Mails,
 } from 'lucide-vue-next';
+import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -29,15 +31,13 @@ import {
 import type { NavItem } from '@/types';
 import { admindashboard as dashboard } from '@/routes';
 import { index as assignmentsIndex } from '@/routes/adminAssignments';
-import { index as mailIndex } from '@/routes/mail';
 import { index as emailIndex } from '@/routes/emails';
+import { index as mailIndex } from '@/routes/mail';
 import { index as pharmaciesIndex } from '@/routes/pharmacies';
 import { index as pharmacyguardsIndex } from '@/routes/pharmacyguards';
 import { index as servicesIndex } from '@/routes/services';
 import { index as usersIndex } from '@/routes/users';
 import { index as workshopsIndex } from '@/routes/workshops';
-import { usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
 
 const page = usePage();
 const isSuperAdmin = page.props.auth.user.role === 'superadmin';
