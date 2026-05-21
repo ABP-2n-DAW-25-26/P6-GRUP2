@@ -117,8 +117,8 @@ function renderTurnstile() {
     const t = (window as any).turnstile;
 
     if (!el || !props.turnstileSiteKey || !t) {
-return;
-}
+        return;
+    }
 
     el.innerHTML = '';
     turnstileWidgetId.value = t.render(el, {
@@ -138,8 +138,8 @@ function onError() {
 
 onMounted(() => {
     if (!props.turnstileSiteKey) {
-return;
-}
+        return;
+    }
 
     if (document.getElementById('cf-turnstile-api')) {
         renderTurnstile();
@@ -166,8 +166,8 @@ onUnmounted(() => {
 // the next submission has a fresh token
 watch(flashSuccess, (v) => {
     if (v) {
-renderTurnstile();
-}
+        renderTurnstile();
+    }
 });
 
 const showForm = ref(false);

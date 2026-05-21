@@ -62,8 +62,8 @@ const totalPages = computed(() => Math.ceil(schedules.value.length / perPage));
 
 function changePage(newPage: number) {
     if (newPage < 1 || newPage > totalPages.value) {
-return;
-}
+        return;
+    }
 
     page.value = newPage;
 

@@ -12,8 +12,8 @@ const isOpenNow = computed(() => {
     const now = new Date();
 
     if (now.getDay() === 0) {
-return false;
-}
+        return false;
+    }
 
     const minutes = now.getHours() * 60 + now.getMinutes();
 

@@ -213,8 +213,8 @@ function setPreviousMonth() {
     setMonth.num = getPreviousMonth();
 
     if (setMonth.num == 11) {
-setPreviousYear();
-}
+        setPreviousYear();
+    }
 }
 
 // Function Set Next Month
@@ -222,8 +222,8 @@ function setNextMonth() {
     setMonth.num = getNextMonth();
 
     if (setMonth.num == 0) {
-setNextYear();
-}
+        setNextYear();
+    }
 }
 
 /// Year
@@ -330,8 +330,8 @@ function setPreviousWeek() {
         setMonthName();
 
         if (setYear.double) {
-setYearName();
-}
+            setYearName();
+        }
     }
 }
 

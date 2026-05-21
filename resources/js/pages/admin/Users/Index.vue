@@ -123,8 +123,8 @@ const deleteUser = (user: User) => {
 
 const confirmDelete = () => {
     if (userToDelete.value === null) {
-return;
-}
+        return;
+    }
 
     router.delete(usersDestroy(userToDelete.value.id).url);
     userToDelete.value = null;
