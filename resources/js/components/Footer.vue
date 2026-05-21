@@ -62,7 +62,7 @@ import { Link } from '@inertiajs/vue3';
                         </li>
                         <li>
                             <a
-                                href="/#farmacies-guardia"
+                                href="/#pharmacy-guards"
                                 class="transition hover:text-white"
                                 >Farmàcies de guàrdia</a
                             >
