@@ -621,6 +621,7 @@ function setNextWeek() {
                                 />
                             </div>
                             <h4
+                                id="farmacianame"
                                 class="text-lg leading-snug font-semibold text-[#0E3C4D]"
                             >
                                 {{ pharmacy.name || 'Carregant farmàcia...' }}

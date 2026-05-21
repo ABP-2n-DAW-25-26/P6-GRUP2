@@ -18,7 +18,8 @@ class admin_pharmacies_controller extends Controller
             ->select('id', 'name', 'latitude', 'longitude', 'created_at');
 
         if ($request->filled('search')) {
-            $query->where('name', 'like', '%'.$request->search.'%');
+            $query->where('name', 'like', '%' . $request->search . '%')->get();
+            return response()->json($query->get());
         }
 
         $pharmacies = $query
@@ -30,12 +31,16 @@ class admin_pharmacies_controller extends Controller
         ]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $pharmacies = DB::table('pharmacies')
             ->select('id', 'name', 'latitude', 'longitude', 'created_at')
             ->orderBy('name')
             ->get();
+
+        if ($request->expectsJson()) {
+            return response()->json($pharmacies);
+        }
 
         return Inertia::render('admin/Pharmacies/Index', [
             'pharmacies' => $pharmacies,
