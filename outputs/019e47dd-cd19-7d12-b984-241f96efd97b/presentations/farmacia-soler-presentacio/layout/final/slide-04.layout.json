@@ -1,0 +1,4001 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/iwbhfb",
+    "id": "iwbhfb",
+    "slide": 4,
+    "layoutId": "d9c91e2f-aab4-4a1d-966c-83524fcb2919",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "8eca04d6-e89b-4e62-8fab-1a5249dd4e9b",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt",
+      "Aptos",
+      "Aptos Display"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "d9c91e2f-aab4-4a1d-966c-83524fcb2919",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "8eca04d6-e89b-4e62-8fab-1a5249dd4e9b",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "8eca04d6-e89b-4e62-8fab-1a5249dd4e9b",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/s72x4nap",
+      "id": "1",
+      "bbox": [
+        52,
+        52,
+        265.32,
+        49.6
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.0"
+      },
+      "geometry": "roundRect",
+      "fillColor": "#DDEEE8"
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3m94fu18",
+      "id": "2",
+      "bbox": [
+        66,
+        60,
+        237.32,
+        33.6
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.0.0"
+      },
+      "geometry": "rect",
+      "text": "3 · FUNCIONALITATS DESTACADES",
+      "textPreview": "3 · FUNCIONALITATS DESTACADES",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "fontSize": 14,
+        "typeface": "Aptos",
+        "bold": true,
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "3 · FUNCIONALITATS"
+          },
+          {
+            "index": 2,
+            "text": "DESTACADES"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "3 · FUNCIONALITATS DESTACADES",
+          "runs": [
+            {
+              "index": 1,
+              "text": "3 · FUNCIONALITATS DESTACADES",
+              "fontSize": 14,
+              "typeface": "Aptos",
+              "color": "#1C5B4B",
+              "bold": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/a5gbq1or",
+      "id": "3",
+      "bbox": [
+        52,
+        119.6,
+        640,
+        39.06
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.1"
+      },
+      "geometry": "rect",
+      "text": "El valor practic del projecte",
+      "textPreview": "El valor practic del projecte",
+      "resolvedFontSize": 31,
+      "resolvedTextStyle": {
+        "fontSize": 31,
+        "typeface": "Aptos Display",
+        "bold": true,
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "El valor practic del projecte"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "El valor practic del projecte",
+          "runs": [
+            {
+              "index": 1,
+              "text": "El valor practic del projecte",
+              "fontSize": 31,
+              "typeface": "Aptos Display",
+              "color": "#12202B",
+              "bold": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/h4byhgn2",
+      "id": "4",
+      "bbox": [
+        52,
+        176.66,
+        640,
+        52.22
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.2"
+      },
+      "geometry": "rect",
+      "text": "Aquestes son les funcionalitats que expliquen millor per que la plataforma es util i demo-ready.",
+      "textPreview": "Aquestes son les funcionalitats que expliquen millor per que la plataforma es util i demo-ready.",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "Aptos",
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Aquestes son les funcionalitats que expliquen millor per que la plataforma es util i"
+          },
+          {
+            "index": 2,
+            "text": "demo-ready."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Aquestes son les funcionalitats que expliquen millor per que la plataforma es util i demo-ready.",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Aquestes son les funcionalitats que expliquen millor per que la plataforma es util i demo-ready.",
+              "fontSize": 17,
+              "typeface": "Aptos",
+              "color": "#5B6B77"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sji5snel",
+      "id": "5",
+      "bbox": [
+        52,
+        246.88,
+        8,
+        8
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.3.0.0"
+      },
+      "geometry": "ellipse",
+      "fillColor": "#2F7D6B"
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3ylc7u54",
+      "id": "6",
+      "bbox": [
+        72,
+        246.88,
+        620,
+        24
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.3.0.1"
+      },
+      "geometry": "rect",
+      "text": "Cites: seleccio de servei, data i hora disponibles, confirmacio per correu i PDF.",
+      "textPreview": "Cites: seleccio de servei, data i hora disponibles, confirmacio per correu i PDF.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Cites: seleccio de servei, data i hora disponibles, confirmacio per correu i PDF."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Cites: seleccio de servei, data i hora disponibles, confirmacio per correu i PDF.",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Cites: seleccio de servei, data i hora disponibles, confirmacio per correu i PDF.",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#12202B"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/adsji5sn",
+      "id": "7",
+      "bbox": [
+        52,
+        282.88,
+        8,
+        8
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.3.1.0"
+      },
+      "geometry": "ellipse",
+      "fillColor": "#2F7D6B"
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/hgn29gr2",
+      "id": "8",
+      "bbox": [
+        72,
+        282.88,
+        620,
+        24
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.3.1.1"
+      },
+      "geometry": "rect",
+      "text": "Tallers: inscripcio publica amb control de places.",
+      "textPreview": "Tallers: inscripcio publica amb control de places.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Tallers: inscripcio publica amb control de places."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Tallers: inscripcio publica amb control de places.",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Tallers: inscripcio publica amb control de places.",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#12202B"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/svu9knih",
+      "id": "9",
+      "bbox": [
+        52,
+        318.88,
+        8,
+        8
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.3.2.0"
+      },
+      "geometry": "ellipse",
+      "fillColor": "#2F7D6B"
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ed8bat47",
+      "id": "10",
+      "bbox": [
+        72,
+        318.88,
+        620,
+        24
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.3.2.1"
+      },
+      "geometry": "rect",
+      "text": "Encarrecs: codi de seguiment per consultar l’estat.",
+      "textPreview": "Encarrecs: codi de seguiment per consultar l’estat.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Encarrecs: codi de seguiment per consultar l’estat."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Encarrecs: codi de seguiment per consultar l’estat.",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Encarrecs: codi de seguiment per consultar l’estat.",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#12202B"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7u54zido",
+      "id": "11",
+      "bbox": [
+        52,
+        354.88,
+        8,
+        8
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.3.3.0"
+      },
+      "geometry": "ellipse",
+      "fillColor": "#2F7D6B"
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wfyxobm5",
+      "id": "12",
+      "bbox": [
+        72,
+        354.88,
+        620,
+        24
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.3.3.1"
+      },
+      "geometry": "rect",
+      "text": "Farmacies de guardia: mapa interactiu segons la data.",
+      "textPreview": "Farmacies de guardia: mapa interactiu segons la data.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Farmacies de guardia: mapa interactiu segons la data."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Farmacies de guardia: mapa interactiu segons la data.",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Farmacies de guardia: mapa interactiu segons la data.",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#12202B"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/l0rqd4vm",
+      "id": "13",
+      "bbox": [
+        52,
+        390.88,
+        8,
+        8
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.3.4.0"
+      },
+      "geometry": "ellipse",
+      "fillColor": "#2F7D6B"
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/eloj2t83",
+      "id": "14",
+      "bbox": [
+        72,
+        390.88,
+        620,
+        24
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.3.4.1"
+      },
+      "geometry": "rect",
+      "text": "Admin: gestio de serveis, horaris, usuaris, tallers i correus.",
+      "textPreview": "Admin: gestio de serveis, horaris, usuaris, tallers i correus.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Admin: gestio de serveis, horaris, usuaris, tallers i correus."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Admin: gestio de serveis, horaris, usuaris, tallers i correus.",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Admin: gestio de serveis, horaris, usuaris, tallers i correus.",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#12202B"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/36hcrmhk",
+      "id": "15",
+      "bbox": [
+        52,
+        432.88,
+        640,
+        92.14
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.4"
+      },
+      "geometry": "roundRect",
+      "fillColor": "#1C5B4B"
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wra5gbq1",
+      "id": "16",
+      "bbox": [
+        74,
+        454.88,
+        596,
+        48.14
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.0.4.0"
+      },
+      "geometry": "rect",
+      "text": "Aquestes funcionalitats no les explicarem totes a fons ara: les deixem preparades per veure-les millor a la demo.",
+      "textPreview": "Aquestes funcionalitats no les explicarem totes a fons ara: les deixem preparades per veure-les millor a la demo.",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "bold": true,
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Aquestes funcionalitats no les explicarem totes a fons ara: les deixem"
+          },
+          {
+            "index": 2,
+            "text": "preparades per veure-les millor a la demo."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Aquestes funcionalitats no les explicarem totes a fons ara: les deixem preparades per veure-les millor a la demo.",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Aquestes funcionalitats no les explicarem totes a fons ara: les deixem preparades per veure-les millor a la demo.",
+              "fontSize": 17,
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lc7u54zi",
+      "id": "17",
+      "bbox": [
+        716,
+        52,
+        247,
+        310
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.0.0"
+      },
+      "geometry": "roundRect",
+      "fillColor": "#EEF4F6"
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/epkzupwb",
+      "id": "18",
+      "bbox": [
+        740,
+        76,
+        199,
+        36
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.0.0.0.0.0"
+      },
+      "geometry": "rect",
+      "text": "Per que aquesta slide importa",
+      "textPreview": "Per que aquesta slide importa",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "fontSize": 15,
+        "typeface": "+mn-lt",
+        "bold": true,
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Per que aquesta slide"
+          },
+          {
+            "index": 2,
+            "text": "importa"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Per que aquesta slide importa",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Per que aquesta slide importa",
+              "fontSize": 15,
+              "color": "#1C5B4B",
+              "bold": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7adsji5s",
+      "id": "19",
+      "bbox": [
+        740,
+        122,
+        199,
+        151.2
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.0.0.0.0.1"
+      },
+      "geometry": "rect",
+      "text": "Les funcionalitats son el pont entre el problema i la demo",
+      "textPreview": "Les funcionalitats son el pont entre el problema i la demo",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Aptos Display",
+        "bold": true,
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 5,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Les"
+          },
+          {
+            "index": 2,
+            "text": "funcionalitats"
+          },
+          {
+            "index": 3,
+            "text": "son el pont entre"
+          },
+          {
+            "index": 4,
+            "text": "el problema i la"
+          },
+          {
+            "index": 5,
+            "text": "demo"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Les funcionalitats son el pont entre el problema i la demo",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Les funcionalitats son el pont entre el problema i la demo",
+              "fontSize": 24,
+              "typeface": "Aptos Display",
+              "color": "#12202B",
+              "bold": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/z61032ls",
+      "id": "20",
+      "bbox": [
+        740,
+        283.2,
+        199,
+        98.3
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.0.0.0.0.2"
+      },
+      "geometry": "rect",
+      "text": "No es tracta d’ensenyar totes les pantalles, sino de destacar allo que demostra valor real.",
+      "textPreview": "No es tracta d’ensenyar totes les pantalles, sino de destacar allo que demostra valor real.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "No es tracta d’ensenyar"
+          },
+          {
+            "index": 2,
+            "text": "totes les pantalles, sino de"
+          },
+          {
+            "index": 3,
+            "text": "destacar allo que demostra"
+          },
+          {
+            "index": 4,
+            "text": "valor real."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "No es tracta d’ensenyar totes les pantalles, sino de destacar allo que demostra valor real.",
+          "runs": [
+            {
+              "index": 1,
+              "text": "No es tracta d’ensenyar totes les pantalles, sino de destacar allo que demostra valor real.",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#5B6B77"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 21,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/al87ed8b",
+      "id": "21",
+      "bbox": [
+        740,
+        399.5,
+        199,
+        143.36
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.0.0.0.1"
+      },
+      "geometry": "roundRect",
+      "fillColor": "#1C5B4B"
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/hcrmhk3q",
+      "id": "22",
+      "bbox": [
+        756,
+        415.5,
+        167,
+        111.36
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.0.0.0.1.0"
+      },
+      "geometry": "rect",
+      "text": "Missatge clau: cada modul resol una necessitat concreta i prepara una demo facil d’entendre.",
+      "textPreview": "Missatge clau: cada modul resol una necessitat concreta i prepara una demo facil d’entendre.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "+mn-lt",
+        "bold": true,
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 5,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Missatge clau: cada"
+          },
+          {
+            "index": 2,
+            "text": "modul resol una"
+          },
+          {
+            "index": 3,
+            "text": "necessitat concreta i"
+          },
+          {
+            "index": 4,
+            "text": "prepara una demo"
+          },
+          {
+            "index": 5,
+            "text": "facil d’entendre."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Missatge clau: cada modul resol una necessitat concreta i prepara una demo facil d’entendre.",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Missatge clau: cada modul resol una necessitat concreta i prepara una demo facil d’entendre.",
+              "fontSize": 16,
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/orytsvu9",
+      "id": "23",
+      "bbox": [
+        981,
+        52,
+        247,
+        310
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.0.1"
+      },
+      "geometry": "roundRect",
+      "fillColor": "#F2E8DA"
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zupwb2hw",
+      "id": "24",
+      "bbox": [
+        1005,
+        76,
+        199,
+        18
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.0.1.0.0"
+      },
+      "geometry": "rect",
+      "text": "Flux de demo recomanat",
+      "textPreview": "Flux de demo recomanat",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "fontSize": 15,
+        "typeface": "+mn-lt",
+        "bold": true,
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Flux de demo recomanat"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Flux de demo recomanat",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Flux de demo recomanat",
+              "fontSize": 15,
+              "color": "#1C5B4B",
+              "bold": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 25,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/a9w3m94f",
+      "id": "25",
+      "bbox": [
+        1005,
+        162,
+        199,
+        57.6
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.0.1.0.1.0"
+      },
+      "geometry": "rect",
+      "text": "1. Flux public rapid",
+      "textPreview": "1. Flux public rapid",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "+mn-lt",
+        "bold": true,
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "1. Flux public"
+          },
+          {
+            "index": 2,
+            "text": "rapid"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "1. Flux public rapid",
+          "runs": [
+            {
+              "index": 1,
+              "text": "1. Flux public rapid",
+              "fontSize": 24,
+              "color": "#12202B",
+              "bold": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 26,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/h0fepkzu",
+      "id": "26",
+      "bbox": [
+        1005,
+        235.6,
+        199,
+        43.2
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.0.1.0.1.1"
+      },
+      "geometry": "rect",
+      "text": "2. Resultat o confirmacio",
+      "textPreview": "2. Resultat o confirmacio",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "fontSize": 18,
+        "typeface": "+mn-lt",
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "2. Resultat o"
+          },
+          {
+            "index": 2,
+            "text": "confirmacio"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "2. Resultat o confirmacio",
+          "runs": [
+            {
+              "index": 1,
+              "text": "2. Resultat o confirmacio",
+              "fontSize": 18,
+              "color": "#5B6B77"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 27,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sfil0rqd",
+      "id": "27",
+      "bbox": [
+        1005,
+        294.8,
+        199,
+        43.2
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.0.1.0.1.2"
+      },
+      "geometry": "rect",
+      "text": "3. Entrada al panell admin",
+      "textPreview": "3. Entrada al panell admin",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "fontSize": 18,
+        "typeface": "+mn-lt",
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "3. Entrada al panell"
+          },
+          {
+            "index": 2,
+            "text": "admin"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "3. Entrada al panell admin",
+          "runs": [
+            {
+              "index": 1,
+              "text": "3. Entrada al panell admin",
+              "fontSize": 18,
+              "color": "#5B6B77"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 28,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zqtcj6to",
+      "id": "28",
+      "bbox": [
+        716,
+        380,
+        512,
+        288
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.1"
+      },
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#D9E2E8",
+      "lineWidth": 1
+    },
+    {
+      "order": 29,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/65wjudg7",
+      "id": "29",
+      "bbox": [
+        740,
+        404,
+        223,
+        240
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.1.0.0"
+      },
+      "geometry": "roundRect",
+      "fillColor": "#DDEEE8"
+    },
+    {
+      "order": 30,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0je9cvix",
+      "id": "30",
+      "bbox": [
+        764,
+        428,
+        175,
+        18
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.1.0.0.0.0"
+      },
+      "geometry": "rect",
+      "text": "Exemple de valor public",
+      "textPreview": "Exemple de valor public",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "fontSize": 15,
+        "typeface": "+mn-lt",
+        "bold": true,
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Exemple de valor public"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Exemple de valor public",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Exemple de valor public",
+              "fontSize": 15,
+              "color": "#1C5B4B",
+              "bold": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 31,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/t47y1kre",
+      "id": "31",
+      "bbox": [
+        764,
+        458,
+        175,
+        60.48
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.1.0.0.0.1"
+      },
+      "geometry": "rect",
+      "text": "Reserva de cites",
+      "textPreview": "Reserva de cites",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Aptos Display",
+        "bold": true,
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Reserva de"
+          },
+          {
+            "index": 2,
+            "text": "cites"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Reserva de cites",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Reserva de cites",
+              "fontSize": 24,
+              "typeface": "Aptos Display",
+              "color": "#12202B",
+              "bold": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 32,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/idonyd0z",
+      "id": "32",
+      "bbox": [
+        764,
+        530.48,
+        175,
+        73.73
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.1.0.0.0.2"
+      },
+      "geometry": "rect",
+      "text": "Usuari tria servei, data i hora disponible; rep confirmacio i PDF.",
+      "textPreview": "Usuari tria servei, data i hora disponible; rep confirmacio i PDF.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Usuari tria servei, data i"
+          },
+          {
+            "index": 2,
+            "text": "hora disponible; rep"
+          },
+          {
+            "index": 3,
+            "text": "confirmacio i PDF."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Usuari tria servei, data i hora disponible; rep confirmacio i PDF.",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Usuari tria servei, data i hora disponible; rep confirmacio i PDF.",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#5B6B77"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 33,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/byhgn29g",
+      "id": "33",
+      "bbox": [
+        981,
+        404,
+        223,
+        240
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.1.0.1"
+      },
+      "geometry": "roundRect",
+      "fillColor": "#EEF1F8"
+    },
+    {
+      "order": 34,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0rqd4vmt",
+      "id": "34",
+      "bbox": [
+        1005,
+        428,
+        175,
+        18
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.1.0.1.0.0"
+      },
+      "geometry": "rect",
+      "text": "Exemple de valor intern",
+      "textPreview": "Exemple de valor intern",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "fontSize": 15,
+        "typeface": "+mn-lt",
+        "bold": true,
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Exemple de valor intern"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Exemple de valor intern",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Exemple de valor intern",
+              "fontSize": 15,
+              "color": "#163B57",
+              "bold": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 35,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tcj6tova",
+      "id": "35",
+      "bbox": [
+        1005,
+        458,
+        175,
+        30.24
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.1.0.1.0.1"
+      },
+      "geometry": "rect",
+      "text": "Panell admin",
+      "textPreview": "Panell admin",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Aptos Display",
+        "bold": true,
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Panell admin"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Panell admin",
+          "runs": [
+            {
+              "index": 1,
+              "text": "Panell admin",
+              "fontSize": 24,
+              "typeface": "Aptos Display",
+              "color": "#12202B",
+              "bold": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 36,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/il0rqd4v",
+      "id": "36",
+      "bbox": [
+        1005,
+        500.24,
+        175,
+        98.3
+      ],
+      "composeSource": {
+        "run": 1,
+        "path": "0.0.1.1.0.1.0.2"
+      },
+      "geometry": "rect",
+      "text": "L’equip pot gestionar serveis, horaris, tallers, usuaris i correus des d’un sol lloc.",
+      "textPreview": "L’equip pot gestionar serveis, horaris, tallers, usuaris i correus des d’un sol lloc.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "Aptos",
+        "alignment": "left"
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "L’equip pot gestionar"
+          },
+          {
+            "index": 2,
+            "text": "serveis, horaris, tallers,"
+          },
+          {
+            "index": 3,
+            "text": "usuaris i correus des"
+          },
+          {
+            "index": 4,
+            "text": "d’un sol lloc."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "L’equip pot gestionar serveis, horaris, tallers, usuaris i correus des d’un sol lloc.",
+          "runs": [
+            {
+              "index": 1,
+              "text": "L’equip pot gestionar serveis, horaris, tallers, usuaris i correus des d’un sol lloc.",
+              "fontSize": 16,
+              "typeface": "Aptos",
+              "color": "#5B6B77"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "composeRuns": [
+    {
+      "index": 1,
+      "frame": {
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "root": {
+        "path": "0",
+        "kind": "panel",
+        "requestedSize": {
+          "width": {
+            "mode": "fill",
+            "value": 1
+          },
+          "height": {
+            "mode": "fill",
+            "value": 1
+          }
+        },
+        "intrinsicSize": {
+          "width": 104,
+          "height": 104
+        },
+        "frame": {
+          "left": 0,
+          "top": 0,
+          "width": 1280,
+          "height": 720
+        },
+        "children": [
+          {
+            "path": "0.0",
+            "kind": "row",
+            "requestedSize": {
+              "width": {
+                "mode": "fill",
+                "value": 1
+              },
+              "height": {
+                "mode": "fill",
+                "value": 1
+              }
+            },
+            "intrinsicSize": {
+              "width": 664,
+              "height": 0
+            },
+            "frame": {
+              "left": 52,
+              "top": 52,
+              "width": 1176,
+              "height": 616
+            },
+            "children": [
+              {
+                "path": "0.0.0",
+                "kind": "column",
+                "requestedSize": {
+                  "width": {
+                    "mode": "fixed",
+                    "value": 640
+                  },
+                  "height": {
+                    "mode": "fill",
+                    "value": 1
+                  }
+                },
+                "intrinsicSize": {
+                  "width": 265.32,
+                  "height": 406.04
+                },
+                "frame": {
+                  "left": 52,
+                  "top": 52,
+                  "width": 640,
+                  "height": 616
+                },
+                "children": [
+                  {
+                    "path": "0.0.0.0",
+                    "kind": "panel",
+                    "requestedSize": {
+                      "width": {
+                        "mode": "hug"
+                      },
+                      "height": {
+                        "mode": "hug"
+                      }
+                    },
+                    "intrinsicSize": {
+                      "width": 265.32,
+                      "height": 32.8
+                    },
+                    "frame": {
+                      "left": 52,
+                      "top": 52,
+                      "width": 265.32,
+                      "height": 49.6
+                    },
+                    "children": [
+                      {
+                        "path": "0.0.0.0.0",
+                        "kind": "text",
+                        "requestedSize": {
+                          "width": {
+                            "mode": "hug"
+                          },
+                          "height": {
+                            "mode": "hug"
+                          }
+                        },
+                        "intrinsicSize": {
+                          "width": 237.32,
+                          "height": 16.8
+                        },
+                        "frame": {
+                          "left": 66,
+                          "top": 60,
+                          "width": 237.32,
+                          "height": 33.6
+                        },
+                        "children": [],
+                        "text": "3 · FUNCIONALITATS DESTACADES",
+                        "transform": "none",
+                        "element": {
+                          "aid": "sh/3m94fu18",
+                          "id": "2",
+                          "kind": "shape"
+                        }
+                      }
+                    ],
+                    "padding": {
+                      "top": 8,
+                      "right": 14,
+                      "bottom": 8,
+                      "left": 14
+                    },
+                    "align": "start",
+                    "justify": "start",
+                    "contentFrame": {
+                      "left": 66,
+                      "top": 60,
+                      "width": 237.32,
+                      "height": 33.6
+                    },
+                    "element": {
+                      "aid": "sh/s72x4nap",
+                      "id": "1",
+                      "kind": "shape"
+                    }
+                  },
+                  {
+                    "path": "0.0.0.1",
+                    "kind": "text",
+                    "requestedSize": {
+                      "width": {
+                        "mode": "fill",
+                        "value": 1
+                      },
+                      "height": {
+                        "mode": "hug"
+                      }
+                    },
+                    "intrinsicSize": {
+                      "width": 0,
+                      "height": 39.06
+                    },
+                    "frame": {
+                      "left": 52,
+                      "top": 119.6,
+                      "width": 640,
+                      "height": 39.06
+                    },
+                    "children": [],
+                    "text": "El valor practic del projecte",
+                    "transform": "none",
+                    "element": {
+                      "aid": "sh/a5gbq1or",
+                      "id": "3",
+                      "kind": "shape"
+                    }
+                  },
+                  {
+                    "path": "0.0.0.2",
+                    "kind": "text",
+                    "requestedSize": {
+                      "width": {
+                        "mode": "fill",
+                        "value": 1
+                      },
+                      "height": {
+                        "mode": "hug"
+                      }
+                    },
+                    "intrinsicSize": {
+                      "width": 0,
+                      "height": 26.11
+                    },
+                    "frame": {
+                      "left": 52,
+                      "top": 176.66,
+                      "width": 640,
+                      "height": 52.22
+                    },
+                    "children": [],
+                    "text": "Aquestes son les funcionalitats que expliquen millor per que la plataforma es util i demo-ready.",
+                    "transform": "none",
+                    "element": {
+                      "aid": "sh/h4byhgn2",
+                      "id": "4",
+                      "kind": "shape"
+                    }
+                  },
+                  {
+                    "path": "0.0.0.3",
+                    "kind": "column",
+                    "requestedSize": {
+                      "width": {
+                        "mode": "fill",
+                        "value": 1
+                      },
+                      "height": {
+                        "mode": "hug"
+                      }
+                    },
+                    "intrinsicSize": {
+                      "width": 0,
+                      "height": 168
+                    },
+                    "frame": {
+                      "left": 52,
+                      "top": 246.88,
+                      "width": 640,
+                      "height": 168
+                    },
+                    "children": [
+                      {
+                        "path": "0.0.0.3.0",
+                        "kind": "row",
+                        "requestedSize": {
+                          "width": {
+                            "mode": "fill",
+                            "value": 1
+                          },
+                          "height": {
+                            "mode": "hug"
+                          }
+                        },
+                        "intrinsicSize": {
+                          "width": 20,
+                          "height": 24
+                        },
+                        "frame": {
+                          "left": 52,
+                          "top": 246.88,
+                          "width": 640,
+                          "height": 24
+                        },
+                        "children": [
+                          {
+                            "path": "0.0.0.3.0.0",
+                            "kind": "shape",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fixed",
+                                "value": 8
+                              },
+                              "height": {
+                                "mode": "fixed",
+                                "value": 8
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 8,
+                              "height": 8
+                            },
+                            "frame": {
+                              "left": 52,
+                              "top": 246.88,
+                              "width": 8,
+                              "height": 8
+                            },
+                            "children": [],
+                            "geometry": "ellipse",
+                            "element": {
+                              "aid": "sh/sji5snel",
+                              "id": "5",
+                              "kind": "shape"
+                            }
+                          },
+                          {
+                            "path": "0.0.0.3.0.1",
+                            "kind": "text",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fill",
+                                "value": 1
+                              },
+                              "height": {
+                                "mode": "hug"
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 0,
+                              "height": 24
+                            },
+                            "frame": {
+                              "left": 72,
+                              "top": 246.88,
+                              "width": 620,
+                              "height": 24
+                            },
+                            "children": [],
+                            "text": "Cites: seleccio de servei, data i hora disponibles, confirmacio per correu i PDF.",
+                            "transform": "none",
+                            "element": {
+                              "aid": "sh/3ylc7u54",
+                              "id": "6",
+                              "kind": "shape"
+                            }
+                          }
+                        ],
+                        "padding": {
+                          "top": 0,
+                          "right": 0,
+                          "bottom": 0,
+                          "left": 0
+                        },
+                        "gap": 12,
+                        "effectiveGap": 12,
+                        "justifyOffset": 0,
+                        "align": "start",
+                        "justify": "start",
+                        "contentFrame": {
+                          "left": 52,
+                          "top": 246.88,
+                          "width": 640,
+                          "height": 24
+                        },
+                        "items": [
+                          {
+                            "path": "0.0.0.3.0.0",
+                            "frame": {
+                              "left": 52,
+                              "top": 246.88,
+                              "width": 8,
+                              "height": 8
+                            }
+                          },
+                          {
+                            "path": "0.0.0.3.0.1",
+                            "frame": {
+                              "left": 72,
+                              "top": 246.88,
+                              "width": 620,
+                              "height": 24
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "path": "0.0.0.3.1",
+                        "kind": "row",
+                        "requestedSize": {
+                          "width": {
+                            "mode": "fill",
+                            "value": 1
+                          },
+                          "height": {
+                            "mode": "hug"
+                          }
+                        },
+                        "intrinsicSize": {
+                          "width": 20,
+                          "height": 24
+                        },
+                        "frame": {
+                          "left": 52,
+                          "top": 282.88,
+                          "width": 640,
+                          "height": 24
+                        },
+                        "children": [
+                          {
+                            "path": "0.0.0.3.1.0",
+                            "kind": "shape",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fixed",
+                                "value": 8
+                              },
+                              "height": {
+                                "mode": "fixed",
+                                "value": 8
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 8,
+                              "height": 8
+                            },
+                            "frame": {
+                              "left": 52,
+                              "top": 282.88,
+                              "width": 8,
+                              "height": 8
+                            },
+                            "children": [],
+                            "geometry": "ellipse",
+                            "element": {
+                              "aid": "sh/adsji5sn",
+                              "id": "7",
+                              "kind": "shape"
+                            }
+                          },
+                          {
+                            "path": "0.0.0.3.1.1",
+                            "kind": "text",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fill",
+                                "value": 1
+                              },
+                              "height": {
+                                "mode": "hug"
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 0,
+                              "height": 24
+                            },
+                            "frame": {
+                              "left": 72,
+                              "top": 282.88,
+                              "width": 620,
+                              "height": 24
+                            },
+                            "children": [],
+                            "text": "Tallers: inscripcio publica amb control de places.",
+                            "transform": "none",
+                            "element": {
+                              "aid": "sh/hgn29gr2",
+                              "id": "8",
+                              "kind": "shape"
+                            }
+                          }
+                        ],
+                        "padding": {
+                          "top": 0,
+                          "right": 0,
+                          "bottom": 0,
+                          "left": 0
+                        },
+                        "gap": 12,
+                        "effectiveGap": 12,
+                        "justifyOffset": 0,
+                        "align": "start",
+                        "justify": "start",
+                        "contentFrame": {
+                          "left": 52,
+                          "top": 282.88,
+                          "width": 640,
+                          "height": 24
+                        },
+                        "items": [
+                          {
+                            "path": "0.0.0.3.1.0",
+                            "frame": {
+                              "left": 52,
+                              "top": 282.88,
+                              "width": 8,
+                              "height": 8
+                            }
+                          },
+                          {
+                            "path": "0.0.0.3.1.1",
+                            "frame": {
+                              "left": 72,
+                              "top": 282.88,
+                              "width": 620,
+                              "height": 24
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "path": "0.0.0.3.2",
+                        "kind": "row",
+                        "requestedSize": {
+                          "width": {
+                            "mode": "fill",
+                            "value": 1
+                          },
+                          "height": {
+                            "mode": "hug"
+                          }
+                        },
+                        "intrinsicSize": {
+                          "width": 20,
+                          "height": 24
+                        },
+                        "frame": {
+                          "left": 52,
+                          "top": 318.88,
+                          "width": 640,
+                          "height": 24
+                        },
+                        "children": [
+                          {
+                            "path": "0.0.0.3.2.0",
+                            "kind": "shape",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fixed",
+                                "value": 8
+                              },
+                              "height": {
+                                "mode": "fixed",
+                                "value": 8
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 8,
+                              "height": 8
+                            },
+                            "frame": {
+                              "left": 52,
+                              "top": 318.88,
+                              "width": 8,
+                              "height": 8
+                            },
+                            "children": [],
+                            "geometry": "ellipse",
+                            "element": {
+                              "aid": "sh/svu9knih",
+                              "id": "9",
+                              "kind": "shape"
+                            }
+                          },
+                          {
+                            "path": "0.0.0.3.2.1",
+                            "kind": "text",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fill",
+                                "value": 1
+                              },
+                              "height": {
+                                "mode": "hug"
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 0,
+                              "height": 24
+                            },
+                            "frame": {
+                              "left": 72,
+                              "top": 318.88,
+                              "width": 620,
+                              "height": 24
+                            },
+                            "children": [],
+                            "text": "Encarrecs: codi de seguiment per consultar l’estat.",
+                            "transform": "none",
+                            "element": {
+                              "aid": "sh/ed8bat47",
+                              "id": "10",
+                              "kind": "shape"
+                            }
+                          }
+                        ],
+                        "padding": {
+                          "top": 0,
+                          "right": 0,
+                          "bottom": 0,
+                          "left": 0
+                        },
+                        "gap": 12,
+                        "effectiveGap": 12,
+                        "justifyOffset": 0,
+                        "align": "start",
+                        "justify": "start",
+                        "contentFrame": {
+                          "left": 52,
+                          "top": 318.88,
+                          "width": 640,
+                          "height": 24
+                        },
+                        "items": [
+                          {
+                            "path": "0.0.0.3.2.0",
+                            "frame": {
+                              "left": 52,
+                              "top": 318.88,
+                              "width": 8,
+                              "height": 8
+                            }
+                          },
+                          {
+                            "path": "0.0.0.3.2.1",
+                            "frame": {
+                              "left": 72,
+                              "top": 318.88,
+                              "width": 620,
+                              "height": 24
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "path": "0.0.0.3.3",
+                        "kind": "row",
+                        "requestedSize": {
+                          "width": {
+                            "mode": "fill",
+                            "value": 1
+                          },
+                          "height": {
+                            "mode": "hug"
+                          }
+                        },
+                        "intrinsicSize": {
+                          "width": 20,
+                          "height": 24
+                        },
+                        "frame": {
+                          "left": 52,
+                          "top": 354.88,
+                          "width": 640,
+                          "height": 24
+                        },
+                        "children": [
+                          {
+                            "path": "0.0.0.3.3.0",
+                            "kind": "shape",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fixed",
+                                "value": 8
+                              },
+                              "height": {
+                                "mode": "fixed",
+                                "value": 8
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 8,
+                              "height": 8
+                            },
+                            "frame": {
+                              "left": 52,
+                              "top": 354.88,
+                              "width": 8,
+                              "height": 8
+                            },
+                            "children": [],
+                            "geometry": "ellipse",
+                            "element": {
+                              "aid": "sh/7u54zido",
+                              "id": "11",
+                              "kind": "shape"
+                            }
+                          },
+                          {
+                            "path": "0.0.0.3.3.1",
+                            "kind": "text",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fill",
+                                "value": 1
+                              },
+                              "height": {
+                                "mode": "hug"
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 0,
+                              "height": 24
+                            },
+                            "frame": {
+                              "left": 72,
+                              "top": 354.88,
+                              "width": 620,
+                              "height": 24
+                            },
+                            "children": [],
+                            "text": "Farmacies de guardia: mapa interactiu segons la data.",
+                            "transform": "none",
+                            "element": {
+                              "aid": "sh/wfyxobm5",
+                              "id": "12",
+                              "kind": "shape"
+                            }
+                          }
+                        ],
+                        "padding": {
+                          "top": 0,
+                          "right": 0,
+                          "bottom": 0,
+                          "left": 0
+                        },
+                        "gap": 12,
+                        "effectiveGap": 12,
+                        "justifyOffset": 0,
+                        "align": "start",
+                        "justify": "start",
+                        "contentFrame": {
+                          "left": 52,
+                          "top": 354.88,
+                          "width": 640,
+                          "height": 24
+                        },
+                        "items": [
+                          {
+                            "path": "0.0.0.3.3.0",
+                            "frame": {
+                              "left": 52,
+                              "top": 354.88,
+                              "width": 8,
+                              "height": 8
+                            }
+                          },
+                          {
+                            "path": "0.0.0.3.3.1",
+                            "frame": {
+                              "left": 72,
+                              "top": 354.88,
+                              "width": 620,
+                              "height": 24
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "path": "0.0.0.3.4",
+                        "kind": "row",
+                        "requestedSize": {
+                          "width": {
+                            "mode": "fill",
+                            "value": 1
+                          },
+                          "height": {
+                            "mode": "hug"
+                          }
+                        },
+                        "intrinsicSize": {
+                          "width": 20,
+                          "height": 24
+                        },
+                        "frame": {
+                          "left": 52,
+                          "top": 390.88,
+                          "width": 640,
+                          "height": 24
+                        },
+                        "children": [
+                          {
+                            "path": "0.0.0.3.4.0",
+                            "kind": "shape",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fixed",
+                                "value": 8
+                              },
+                              "height": {
+                                "mode": "fixed",
+                                "value": 8
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 8,
+                              "height": 8
+                            },
+                            "frame": {
+                              "left": 52,
+                              "top": 390.88,
+                              "width": 8,
+                              "height": 8
+                            },
+                            "children": [],
+                            "geometry": "ellipse",
+                            "element": {
+                              "aid": "sh/l0rqd4vm",
+                              "id": "13",
+                              "kind": "shape"
+                            }
+                          },
+                          {
+                            "path": "0.0.0.3.4.1",
+                            "kind": "text",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fill",
+                                "value": 1
+                              },
+                              "height": {
+                                "mode": "hug"
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 0,
+                              "height": 24
+                            },
+                            "frame": {
+                              "left": 72,
+                              "top": 390.88,
+                              "width": 620,
+                              "height": 24
+                            },
+                            "children": [],
+                            "text": "Admin: gestio de serveis, horaris, usuaris, tallers i correus.",
+                            "transform": "none",
+                            "element": {
+                              "aid": "sh/eloj2t83",
+                              "id": "14",
+                              "kind": "shape"
+                            }
+                          }
+                        ],
+                        "padding": {
+                          "top": 0,
+                          "right": 0,
+                          "bottom": 0,
+                          "left": 0
+                        },
+                        "gap": 12,
+                        "effectiveGap": 12,
+                        "justifyOffset": 0,
+                        "align": "start",
+                        "justify": "start",
+                        "contentFrame": {
+                          "left": 52,
+                          "top": 390.88,
+                          "width": 640,
+                          "height": 24
+                        },
+                        "items": [
+                          {
+                            "path": "0.0.0.3.4.0",
+                            "frame": {
+                              "left": 52,
+                              "top": 390.88,
+                              "width": 8,
+                              "height": 8
+                            }
+                          },
+                          {
+                            "path": "0.0.0.3.4.1",
+                            "frame": {
+                              "left": 72,
+                              "top": 390.88,
+                              "width": 620,
+                              "height": 24
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "padding": {
+                      "top": 0,
+                      "right": 0,
+                      "bottom": 0,
+                      "left": 0
+                    },
+                    "gap": 12,
+                    "effectiveGap": 12,
+                    "justifyOffset": 0,
+                    "align": "start",
+                    "justify": "start",
+                    "contentFrame": {
+                      "left": 52,
+                      "top": 246.88,
+                      "width": 640,
+                      "height": 168
+                    },
+                    "items": [
+                      {
+                        "path": "0.0.0.3.0",
+                        "frame": {
+                          "left": 52,
+                          "top": 246.88,
+                          "width": 640,
+                          "height": 24
+                        }
+                      },
+                      {
+                        "path": "0.0.0.3.1",
+                        "frame": {
+                          "left": 52,
+                          "top": 282.88,
+                          "width": 640,
+                          "height": 24
+                        }
+                      },
+                      {
+                        "path": "0.0.0.3.2",
+                        "frame": {
+                          "left": 52,
+                          "top": 318.88,
+                          "width": 640,
+                          "height": 24
+                        }
+                      },
+                      {
+                        "path": "0.0.0.3.3",
+                        "frame": {
+                          "left": 52,
+                          "top": 354.88,
+                          "width": 640,
+                          "height": 24
+                        }
+                      },
+                      {
+                        "path": "0.0.0.3.4",
+                        "frame": {
+                          "left": 52,
+                          "top": 390.88,
+                          "width": 640,
+                          "height": 24
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "path": "0.0.0.4",
+                    "kind": "panel",
+                    "requestedSize": {
+                      "width": {
+                        "mode": "fill",
+                        "value": 1
+                      },
+                      "height": {
+                        "mode": "hug"
+                      }
+                    },
+                    "intrinsicSize": {
+                      "width": 44,
+                      "height": 68.07
+                    },
+                    "frame": {
+                      "left": 52,
+                      "top": 432.88,
+                      "width": 640,
+                      "height": 92.14
+                    },
+                    "children": [
+                      {
+                        "path": "0.0.0.4.0",
+                        "kind": "text",
+                        "requestedSize": {
+                          "width": {
+                            "mode": "fill",
+                            "value": 1
+                          },
+                          "height": {
+                            "mode": "hug"
+                          }
+                        },
+                        "intrinsicSize": {
+                          "width": 0,
+                          "height": 24.07
+                        },
+                        "frame": {
+                          "left": 74,
+                          "top": 454.88,
+                          "width": 596,
+                          "height": 48.14
+                        },
+                        "children": [],
+                        "text": "Aquestes funcionalitats no les explicarem totes a fons ara: les deixem preparades per veure-les millor a la demo.",
+                        "transform": "none",
+                        "element": {
+                          "aid": "sh/wra5gbq1",
+                          "id": "16",
+                          "kind": "shape"
+                        }
+                      }
+                    ],
+                    "padding": {
+                      "top": 22,
+                      "right": 22,
+                      "bottom": 22,
+                      "left": 22
+                    },
+                    "align": "start",
+                    "justify": "start",
+                    "contentFrame": {
+                      "left": 74,
+                      "top": 454.88,
+                      "width": 596,
+                      "height": 48.14
+                    },
+                    "element": {
+                      "aid": "sh/36hcrmhk",
+                      "id": "15",
+                      "kind": "shape"
+                    }
+                  }
+                ],
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "gap": 18,
+                "effectiveGap": 18,
+                "justifyOffset": 0,
+                "align": "start",
+                "justify": "start",
+                "contentFrame": {
+                  "left": 52,
+                  "top": 52,
+                  "width": 640,
+                  "height": 616
+                },
+                "items": [
+                  {
+                    "path": "0.0.0.0",
+                    "frame": {
+                      "left": 52,
+                      "top": 52,
+                      "width": 265.32,
+                      "height": 49.6
+                    }
+                  },
+                  {
+                    "path": "0.0.0.1",
+                    "frame": {
+                      "left": 52,
+                      "top": 119.6,
+                      "width": 640,
+                      "height": 39.06
+                    }
+                  },
+                  {
+                    "path": "0.0.0.2",
+                    "frame": {
+                      "left": 52,
+                      "top": 176.66,
+                      "width": 640,
+                      "height": 52.22
+                    }
+                  },
+                  {
+                    "path": "0.0.0.3",
+                    "frame": {
+                      "left": 52,
+                      "top": 246.88,
+                      "width": 640,
+                      "height": 168
+                    }
+                  },
+                  {
+                    "path": "0.0.0.4",
+                    "frame": {
+                      "left": 52,
+                      "top": 432.88,
+                      "width": 640,
+                      "height": 92.14
+                    }
+                  }
+                ]
+              },
+              {
+                "path": "0.0.1",
+                "kind": "column",
+                "requestedSize": {
+                  "width": {
+                    "mode": "fill",
+                    "value": 1
+                  },
+                  "height": {
+                    "mode": "fill",
+                    "value": 1
+                  }
+                },
+                "intrinsicSize": {
+                  "width": 0,
+                  "height": 328
+                },
+                "frame": {
+                  "left": 716,
+                  "top": 52,
+                  "width": 512,
+                  "height": 616
+                },
+                "children": [
+                  {
+                    "path": "0.0.1.0",
+                    "kind": "row",
+                    "requestedSize": {
+                      "width": {
+                        "mode": "fill",
+                        "value": 1
+                      },
+                      "height": {
+                        "mode": "fixed",
+                        "value": 310
+                      }
+                    },
+                    "intrinsicSize": {
+                      "width": 18,
+                      "height": 0
+                    },
+                    "frame": {
+                      "left": 716,
+                      "top": 52,
+                      "width": 512,
+                      "height": 310
+                    },
+                    "children": [
+                      {
+                        "path": "0.0.1.0.0",
+                        "kind": "panel",
+                        "requestedSize": {
+                          "width": {
+                            "mode": "fill",
+                            "value": 1
+                          },
+                          "height": {
+                            "mode": "fill",
+                            "value": 1
+                          }
+                        },
+                        "intrinsicSize": {
+                          "width": 48,
+                          "height": 48
+                        },
+                        "frame": {
+                          "left": 716,
+                          "top": 52,
+                          "width": 247,
+                          "height": 310
+                        },
+                        "children": [
+                          {
+                            "path": "0.0.1.0.0.0",
+                            "kind": "column",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fill",
+                                "value": 1
+                              },
+                              "height": {
+                                "mode": "fill",
+                                "value": 1
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 0,
+                              "height": 165.09
+                            },
+                            "frame": {
+                              "left": 740,
+                              "top": 76,
+                              "width": 199,
+                              "height": 262
+                            },
+                            "children": [
+                              {
+                                "path": "0.0.1.0.0.0.0",
+                                "kind": "column",
+                                "requestedSize": {
+                                  "width": {
+                                    "mode": "fill",
+                                    "value": 1
+                                  },
+                                  "height": {
+                                    "mode": "hug"
+                                  }
+                                },
+                                "intrinsicSize": {
+                                  "width": 0,
+                                  "height": 92.82
+                                },
+                                "frame": {
+                                  "left": 740,
+                                  "top": 76,
+                                  "width": 199,
+                                  "height": 305.5
+                                },
+                                "children": [
+                                  {
+                                    "path": "0.0.1.0.0.0.0.0",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 18
+                                    },
+                                    "frame": {
+                                      "left": 740,
+                                      "top": 76,
+                                      "width": 199,
+                                      "height": 36
+                                    },
+                                    "children": [],
+                                    "text": "Per que aquesta slide importa",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/epkzupwb",
+                                      "id": "18",
+                                      "kind": "shape"
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.0.0.0.0.1",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 30.24
+                                    },
+                                    "frame": {
+                                      "left": 740,
+                                      "top": 122,
+                                      "width": 199,
+                                      "height": 151.2
+                                    },
+                                    "children": [],
+                                    "text": "Les funcionalitats son el pont entre el problema i la demo",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/7adsji5s",
+                                      "id": "19",
+                                      "kind": "shape"
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.0.0.0.0.2",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 24.58
+                                    },
+                                    "frame": {
+                                      "left": 740,
+                                      "top": 283.2,
+                                      "width": 199,
+                                      "height": 98.3
+                                    },
+                                    "children": [],
+                                    "text": "No es tracta d’ensenyar totes les pantalles, sino de destacar allo que demostra valor real.",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/z61032ls",
+                                      "id": "20",
+                                      "kind": "shape"
+                                    }
+                                  }
+                                ],
+                                "padding": {
+                                  "top": 0,
+                                  "right": 0,
+                                  "bottom": 0,
+                                  "left": 0
+                                },
+                                "gap": 10,
+                                "effectiveGap": 10,
+                                "justifyOffset": 0,
+                                "align": "start",
+                                "justify": "start",
+                                "contentFrame": {
+                                  "left": 740,
+                                  "top": 76,
+                                  "width": 199,
+                                  "height": 305.5
+                                },
+                                "items": [
+                                  {
+                                    "path": "0.0.1.0.0.0.0.0",
+                                    "frame": {
+                                      "left": 740,
+                                      "top": 76,
+                                      "width": 199,
+                                      "height": 36
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.0.0.0.0.1",
+                                    "frame": {
+                                      "left": 740,
+                                      "top": 122,
+                                      "width": 199,
+                                      "height": 151.2
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.0.0.0.0.2",
+                                    "frame": {
+                                      "left": 740,
+                                      "top": 283.2,
+                                      "width": 199,
+                                      "height": 98.3
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "path": "0.0.1.0.0.0.1",
+                                "kind": "panel",
+                                "requestedSize": {
+                                  "width": {
+                                    "mode": "fill",
+                                    "value": 1
+                                  },
+                                  "height": {
+                                    "mode": "hug"
+                                  }
+                                },
+                                "intrinsicSize": {
+                                  "width": 32,
+                                  "height": 54.27
+                                },
+                                "frame": {
+                                  "left": 740,
+                                  "top": 399.5,
+                                  "width": 199,
+                                  "height": 143.36
+                                },
+                                "children": [
+                                  {
+                                    "path": "0.0.1.0.0.0.1.0",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 22.27
+                                    },
+                                    "frame": {
+                                      "left": 756,
+                                      "top": 415.5,
+                                      "width": 167,
+                                      "height": 111.36
+                                    },
+                                    "children": [],
+                                    "text": "Missatge clau: cada modul resol una necessitat concreta i prepara una demo facil d’entendre.",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/hcrmhk3q",
+                                      "id": "22",
+                                      "kind": "shape"
+                                    }
+                                  }
+                                ],
+                                "padding": {
+                                  "top": 16,
+                                  "right": 16,
+                                  "bottom": 16,
+                                  "left": 16
+                                },
+                                "align": "start",
+                                "justify": "start",
+                                "contentFrame": {
+                                  "left": 756,
+                                  "top": 415.5,
+                                  "width": 167,
+                                  "height": 111.36
+                                },
+                                "element": {
+                                  "aid": "sh/al87ed8b",
+                                  "id": "21",
+                                  "kind": "shape"
+                                }
+                              }
+                            ],
+                            "padding": {
+                              "top": 0,
+                              "right": 0,
+                              "bottom": 0,
+                              "left": 0
+                            },
+                            "gap": 18,
+                            "effectiveGap": 18,
+                            "justifyOffset": 0,
+                            "align": "start",
+                            "justify": "between",
+                            "contentFrame": {
+                              "left": 740,
+                              "top": 76,
+                              "width": 199,
+                              "height": 262
+                            },
+                            "items": [
+                              {
+                                "path": "0.0.1.0.0.0.0",
+                                "frame": {
+                                  "left": 740,
+                                  "top": 76,
+                                  "width": 199,
+                                  "height": 305.5
+                                }
+                              },
+                              {
+                                "path": "0.0.1.0.0.0.1",
+                                "frame": {
+                                  "left": 740,
+                                  "top": 399.5,
+                                  "width": 199,
+                                  "height": 143.36
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "padding": {
+                          "top": 24,
+                          "right": 24,
+                          "bottom": 24,
+                          "left": 24
+                        },
+                        "align": "start",
+                        "justify": "start",
+                        "contentFrame": {
+                          "left": 740,
+                          "top": 76,
+                          "width": 199,
+                          "height": 262
+                        },
+                        "element": {
+                          "aid": "sh/lc7u54zi",
+                          "id": "17",
+                          "kind": "shape"
+                        }
+                      },
+                      {
+                        "path": "0.0.1.0.1",
+                        "kind": "panel",
+                        "requestedSize": {
+                          "width": {
+                            "mode": "fill",
+                            "value": 1
+                          },
+                          "height": {
+                            "mode": "fill",
+                            "value": 1
+                          }
+                        },
+                        "intrinsicSize": {
+                          "width": 48,
+                          "height": 48
+                        },
+                        "frame": {
+                          "left": 981,
+                          "top": 52,
+                          "width": 247,
+                          "height": 310
+                        },
+                        "children": [
+                          {
+                            "path": "0.0.1.0.1.0",
+                            "kind": "column",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fill",
+                                "value": 1
+                              },
+                              "height": {
+                                "mode": "fill",
+                                "value": 1
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 0,
+                              "height": 140
+                            },
+                            "frame": {
+                              "left": 1005,
+                              "top": 76,
+                              "width": 199,
+                              "height": 262
+                            },
+                            "children": [
+                              {
+                                "path": "0.0.1.0.1.0.0",
+                                "kind": "text",
+                                "requestedSize": {
+                                  "width": {
+                                    "mode": "fill",
+                                    "value": 1
+                                  },
+                                  "height": {
+                                    "mode": "hug"
+                                  }
+                                },
+                                "intrinsicSize": {
+                                  "width": 0,
+                                  "height": 18
+                                },
+                                "frame": {
+                                  "left": 1005,
+                                  "top": 76,
+                                  "width": 199,
+                                  "height": 18
+                                },
+                                "children": [],
+                                "text": "Flux de demo recomanat",
+                                "transform": "none",
+                                "element": {
+                                  "aid": "sh/zupwb2hw",
+                                  "id": "24",
+                                  "kind": "shape"
+                                }
+                              },
+                              {
+                                "path": "0.0.1.0.1.0.1",
+                                "kind": "column",
+                                "requestedSize": {
+                                  "width": {
+                                    "mode": "fill",
+                                    "value": 1
+                                  },
+                                  "height": {
+                                    "mode": "hug"
+                                  }
+                                },
+                                "intrinsicSize": {
+                                  "width": 0,
+                                  "height": 104
+                                },
+                                "frame": {
+                                  "left": 1005,
+                                  "top": 162,
+                                  "width": 199,
+                                  "height": 176
+                                },
+                                "children": [
+                                  {
+                                    "path": "0.0.1.0.1.0.1.0",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 28.8
+                                    },
+                                    "frame": {
+                                      "left": 1005,
+                                      "top": 162,
+                                      "width": 199,
+                                      "height": 57.6
+                                    },
+                                    "children": [],
+                                    "text": "1. Flux public rapid",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/a9w3m94f",
+                                      "id": "25",
+                                      "kind": "shape"
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.0.1.0.1.1",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 21.6
+                                    },
+                                    "frame": {
+                                      "left": 1005,
+                                      "top": 235.6,
+                                      "width": 199,
+                                      "height": 43.2
+                                    },
+                                    "children": [],
+                                    "text": "2. Resultat o confirmacio",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/h0fepkzu",
+                                      "id": "26",
+                                      "kind": "shape"
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.0.1.0.1.2",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 21.6
+                                    },
+                                    "frame": {
+                                      "left": 1005,
+                                      "top": 294.8,
+                                      "width": 199,
+                                      "height": 43.2
+                                    },
+                                    "children": [],
+                                    "text": "3. Entrada al panell admin",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/sfil0rqd",
+                                      "id": "27",
+                                      "kind": "shape"
+                                    }
+                                  }
+                                ],
+                                "padding": {
+                                  "top": 0,
+                                  "right": 0,
+                                  "bottom": 0,
+                                  "left": 0
+                                },
+                                "gap": 16,
+                                "effectiveGap": 16,
+                                "justifyOffset": 0,
+                                "align": "start",
+                                "justify": "start",
+                                "contentFrame": {
+                                  "left": 1005,
+                                  "top": 162,
+                                  "width": 199,
+                                  "height": 176
+                                },
+                                "items": [
+                                  {
+                                    "path": "0.0.1.0.1.0.1.0",
+                                    "frame": {
+                                      "left": 1005,
+                                      "top": 162,
+                                      "width": 199,
+                                      "height": 57.6
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.0.1.0.1.1",
+                                    "frame": {
+                                      "left": 1005,
+                                      "top": 235.6,
+                                      "width": 199,
+                                      "height": 43.2
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.0.1.0.1.2",
+                                    "frame": {
+                                      "left": 1005,
+                                      "top": 294.8,
+                                      "width": 199,
+                                      "height": 43.2
+                                    }
+                                  }
+                                ]
+                              }
+                            ],
+                            "padding": {
+                              "top": 0,
+                              "right": 0,
+                              "bottom": 0,
+                              "left": 0
+                            },
+                            "gap": 18,
+                            "effectiveGap": 68,
+                            "justifyOffset": 0,
+                            "align": "start",
+                            "justify": "between",
+                            "contentFrame": {
+                              "left": 1005,
+                              "top": 76,
+                              "width": 199,
+                              "height": 262
+                            },
+                            "items": [
+                              {
+                                "path": "0.0.1.0.1.0.0",
+                                "frame": {
+                                  "left": 1005,
+                                  "top": 76,
+                                  "width": 199,
+                                  "height": 18
+                                }
+                              },
+                              {
+                                "path": "0.0.1.0.1.0.1",
+                                "frame": {
+                                  "left": 1005,
+                                  "top": 162,
+                                  "width": 199,
+                                  "height": 176
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "padding": {
+                          "top": 24,
+                          "right": 24,
+                          "bottom": 24,
+                          "left": 24
+                        },
+                        "align": "start",
+                        "justify": "start",
+                        "contentFrame": {
+                          "left": 1005,
+                          "top": 76,
+                          "width": 199,
+                          "height": 262
+                        },
+                        "element": {
+                          "aid": "sh/orytsvu9",
+                          "id": "23",
+                          "kind": "shape"
+                        }
+                      }
+                    ],
+                    "padding": {
+                      "top": 0,
+                      "right": 0,
+                      "bottom": 0,
+                      "left": 0
+                    },
+                    "gap": 18,
+                    "effectiveGap": 18,
+                    "justifyOffset": 0,
+                    "align": "start",
+                    "justify": "start",
+                    "contentFrame": {
+                      "left": 716,
+                      "top": 52,
+                      "width": 512,
+                      "height": 310
+                    },
+                    "items": [
+                      {
+                        "path": "0.0.1.0.0",
+                        "frame": {
+                          "left": 716,
+                          "top": 52,
+                          "width": 247,
+                          "height": 310
+                        }
+                      },
+                      {
+                        "path": "0.0.1.0.1",
+                        "frame": {
+                          "left": 981,
+                          "top": 52,
+                          "width": 247,
+                          "height": 310
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "path": "0.0.1.1",
+                    "kind": "panel",
+                    "requestedSize": {
+                      "width": {
+                        "mode": "fill",
+                        "value": 1
+                      },
+                      "height": {
+                        "mode": "fill",
+                        "value": 1
+                      }
+                    },
+                    "intrinsicSize": {
+                      "width": 48,
+                      "height": 48
+                    },
+                    "frame": {
+                      "left": 716,
+                      "top": 380,
+                      "width": 512,
+                      "height": 288
+                    },
+                    "children": [
+                      {
+                        "path": "0.0.1.1.0",
+                        "kind": "row",
+                        "requestedSize": {
+                          "width": {
+                            "mode": "fill",
+                            "value": 1
+                          },
+                          "height": {
+                            "mode": "fill",
+                            "value": 1
+                          }
+                        },
+                        "intrinsicSize": {
+                          "width": 18,
+                          "height": 0
+                        },
+                        "frame": {
+                          "left": 740,
+                          "top": 404,
+                          "width": 464,
+                          "height": 240
+                        },
+                        "children": [
+                          {
+                            "path": "0.0.1.1.0.0",
+                            "kind": "panel",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fill",
+                                "value": 1
+                              },
+                              "height": {
+                                "mode": "fill",
+                                "value": 1
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 48,
+                              "height": 144.82
+                            },
+                            "frame": {
+                              "left": 740,
+                              "top": 404,
+                              "width": 223,
+                              "height": 240
+                            },
+                            "children": [
+                              {
+                                "path": "0.0.1.1.0.0.0",
+                                "kind": "column",
+                                "requestedSize": {
+                                  "width": {
+                                    "mode": "fill",
+                                    "value": 1
+                                  },
+                                  "height": {
+                                    "mode": "hug"
+                                  }
+                                },
+                                "intrinsicSize": {
+                                  "width": 0,
+                                  "height": 96.82
+                                },
+                                "frame": {
+                                  "left": 764,
+                                  "top": 428,
+                                  "width": 175,
+                                  "height": 176.21
+                                },
+                                "children": [
+                                  {
+                                    "path": "0.0.1.1.0.0.0.0",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 18
+                                    },
+                                    "frame": {
+                                      "left": 764,
+                                      "top": 428,
+                                      "width": 175,
+                                      "height": 18
+                                    },
+                                    "children": [],
+                                    "text": "Exemple de valor public",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/0je9cvix",
+                                      "id": "30",
+                                      "kind": "shape"
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.1.0.0.0.1",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 30.24
+                                    },
+                                    "frame": {
+                                      "left": 764,
+                                      "top": 458,
+                                      "width": 175,
+                                      "height": 60.48
+                                    },
+                                    "children": [],
+                                    "text": "Reserva de cites",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/t47y1kre",
+                                      "id": "31",
+                                      "kind": "shape"
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.1.0.0.0.2",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 24.58
+                                    },
+                                    "frame": {
+                                      "left": 764,
+                                      "top": 530.48,
+                                      "width": 175,
+                                      "height": 73.73
+                                    },
+                                    "children": [],
+                                    "text": "Usuari tria servei, data i hora disponible; rep confirmacio i PDF.",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/idonyd0z",
+                                      "id": "32",
+                                      "kind": "shape"
+                                    }
+                                  }
+                                ],
+                                "padding": {
+                                  "top": 0,
+                                  "right": 0,
+                                  "bottom": 0,
+                                  "left": 0
+                                },
+                                "gap": 12,
+                                "effectiveGap": 12,
+                                "justifyOffset": 0,
+                                "align": "start",
+                                "justify": "start",
+                                "contentFrame": {
+                                  "left": 764,
+                                  "top": 428,
+                                  "width": 175,
+                                  "height": 176.21
+                                },
+                                "items": [
+                                  {
+                                    "path": "0.0.1.1.0.0.0.0",
+                                    "frame": {
+                                      "left": 764,
+                                      "top": 428,
+                                      "width": 175,
+                                      "height": 18
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.1.0.0.0.1",
+                                    "frame": {
+                                      "left": 764,
+                                      "top": 458,
+                                      "width": 175,
+                                      "height": 60.48
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.1.0.0.0.2",
+                                    "frame": {
+                                      "left": 764,
+                                      "top": 530.48,
+                                      "width": 175,
+                                      "height": 73.73
+                                    }
+                                  }
+                                ]
+                              }
+                            ],
+                            "padding": {
+                              "top": 24,
+                              "right": 24,
+                              "bottom": 24,
+                              "left": 24
+                            },
+                            "align": "start",
+                            "justify": "start",
+                            "contentFrame": {
+                              "left": 764,
+                              "top": 428,
+                              "width": 175,
+                              "height": 192
+                            },
+                            "element": {
+                              "aid": "sh/65wjudg7",
+                              "id": "29",
+                              "kind": "shape"
+                            }
+                          },
+                          {
+                            "path": "0.0.1.1.0.1",
+                            "kind": "panel",
+                            "requestedSize": {
+                              "width": {
+                                "mode": "fill",
+                                "value": 1
+                              },
+                              "height": {
+                                "mode": "fill",
+                                "value": 1
+                              }
+                            },
+                            "intrinsicSize": {
+                              "width": 48,
+                              "height": 144.82
+                            },
+                            "frame": {
+                              "left": 981,
+                              "top": 404,
+                              "width": 223,
+                              "height": 240
+                            },
+                            "children": [
+                              {
+                                "path": "0.0.1.1.0.1.0",
+                                "kind": "column",
+                                "requestedSize": {
+                                  "width": {
+                                    "mode": "fill",
+                                    "value": 1
+                                  },
+                                  "height": {
+                                    "mode": "hug"
+                                  }
+                                },
+                                "intrinsicSize": {
+                                  "width": 0,
+                                  "height": 96.82
+                                },
+                                "frame": {
+                                  "left": 1005,
+                                  "top": 428,
+                                  "width": 175,
+                                  "height": 170.54
+                                },
+                                "children": [
+                                  {
+                                    "path": "0.0.1.1.0.1.0.0",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 18
+                                    },
+                                    "frame": {
+                                      "left": 1005,
+                                      "top": 428,
+                                      "width": 175,
+                                      "height": 18
+                                    },
+                                    "children": [],
+                                    "text": "Exemple de valor intern",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/0rqd4vmt",
+                                      "id": "34",
+                                      "kind": "shape"
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.1.0.1.0.1",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 30.24
+                                    },
+                                    "frame": {
+                                      "left": 1005,
+                                      "top": 458,
+                                      "width": 175,
+                                      "height": 30.24
+                                    },
+                                    "children": [],
+                                    "text": "Panell admin",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/tcj6tova",
+                                      "id": "35",
+                                      "kind": "shape"
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.1.0.1.0.2",
+                                    "kind": "text",
+                                    "requestedSize": {
+                                      "width": {
+                                        "mode": "fill",
+                                        "value": 1
+                                      },
+                                      "height": {
+                                        "mode": "hug"
+                                      }
+                                    },
+                                    "intrinsicSize": {
+                                      "width": 0,
+                                      "height": 24.58
+                                    },
+                                    "frame": {
+                                      "left": 1005,
+                                      "top": 500.24,
+                                      "width": 175,
+                                      "height": 98.3
+                                    },
+                                    "children": [],
+                                    "text": "L’equip pot gestionar serveis, horaris, tallers, usuaris i correus des d’un sol lloc.",
+                                    "transform": "none",
+                                    "element": {
+                                      "aid": "sh/il0rqd4v",
+                                      "id": "36",
+                                      "kind": "shape"
+                                    }
+                                  }
+                                ],
+                                "padding": {
+                                  "top": 0,
+                                  "right": 0,
+                                  "bottom": 0,
+                                  "left": 0
+                                },
+                                "gap": 12,
+                                "effectiveGap": 12,
+                                "justifyOffset": 0,
+                                "align": "start",
+                                "justify": "start",
+                                "contentFrame": {
+                                  "left": 1005,
+                                  "top": 428,
+                                  "width": 175,
+                                  "height": 170.54
+                                },
+                                "items": [
+                                  {
+                                    "path": "0.0.1.1.0.1.0.0",
+                                    "frame": {
+                                      "left": 1005,
+                                      "top": 428,
+                                      "width": 175,
+                                      "height": 18
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.1.0.1.0.1",
+                                    "frame": {
+                                      "left": 1005,
+                                      "top": 458,
+                                      "width": 175,
+                                      "height": 30.24
+                                    }
+                                  },
+                                  {
+                                    "path": "0.0.1.1.0.1.0.2",
+                                    "frame": {
+                                      "left": 1005,
+                                      "top": 500.24,
+                                      "width": 175,
+                                      "height": 98.3
+                                    }
+                                  }
+                                ]
+                              }
+                            ],
+                            "padding": {
+                              "top": 24,
+                              "right": 24,
+                              "bottom": 24,
+                              "left": 24
+                            },
+                            "align": "start",
+                            "justify": "start",
+                            "contentFrame": {
+                              "left": 1005,
+                              "top": 428,
+                              "width": 175,
+                              "height": 192
+                            },
+                            "element": {
+                              "aid": "sh/byhgn29g",
+                              "id": "33",
+                              "kind": "shape"
+                            }
+                          }
+                        ],
+                        "padding": {
+                          "top": 0,
+                          "right": 0,
+                          "bottom": 0,
+                          "left": 0
+                        },
+                        "gap": 18,
+                        "effectiveGap": 18,
+                        "justifyOffset": 0,
+                        "align": "start",
+                        "justify": "start",
+                        "contentFrame": {
+                          "left": 740,
+                          "top": 404,
+                          "width": 464,
+                          "height": 240
+                        },
+                        "items": [
+                          {
+                            "path": "0.0.1.1.0.0",
+                            "frame": {
+                              "left": 740,
+                              "top": 404,
+                              "width": 223,
+                              "height": 240
+                            }
+                          },
+                          {
+                            "path": "0.0.1.1.0.1",
+                            "frame": {
+                              "left": 981,
+                              "top": 404,
+                              "width": 223,
+                              "height": 240
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "padding": {
+                      "top": 24,
+                      "right": 24,
+                      "bottom": 24,
+                      "left": 24
+                    },
+                    "align": "start",
+                    "justify": "start",
+                    "contentFrame": {
+                      "left": 740,
+                      "top": 404,
+                      "width": 464,
+                      "height": 240
+                    },
+                    "element": {
+                      "aid": "sh/zqtcj6to",
+                      "id": "28",
+                      "kind": "shape"
+                    }
+                  }
+                ],
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "gap": 18,
+                "effectiveGap": 18,
+                "justifyOffset": 0,
+                "align": "start",
+                "justify": "start",
+                "contentFrame": {
+                  "left": 716,
+                  "top": 52,
+                  "width": 512,
+                  "height": 616
+                },
+                "items": [
+                  {
+                    "path": "0.0.1.0",
+                    "frame": {
+                      "left": 716,
+                      "top": 52,
+                      "width": 512,
+                      "height": 310
+                    }
+                  },
+                  {
+                    "path": "0.0.1.1",
+                    "frame": {
+                      "left": 716,
+                      "top": 380,
+                      "width": 512,
+                      "height": 288
+                    }
+                  }
+                ]
+              }
+            ],
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "gap": 24,
+            "effectiveGap": 24,
+            "justifyOffset": 0,
+            "align": "start",
+            "justify": "start",
+            "contentFrame": {
+              "left": 52,
+              "top": 52,
+              "width": 1176,
+              "height": 616
+            },
+            "items": [
+              {
+                "path": "0.0.0",
+                "frame": {
+                  "left": 52,
+                  "top": 52,
+                  "width": 640,
+                  "height": 616
+                }
+              },
+              {
+                "path": "0.0.1",
+                "frame": {
+                  "left": 716,
+                  "top": 52,
+                  "width": 512,
+                  "height": 616
+                }
+              }
+            ]
+          }
+        ],
+        "padding": {
+          "top": 52,
+          "right": 52,
+          "bottom": 52,
+          "left": 52
+        },
+        "align": "start",
+        "justify": "start",
+        "contentFrame": {
+          "left": 52,
+          "top": 52,
+          "width": 1176,
+          "height": 616
+        }
+      }
+    }
+  ]
+}

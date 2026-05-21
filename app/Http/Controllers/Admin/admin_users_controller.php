@@ -6,9 +6,12 @@ use App\Concerns\PasswordValidationRules;
 use App\Concerns\ProfileValidationRules;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class admin_users_controller extends Controller
 {
@@ -54,7 +57,7 @@ class admin_users_controller extends Controller
             'password' => $validated['password'],
         ]);
 
-        return to_route('users.index')->with('message', 'Usuari creat correctament.');
+        return to_route('users.index')->with('success', 'Usuari creat correctament.');
     }
 
     /**
@@ -68,24 +71,56 @@ class admin_users_controller extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user): Response
     {
-        //
+        return Inertia::render('admin/Users/Edit', [
+            'user' => $user,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user): RedirectResponse
     {
-        //
+        $rules = [
+            'name' => $this->nameRules(),
+            'email' => $this->emailRules($user->id),
+            'role' => ['required', 'string', 'in:admin,superadmin'],
+        ];
+
+        if ($request->filled('password')) {
+            $rules['password'] = ['required', 'string', Password::default(), 'confirmed'];
+        }
+
+        $validated = $request->validate($rules);
+
+        $data = [
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'role' => $validated['role'],
+        ];
+
+        if (! empty($validated['password'])) {
+            $data['password'] = $validated['password'];
+        }
+
+        $user->update($data);
+
+        return to_route('users.index')->with('success', 'Usuari actualitzat correctament.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user): RedirectResponse
     {
-        //
+        if ($user->id === Auth::id()) {
+            return back()->withErrors(['general' => 'No pots eliminar el teu propi compte.']);
+        }
+
+        $user->delete();
+
+        return to_route('users.index')->with('success', 'Usuari eliminat correctament.');
     }
 }

@@ -1,0 +1,16 @@
+Sources used for this deck
+
+Repository facts
+- README.MD for project scope, modules, technology stack, and client context.
+- routes/web.php for route-level confirmation of public/admin capabilities.
+
+Verified identity assets
+- storage/app/public/FarmaciaSolerLogoLong.webp
+- storage/app/public/farmaciaSolerStore.webp
+- storage/app/public/vagaro-ckWrZO5sWOQ-unsplash.webp
+- storage/app/public/photos/workshops/J4n97bPH91AqzCMzsbc5g7cZriJDF7gzUjoBVVC0.png
+
+Use rationale
+- The logo and store photo anchor the deck to the real client.
+- The workshop image supports the workshop/health-services narrative without inventing visuals.
+- No unofficial logo redraws or lookalike marks were created.

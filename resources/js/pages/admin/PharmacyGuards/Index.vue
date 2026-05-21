@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Form, Head, usePage, router } from '@inertiajs/vue3';
+import { Plus, Trash2 } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
@@ -215,8 +216,9 @@ const resetDateFilter = () => {
                         <Button
                             type="submit"
                             :disabled="processing"
-                            class="bg-primary text-primary-foreground hover:bg-primary/90"
+                            class="group bg-primary text-primary-foreground hover:bg-primary/90"
                         >
+                            <Plus class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90" />
                             {{ processing ? 'Creant...' : 'Afegir guàrdia' }}
                         </Button>
                     </div>
@@ -311,10 +313,11 @@ const resetDateFilter = () => {
                                         <div class="flex justify-end">
                                             <button
                                                 type="button"
-                                                class="rounded-xl border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 transition hover:bg-red-100"
+                                                class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-red-50 hover:text-red-600"
+                                                aria-label="Eliminar guàrdia"
                                                 @click="removeGuard(guard.id)"
                                             >
-                                                Eliminar
+                                                <Trash2 class="h-4 w-4" />
                                             </button>
                                         </div>
                                     </td>
