@@ -64,7 +64,11 @@ onUnmounted(() => {
     >
         <span
             class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-            :class="type === 'success' ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'"
+            :class="
+                type === 'success'
+                    ? 'bg-emerald-100 text-emerald-600'
+                    : 'bg-rose-100 text-rose-600'
+            "
         >
             <svg
                 class="h-3.5 w-3.5"

@@ -51,12 +51,10 @@ class AdminServiceController extends Controller
         $validated = $request->validated();
         Service::create($validated);
 
-    
-
         return redirect()
             ->route('services.index')
             ->with('success', 'Servei creat correctament.');
-            
+
     }
 
     /**
@@ -65,7 +63,7 @@ class AdminServiceController extends Controller
     public function show($id)
     {
         $service = Service::with('schedules')->findOrFail($id);
-        
+
         return Inertia::render('admin/ServiceSchedules/Show', [
             'service' => $service,
         ]);
@@ -109,9 +107,9 @@ class AdminServiceController extends Controller
         $service = Service::findOrFail($id);
         $service->delete();
 
-       // Inertia::flash(['success' => 'Servei eliminat correctament.']);
+        // Inertia::flash(['success' => 'Servei eliminat correctament.']);
 
         return redirect()->back()
-        ->with('success', 'Servei eliminat correctament.');
+            ->with('success', 'Servei eliminat correctament.');
     }
 }

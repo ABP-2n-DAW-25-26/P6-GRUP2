@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
-
 class admin_workshops_controller extends Controller
 {
     /**
@@ -141,14 +140,15 @@ class admin_workshops_controller extends Controller
         return to_route('workshops.index')
             ->with('success', 'Taller eliminat correctament.');
     }
-    //Show inscriptions for a workshop 
-     public function inscriptions(Workshop $workshop)
+
+    // Show inscriptions for a workshop
+    public function inscriptions(Workshop $workshop)
     {
         $inscriptions = $workshop->inscriptions()
             ->select(['id', 'workshop_id', 'name', 'email', 'phone', 'created_at'])
             ->orderByDesc('created_at')
             ->get();
- 
+
         return Inertia::render('admin/Workshops/Inscriptions', [
             'workshop' => [
                 'id' => $workshop->id,
@@ -161,15 +161,16 @@ class admin_workshops_controller extends Controller
             'inscriptions' => $inscriptions,
         ]);
     }
-     public function destroyInscription(Workshop $workshop, WorkshopInscription $inscription)
+
+    public function destroyInscription(Workshop $workshop, WorkshopInscription $inscription)
     {
         // Make sure the inscription actually belongs to the given workshop.
         if ($inscription->workshop_id !== $workshop->id) {
             abort(404);
         }
- 
+
         $inscription->delete();
- 
+
         return to_route('workshops.inscriptions', $workshop->id)
             ->with('success', 'Inscripció eliminada correctament.');
     }

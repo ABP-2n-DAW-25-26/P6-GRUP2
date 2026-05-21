@@ -2,6 +2,7 @@
 import { Form, Head, router, usePage } from '@inertiajs/vue3';
 import { Plus, Trash2 } from 'lucide-vue-next';
 import { ref } from 'vue';
+import { watch } from 'vue';
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
@@ -14,7 +15,6 @@ import {
     index as pharmaciesIndex,
     store as pharmaciesStore,
 } from '@/routes/pharmacies';
-import { watch } from 'vue';
 
 interface Pharmacy {
     id: number;
@@ -84,7 +84,7 @@ const cancelDelete = () => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Farmàcies" />
 
-            <div
+        <div
             class="relative flex h-full flex-1 flex-col gap-6 overflow-x-auto p-4 md:p-6"
         >
             <!-- Decorative blurred gradients -->
@@ -120,17 +120,13 @@ const cancelDelete = () => {
                         >
                             Farmàcies
                         </h1>
-                        <p
-                            class="mt-2 max-w-xl text-sm text-muted-foreground"
-                        >
-                            Gestiona les farmàcies associades a la teva aplicació.
+                        <p class="mt-2 max-w-xl text-sm text-muted-foreground">
+                            Gestiona les farmàcies associades a la teva
+                            aplicació.
                         </p>
                     </div>
-
-               
                 </div>
             </div>
-         
 
             <!-- Flash -->
             <div
@@ -153,9 +149,7 @@ const cancelDelete = () => {
                 >
                     <!-- Name -->
                     <div class="grid gap-2 md:col-span-2">
-                        <Label for="name">
-                            Nom
-                        </Label>
+                        <Label for="name"> Nom </Label>
 
                         <Input
                             id="name"
@@ -171,9 +165,7 @@ const cancelDelete = () => {
 
                     <!-- Latitude -->
                     <div class="grid gap-2">
-                        <Label for="latitude">
-                            Latitud
-                        </Label>
+                        <Label for="latitude"> Latitud </Label>
 
                         <Input
                             id="latitude"
@@ -189,9 +181,7 @@ const cancelDelete = () => {
 
                     <!-- Longitude -->
                     <div class="grid gap-2">
-                        <Label for="longitude">
-                            Longitud
-                        </Label>
+                        <Label for="longitude"> Longitud </Label>
 
                         <Input
                             id="longitude"
@@ -206,20 +196,16 @@ const cancelDelete = () => {
                     </div>
 
                     <!-- Submit -->
-                    <div
-                        class="mt-2 flex justify-end md:col-span-2"
-                    >
+                    <div class="mt-2 flex justify-end md:col-span-2">
                         <Button
                             type="submit"
                             :disabled="processing"
                             class="group bg-primary text-primary-foreground hover:bg-primary/90"
                         >
-                            <Plus class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90" />
-                            {{
-                                processing
-                                    ? 'Creant...'
-                                    : 'Crear farmàcia'
-                            }}
+                            <Plus
+                                class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90"
+                            />
+                            {{ processing ? 'Creant...' : 'Crear farmàcia' }}
                         </Button>
                     </div>
                 </Form>
@@ -234,23 +220,17 @@ const cancelDelete = () => {
                     class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center"
                 >
                     <div>
-                        <h2
-                            class="text-lg font-semibold text-foreground"
-                        >
+                        <h2 class="text-lg font-semibold text-foreground">
                             Farmàcies registrades
                         </h2>
 
-                        <p
-                            class="text-sm text-muted-foreground"
-                        >
+                        <p class="text-sm text-muted-foreground">
                             Consulta i elimina farmàcies existents.
                         </p>
                     </div>
 
                     <!-- Search -->
-                    <div
-                        class="relative w-full sm:ml-auto sm:max-w-xs"
-                    >
+                    <div class="relative w-full sm:ml-auto sm:max-w-xs">
                         <svg
                             class="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground"
                             xmlns="http://www.w3.org/2000/svg"
@@ -323,9 +303,7 @@ const cancelDelete = () => {
                                 >
                                     <!-- Name -->
                                     <td class="px-6 py-4">
-                                        <div
-                                            class="flex items-center gap-3"
-                                        >
+                                        <div class="flex items-center gap-3">
                                             <div
                                                 class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary"
                                             >
@@ -345,16 +323,12 @@ const cancelDelete = () => {
                                     </td>
 
                                     <!-- Latitude -->
-                                    <td
-                                        class="px-6 py-4 text-muted-foreground"
-                                    >
+                                    <td class="px-6 py-4 text-muted-foreground">
                                         {{ pharmacy.latitude }}
                                     </td>
 
                                     <!-- Longitude -->
-                                    <td
-                                        class="px-6 py-4 text-muted-foreground"
-                                    >
+                                    <td class="px-6 py-4 text-muted-foreground">
                                         {{ pharmacy.longitude }}
                                     </td>
 
@@ -365,7 +339,9 @@ const cancelDelete = () => {
                                                 type="button"
                                                 class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-red-50 hover:text-red-600"
                                                 aria-label="Eliminar farmàcia"
-                                                @click="removePharmacy(pharmacy.id)"
+                                                @click="
+                                                    removePharmacy(pharmacy.id)
+                                                "
                                             >
                                                 <Trash2 class="h-4 w-4" />
                                             </button>
@@ -374,9 +350,7 @@ const cancelDelete = () => {
                                 </tr>
 
                                 <!-- Empty -->
-                                <tr
-                                    v-if="pharmaciesData.length === 0"
-                                >
+                                <tr v-if="pharmaciesData.length === 0">
                                     <td
                                         colspan="4"
                                         class="px-6 py-12 text-center text-sm text-muted-foreground"

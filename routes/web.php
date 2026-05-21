@@ -78,4 +78,4 @@ Route::post('/workshops/{workshop}/inscribe', [public_workshops_controller::clas
 //
 Route::get('/contact-us', [Contactans::class, 'index'])->name('contactans');
 
-require __DIR__ . '/settings.php';
+require __DIR__.'/settings.php';

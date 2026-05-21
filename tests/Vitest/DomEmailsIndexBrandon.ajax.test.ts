@@ -7,6 +7,7 @@ async function getInertiaPage(url: string) {
     const doc = new DOMParser().parseFromString(html, 'text/html');
     const raw =
         doc.querySelector('script[data-page="app"]')?.textContent ?? '{}';
+
     return JSON.parse(raw) as {
         component: string;
         props: Record<string, unknown>;

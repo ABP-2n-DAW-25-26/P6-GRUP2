@@ -2,6 +2,7 @@
 import { Form, Head, usePage, router } from '@inertiajs/vue3';
 import { Plus, Trash2 } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
+import { watch } from 'vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,7 +14,6 @@ import {
     index as pharmacyguardsIndex,
     store as storePharmacyGuard,
 } from '@/routes/pharmacyguards';
-import { watch } from 'vue';
 
 interface Pharmacy {
     id: number;
@@ -63,7 +63,9 @@ const totalPages = computed(() =>
 );
 
 function changePage(newPage: number) {
-    if (newPage < 1 || newPage > totalPages.value) return;
+    if (newPage < 1 || newPage > totalPages.value) {
+return;
+}
 
     currentPage.value = newPage;
 
@@ -121,7 +123,7 @@ const resetDateFilter = () => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Panell de guardies" />
 
-           <div
+        <div
             class="relative flex h-full flex-1 flex-col gap-6 overflow-x-auto p-4 md:p-6"
         >
             <!-- Decorative blurred gradients -->
@@ -157,14 +159,10 @@ const resetDateFilter = () => {
                         >
                             Panell de guardies
                         </h1>
-                        <p
-                            class="mt-2 max-w-xl text-sm text-muted-foreground"
-                        >
+                        <p class="mt-2 max-w-xl text-sm text-muted-foreground">
                             Consulta, filtra i elimina les guàrdies registrades.
                         </p>
                     </div>
-
-               
                 </div>
             </div>
 
@@ -176,8 +174,12 @@ const resetDateFilter = () => {
                 {{ page.props.flash?.message }}
             </div>
 
-            <div class="relative rounded-2xl border border-sidebar-border/70 bg-background/95 p-6 shadow-sm">
-                <h2 class="text-lg font-semibold text-foreground">Crear guàrdia</h2>
+            <div
+                class="relative rounded-2xl border border-sidebar-border/70 bg-background/95 p-6 shadow-sm"
+            >
+                <h2 class="text-lg font-semibold text-foreground">
+                    Crear guàrdia
+                </h2>
 
                 <Form
                     v-bind="storePharmacyGuard.form()"
@@ -218,14 +220,18 @@ const resetDateFilter = () => {
                             :disabled="processing"
                             class="group bg-primary text-primary-foreground hover:bg-primary/90"
                         >
-                            <Plus class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90" />
+                            <Plus
+                                class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90"
+                            />
                             {{ processing ? 'Creant...' : 'Afegir guàrdia' }}
                         </Button>
                     </div>
                 </Form>
             </div>
 
-            <div class="relative rounded-2xl border border-sidebar-border/70 bg-background/95 p-6 shadow-sm">
+            <div
+                class="relative rounded-2xl border border-sidebar-border/70 bg-background/95 p-6 shadow-sm"
+            >
                 <div class="mb-5">
                     <h2 class="text-lg font-semibold text-foreground">
                         Guàrdies programades
@@ -235,20 +241,34 @@ const resetDateFilter = () => {
                     </p>
                 </div>
 
-                <div class="mb-5 rounded-2xl border border-sidebar-border/70 bg-muted/25 p-4">
-                    <p class="mb-3 text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+                <div
+                    class="mb-5 rounded-2xl border border-sidebar-border/70 bg-muted/25 p-4"
+                >
+                    <p
+                        class="mb-3 text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase"
+                    >
                         Filtres
                     </p>
 
                     <div class="grid gap-3 md:grid-cols-4">
                         <div class="grid gap-1.5">
                             <Label for="date_from">Des de</Label>
-                            <Input id="date_from" v-model="dateFrom" type="date" @change="filterGuards" />
+                            <Input
+                                id="date_from"
+                                v-model="dateFrom"
+                                type="date"
+                                @change="filterGuards"
+                            />
                         </div>
 
                         <div class="grid gap-1.5">
                             <Label for="date_to">Fins a</Label>
-                            <Input id="date_to" v-model="dateTo" type="date" @change="filterGuards" />
+                            <Input
+                                id="date_to"
+                                v-model="dateTo"
+                                type="date"
+                                @change="filterGuards"
+                            />
                         </div>
 
                         <div class="relative md:col-span-1">
@@ -263,25 +283,38 @@ const resetDateFilter = () => {
                         </div>
 
                         <div class="flex items-end">
-                            <Button type="button" variant="outline" class="w-full" @click="resetDateFilter">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                class="w-full"
+                                @click="resetDateFilter"
+                            >
                                 Netejar filtres
                             </Button>
                         </div>
                     </div>
                 </div>
 
-                <div class="overflow-hidden rounded-2xl border border-sidebar-border/70">
+                <div
+                    class="overflow-hidden rounded-2xl border border-sidebar-border/70"
+                >
                     <div class="overflow-x-auto">
                         <table class="min-w-full text-sm">
                             <thead class="bg-muted/80">
                                 <tr>
-                                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase">
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-semibold uppercase"
+                                    >
                                         Data
                                     </th>
-                                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase">
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-semibold uppercase"
+                                    >
                                         Farmàcia
                                     </th>
-                                    <th class="px-6 py-4 text-right text-xs font-semibold uppercase">
+                                    <th
+                                        class="px-6 py-4 text-right text-xs font-semibold uppercase"
+                                    >
                                         Accions
                                     </th>
                                 </tr>
@@ -292,18 +325,25 @@ const resetDateFilter = () => {
                                     v-for="(guard, index) in visibleGuards"
                                     :key="guard.id"
                                     :class="[
-                                        index % 2 === 0 ? 'bg-background' : 'bg-muted/30',
+                                        index % 2 === 0
+                                            ? 'bg-background'
+                                            : 'bg-muted/30',
                                         'border-t border-sidebar-border/60 transition hover:bg-muted/60',
                                     ]"
                                 >
                                     <td class="px-6 py-4 text-muted-foreground">
-                                        {{ new Date(guard.date).toLocaleDateString('ca-ES') }}
+                                        {{
+                                            new Date(
+                                                guard.date,
+                                            ).toLocaleDateString('ca-ES')
+                                        }}
                                     </td>
 
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-3">
-                                        
-                                            <span class="font-medium text-foreground">
+                                            <span
+                                                class="font-medium text-foreground"
+                                            >
                                                 {{ guard.pharmacy_name }}
                                             </span>
                                         </div>
@@ -324,7 +364,10 @@ const resetDateFilter = () => {
                                 </tr>
 
                                 <tr v-if="pharmacyguardsData.length === 0">
-                                    <td colspan="3" class="px-6 py-12 text-center text-sm text-muted-foreground">
+                                    <td
+                                        colspan="3"
+                                        class="px-6 py-12 text-center text-sm text-muted-foreground"
+                                    >
                                         Encara no hi ha guàrdies creades.
                                     </td>
                                 </tr>

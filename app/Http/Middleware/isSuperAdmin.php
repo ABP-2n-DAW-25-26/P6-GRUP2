@@ -18,7 +18,7 @@ class isSuperAdmin
     {
         $user = $request->user();
 
-        if (!$user || !in_array($user->role, ['admin', 'superadmin'], true)) {
+        if (! $user || ! in_array($user->role, ['admin', 'superadmin'], true)) {
             Inertia::flash([
                 'unauthorized' => true,
                 'title' => 'Accés Denegat',

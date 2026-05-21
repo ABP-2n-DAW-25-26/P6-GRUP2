@@ -2,8 +2,8 @@
 import { Icon } from '@iconify/vue';
 import { Head, InfiniteScroll, Link } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
-import { show as workshopShow } from '@/actions/App/Http/Controllers/public_workshops_controller';
 import WebAppLayout from '@/layouts/WebAppLayout.vue';
+import { show as workshopShow } from '@/actions/App/Http/Controllers/public_workshops_controller';
 
 type Workshop = {
     id: number;
@@ -25,7 +25,11 @@ const searchQuery = ref('');
 
 const filteredWorkshops = computed(() => {
     const q = searchQuery.value.trim().toLowerCase();
-    if (!q) return props.workshops.data;
+
+    if (!q) {
+return props.workshops.data;
+}
+
     return props.workshops.data.filter(
         (w) =>
             w.name.toLowerCase().includes(q) ||
@@ -59,11 +63,14 @@ const months = [
 
 function formatDate(dateStr: string): string {
     const d = new Date(dateStr + 'T00:00:00');
+
     return `${weekDays[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}`;
 }
 
 function isPast(workshop: Workshop): boolean {
-    return new Date(`${workshop.workshop_date}T${workshop.end_time}`) < new Date();
+    return (
+        new Date(`${workshop.workshop_date}T${workshop.end_time}`) < new Date()
+    );
 }
 </script>
 
@@ -157,12 +164,16 @@ function isPast(workshop: Workshop): boolean {
                                 :alt="workshop.name"
                                 loading="lazy"
                                 class="h-full w-full object-contain transition duration-500 group-hover:scale-[1.02]"
-                                :class="{ 'opacity-60 grayscale': isPast(workshop) }"
+                                :class="{
+                                    'opacity-60 grayscale': isPast(workshop),
+                                }"
                             />
                             <div
                                 v-else
                                 class="flex h-full w-full flex-col items-center justify-center gap-3 bg-linear-to-br from-[#015873] to-[#01789E]"
-                                :class="{ 'opacity-60 grayscale': isPast(workshop) }"
+                                :class="{
+                                    'opacity-60 grayscale': isPast(workshop),
+                                }"
                             >
                                 <Icon
                                     icon="mdi:school"
@@ -181,14 +192,22 @@ function isPast(workshop: Workshop): boolean {
                                     v-if="isPast(workshop)"
                                     class="flex items-center gap-1 rounded-full bg-black/55 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur-sm"
                                 >
-                                    <Icon icon="mdi:check-circle-outline" width="12" height="12" />
+                                    <Icon
+                                        icon="mdi:check-circle-outline"
+                                        width="12"
+                                        height="12"
+                                    />
                                     Finalitzat
                                 </span>
                                 <span
                                     v-else
                                     class="flex items-center gap-1 rounded-full bg-emerald-500 px-2.5 py-1 text-xs font-semibold text-white shadow-sm"
                                 >
-                                    <Icon icon="mdi:clock-outline" width="12" height="12" />
+                                    <Icon
+                                        icon="mdi:clock-outline"
+                                        width="12"
+                                        height="12"
+                                    />
                                     Properament
                                 </span>
                             </div>

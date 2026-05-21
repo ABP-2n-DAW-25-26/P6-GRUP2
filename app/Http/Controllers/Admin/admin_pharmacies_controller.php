@@ -18,7 +18,7 @@ class admin_pharmacies_controller extends Controller
             ->select('id', 'name', 'latitude', 'longitude', 'created_at');
 
         if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('name', 'like', '%'.$request->search.'%');
         }
 
         $pharmacies = $query

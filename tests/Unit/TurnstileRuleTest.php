@@ -7,7 +7,7 @@ use Tests\TestCase;
 uses(TestCase::class);
 
 test('turnstile rule fails when the secret key is not configured', function () {
-   // If the secret key isn't set, the rule should fail immediately without trying to call Cloudflare's API.
+    // If the secret key isn't set, the rule should fail immediately without trying to call Cloudflare's API.
     config(['services.turnstile.secret_key' => null]);
 
     $rule = new TurnstileRule;
@@ -27,8 +27,8 @@ test('turnstile rule fails when the secret key is not configured', function () {
 });
 
 test('turnstile rule does not fail immediately when a secret is configured', function () {
-  // If the secret key is set, the rule should attempt to validate the token (which will fail due to the fake secret, but that's not what we're testing here). 
-  //The key point is that it should NOT fail with the "not configured" message.
+    // If the secret key is set, the rule should attempt to validate the token (which will fail due to the fake secret, but that's not what we're testing here).
+    // The key point is that it should NOT fail with the "not configured" message.
     config(['services.turnstile.secret_key' => 'fake-secret']);
 
     $rule = new TurnstileRule;
@@ -38,10 +38,10 @@ test('turnstile rule does not fail immediately when a secret is configured', fun
         $failedWith = $message;
     };
 
-  // Act
+    // Act
     try {
         $rule->validate('cf-turnstile-response', 'any-token', $fail);
-    } catch (\Throwable $e) {
+    } catch (Throwable $e) {
         // We expect an exception due to the fake secret, but we want to ignore it for this test.
     }
 

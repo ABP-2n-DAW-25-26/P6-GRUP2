@@ -34,7 +34,9 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head :title="`Editar: ${user.name}`" />
 
-        <div class="relative flex h-full flex-1 flex-col gap-4 overflow-x-auto p-4 md:p-6">
+        <div
+            class="relative flex h-full flex-1 flex-col gap-4 overflow-x-auto p-4 md:p-6"
+        >
             <div
                 class="pointer-events-none absolute top-0 right-8 h-48 w-48 rounded-full bg-muted/70 blur-3xl"
             ></div>
@@ -57,7 +59,9 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <p
                             class="inline-flex items-center gap-2 rounded-full border border-sidebar-border/70 bg-background/80 px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-muted-foreground uppercase shadow-xs backdrop-blur"
                         >
-                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-primary"></span>
+                            <span
+                                class="inline-block h-1.5 w-1.5 rounded-full bg-primary"
+                            ></span>
                             Farmacia Soler
                         </p>
                         <h1
@@ -67,7 +71,8 @@ const breadcrumbs: BreadcrumbItem[] = [
                         </h1>
                         <p class="mt-2 max-w-xl text-sm text-muted-foreground">
                             Modifica la informació de
-                            <strong>{{ user.name }}</strong>.
+                            <strong>{{ user.name }}</strong
+                            >.
                         </p>
                     </div>
                 </div>
@@ -117,8 +122,18 @@ const breadcrumbs: BreadcrumbItem[] = [
                             required
                             class="w-full rounded-xl border border-sidebar-border/80 bg-background px-3 py-2 text-sm shadow-xs transition focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none"
                         >
-                            <option value="admin" :selected="user.role === 'admin'">Admin</option>
-                            <option value="superadmin" :selected="user.role === 'superadmin'">Superadmin</option>
+                            <option
+                                value="admin"
+                                :selected="user.role === 'admin'"
+                            >
+                                Admin
+                            </option>
+                            <option
+                                value="superadmin"
+                                :selected="user.role === 'superadmin'"
+                            >
+                                Superadmin
+                            </option>
                         </select>
                         <InputError :message="errors.role" />
                     </div>
@@ -138,7 +153,9 @@ const breadcrumbs: BreadcrumbItem[] = [
                     </div>
 
                     <div class="grid gap-2">
-                        <Label for="password_confirmation">Confirmar nova contrasenya</Label>
+                        <Label for="password_confirmation"
+                            >Confirmar nova contrasenya</Label
+                        >
                         <PasswordInput
                             id="password_confirmation"
                             name="password_confirmation"

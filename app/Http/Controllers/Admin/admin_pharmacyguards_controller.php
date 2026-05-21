@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\PharmacyGuard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
-use App\Models\PharmacyGuard;
 
 class admin_pharmacyguards_controller extends Controller
 {
@@ -25,7 +25,7 @@ class admin_pharmacyguards_controller extends Controller
             );
 
         if ($request->filled('search')) {
-            $query->where('pharmacies.name', 'like', '%' . $request->search . '%');
+            $query->where('pharmacies.name', 'like', '%'.$request->search.'%');
         }
 
         if ($request->filled('date_from')) {

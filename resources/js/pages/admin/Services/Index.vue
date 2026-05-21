@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Link, Head, useForm } from '@inertiajs/vue3';
-import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import { CalendarPlus, Plus, SquarePen, Trash2 } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
+import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { admindashboard as dashboard } from '@/routes';
@@ -104,7 +104,9 @@ const totalPages = computed(() =>
 // const hasMore = computed(() => page.value < totalPages.value);
 
 function changePage(newPage: number) {
-    if (newPage < 1 || newPage > totalPages.value) return;
+    if (newPage < 1 || newPage > totalPages.value) {
+return;
+}
 
     page.value = newPage;
 
@@ -118,7 +120,7 @@ function changePage(newPage: number) {
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Gestió de serveis" />
 
-      <div
+        <div
             class="relative flex h-full flex-1 flex-col gap-6 overflow-x-auto p-4 md:p-6"
         >
             <!-- Decorative blurred gradients -->
@@ -154,14 +156,11 @@ function changePage(newPage: number) {
                         >
                             Administració de serveis
                         </h1>
-                        <p
-                            class="mt-2 max-w-xl text-sm text-muted-foreground"
-                        >
-                    Administra tots els serveis disponibles de la farmàcia.
+                        <p class="mt-2 max-w-xl text-sm text-muted-foreground">
+                            Administra tots els serveis disponibles de la
+                            farmàcia.
                         </p>
                     </div>
-
-               
                 </div>
             </div>
 
@@ -188,7 +187,9 @@ function changePage(newPage: number) {
                         :href="`/admin/services/create`"
                         class="group inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto"
                     >
-                        <Plus class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90" />
+                        <Plus
+                            class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90"
+                        />
                         Nou servei
                     </Link>
                 </div>
@@ -240,11 +241,7 @@ function changePage(newPage: number) {
                                 >
                                     <!-- Service -->
                                     <td class="px-6 py-4">
-                                        <div
-                                            class="flex items-center gap-3"
-                                        >
-                                           
-
+                                        <div class="flex items-center gap-3">
                                             <span
                                                 class="font-medium text-foreground"
                                             >
@@ -254,40 +251,28 @@ function changePage(newPage: number) {
                                     </td>
 
                                     <!-- Description -->
-                                    <td
-                                        class="px-6 py-4 text-muted-foreground"
-                                    >
+                                    <td class="px-6 py-4 text-muted-foreground">
                                         <div
                                             class="max-w-md"
-                                            v-html="
-                                                service.description
-                                            "
+                                            v-html="service.description"
                                         ></div>
                                     </td>
 
                                     <!-- Duration -->
-                                    <td
-                                        class="px-6 py-4 text-muted-foreground"
-                                    >
-                                        {{
-                                            service.duration_minutes
-                                        }}
+                                    <td class="px-6 py-4 text-muted-foreground">
+                                        {{ service.duration_minutes }}
                                         min
                                     </td>
 
                                     <!-- Actions -->
                                     <td class="px-6 py-4">
-                                        <div
-                                            class="flex justify-end gap-2"
-                                        >
+                                        <div class="flex justify-end gap-2">
                                             <Link
                                                 :href="`/admin/services/${service.id}`"
                                                 class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-blue-50 hover:text-blue-600"
                                                 aria-label="Gestionar horaris"
                                             >
-                                                <CalendarPlus
-                                                    class="h-4 w-4"
-                                                />
+                                                <CalendarPlus class="h-4 w-4" />
                                             </Link>
 
                                             <Link
@@ -295,32 +280,24 @@ function changePage(newPage: number) {
                                                 class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-orange-50 hover:text-orange-600"
                                                 aria-label="Editar servei"
                                             >
-                                                <SquarePen
-                                                    class="h-4 w-4"
-                                                />
+                                                <SquarePen class="h-4 w-4" />
                                             </Link>
 
                                             <button
                                                 @click="
-                                                    openDeleteModal(
-                                                        service,
-                                                    )
+                                                    openDeleteModal(service)
                                                 "
                                                 class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-red-50 hover:text-red-600"
                                                 aria-label="Eliminar servei"
                                             >
-                                                <Trash2
-                                                    class="h-4 w-4"
-                                                />
+                                                <Trash2 class="h-4 w-4" />
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
 
                                 <!-- Empty -->
-                                <tr
-                                    v-if="visibleServices.length === 0"
-                                >
+                                <tr v-if="visibleServices.length === 0">
                                     <td
                                         colspan="4"
                                         class="px-6 py-12 text-center text-sm text-muted-foreground"

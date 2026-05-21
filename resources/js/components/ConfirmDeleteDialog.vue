@@ -16,7 +16,8 @@ withDefaults(
     }>(),
     {
         title: 'Eliminar element',
-        description: "Segur que vols eliminar aquest element? Aquesta acció no es pot desfer.",
+        description:
+            'Segur que vols eliminar aquest element? Aquesta acció no es pot desfer.',
     },
 );
 

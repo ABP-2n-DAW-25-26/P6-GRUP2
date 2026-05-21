@@ -10,8 +10,13 @@ const map = ref();
 // Open between 8:30 and 20:30 every day except Sunday.
 const isOpenNow = computed(() => {
     const now = new Date();
-    if (now.getDay() === 0) return false;
+
+    if (now.getDay() === 0) {
+return false;
+}
+
     const minutes = now.getHours() * 60 + now.getMinutes();
+
     return minutes >= 8 * 60 + 30 && minutes < 20 * 60 + 30;
 });
 

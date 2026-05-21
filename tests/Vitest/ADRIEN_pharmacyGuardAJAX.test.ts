@@ -36,6 +36,7 @@ describe('AJAX pharmacy guard', () => {
             // Fail with a descriptive message if the server returns an error
             if (!response.ok) {
                 const body = await response.text();
+
                 throw new Error(
                     `La petició a farmàcia de guàrdia ha fallat (${response.status}). ${body.slice(0, 400)}`,
                 );
@@ -46,6 +47,7 @@ describe('AJAX pharmacy guard', () => {
 
             if (!contentType.includes('application/json')) {
                 const body = await response.text();
+
                 throw new Error(
                     `S'esperava JSON però s'ha rebut ${contentType}. ${body.slice(0, 400)}`,
                 );

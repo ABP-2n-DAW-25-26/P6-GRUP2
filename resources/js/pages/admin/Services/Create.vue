@@ -15,7 +15,6 @@ import {
     Brain,
     Bandage,
     Thermometer,
-    
 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
@@ -58,7 +57,7 @@ const submit = () => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Nou servei" />
 
-    <div
+        <div
             class="relative flex h-full flex-1 flex-col gap-6 overflow-x-auto p-4 md:p-6"
         >
             <!-- Decorative blurred gradients -->
@@ -94,15 +93,11 @@ const submit = () => {
                         >
                             Crear nou servei
                         </h1>
-                        <p
-                            class="mt-2 max-w-xl text-sm text-muted-foreground"
-                        >
-                            Defineix la informació bàsica, la durada i la icona del
-                            nou servei.
+                        <p class="mt-2 max-w-xl text-sm text-muted-foreground">
+                            Defineix la informació bàsica, la durada i la icona
+                            del nou servei.
                         </p>
                     </div>
-
-               
                 </div>
             </div>
 
@@ -110,19 +105,12 @@ const submit = () => {
             <div
                 class="relative rounded-2xl border border-sidebar-border/70 bg-background/95 p-6 shadow-sm"
             >
-                <form
-                    @submit.prevent="submit"
-                    class="space-y-6"
-                >
+                <form @submit.prevent="submit" class="space-y-6">
                     <!-- Inputs -->
-                    <div
-                        class="grid grid-cols-1 gap-6 md:grid-cols-2"
-                    >
+                    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <!-- Name -->
                         <div class="grid gap-2">
-                            <label
-                                class="text-sm font-medium text-foreground"
-                            >
+                            <label class="text-sm font-medium text-foreground">
                                 Nom del servei
                             </label>
 
@@ -144,9 +132,7 @@ const submit = () => {
 
                         <!-- Duration -->
                         <div class="grid gap-2">
-                            <label
-                                class="text-sm font-medium text-foreground"
-                            >
+                            <label class="text-sm font-medium text-foreground">
                                 Durada (minuts)
                             </label>
 
@@ -159,15 +145,10 @@ const submit = () => {
                             />
 
                             <p
-                                v-if="
-                                    form.errors.duration_minutes
-                                "
+                                v-if="form.errors.duration_minutes"
                                 class="text-xs text-red-500"
                             >
-                                {{
-                                    form.errors
-                                        .duration_minutes
-                                }}
+                                {{ form.errors.duration_minutes }}
                             </p>
                         </div>
                     </div>
@@ -199,15 +180,11 @@ const submit = () => {
 
                     <!-- Icons -->
                     <div class="grid gap-3">
-                        <label
-                            class="text-sm font-medium text-foreground"
-                        >
+                        <label class="text-sm font-medium text-foreground">
                             Icona
                         </label>
 
-                        <div
-                            class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
-                        >
+                        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                             <button
                                 v-for="opt in iconOptions"
                                 :key="opt.value"
@@ -223,10 +200,7 @@ const submit = () => {
                                 <div
                                     class="flex h-10 w-10 items-center justify-center rounded-full bg-background shadow-sm"
                                 >
-                                    <component
-                                        :is="opt.icon"
-                                        class="h-5 w-5"
-                                    />
+                                    <component :is="opt.icon" class="h-5 w-5" />
                                 </div>
 
                                 <span class="font-medium">
@@ -235,10 +209,7 @@ const submit = () => {
                             </button>
                         </div>
 
-                        <p
-                            v-if="form.errors.icon"
-                            class="text-xs text-red-500"
-                        >
+                        <p v-if="form.errors.icon" class="text-xs text-red-500">
                             {{ form.errors.icon }}
                         </p>
                     </div>
@@ -259,11 +230,7 @@ const submit = () => {
                             :disabled="form.processing"
                             class="rounded-xl bg-primary px-5 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 disabled:opacity-50"
                         >
-                            {{
-                                form.processing
-                                    ? 'Desant...'
-                                    : 'Crear servei'
-                            }}
+                            {{ form.processing ? 'Desant...' : 'Crear servei' }}
                         </button>
                     </div>
                 </form>

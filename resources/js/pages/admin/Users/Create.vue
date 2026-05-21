@@ -33,7 +33,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                 class="pointer-events-none absolute bottom-0 left-0 h-56 w-56 rounded-full bg-secondary/60 blur-3xl"
             ></div>
 
-           <!--  header -->
+            <!--  header -->
             <div
                 class="relative overflow-hidden rounded-2xl border border-sidebar-border/70 bg-gradient-to-br from-background via-background to-muted/60 p-7 shadow-sm"
             >
@@ -58,16 +58,11 @@ const breadcrumbs: BreadcrumbItem[] = [
                         >
                             Crear nou usuari
                         </h1>
-                        <p
-                            class="mt-2 max-w-xl text-sm text-muted-foreground"
-                        >
-                            Dona d'alta un nou perfil amb rol d'admin o superadmin.
-
-
+                        <p class="mt-2 max-w-xl text-sm text-muted-foreground">
+                            Dona d'alta un nou perfil amb rol d'admin o
+                            superadmin.
                         </p>
                     </div>
-
-               
                 </div>
             </div>
 

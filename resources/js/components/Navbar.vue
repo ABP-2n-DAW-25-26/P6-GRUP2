@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { Icon } from '@iconify/vue';
 
 const isMobileMenuOpen = ref(false);
 const page = usePage();

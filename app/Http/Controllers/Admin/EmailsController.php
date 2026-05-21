@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Emails\CreateEmailAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateEmailRequest;
+use App\Models\Email;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\Email;
-use App\Actions\Emails\CreateEmailAction;
-use App\Http\Requests\CreateEmailRequest;
-use Illuminate\Support\Facades\DB;
 
 class EmailsController extends Controller
 {
