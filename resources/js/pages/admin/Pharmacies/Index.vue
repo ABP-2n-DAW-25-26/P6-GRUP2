@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import { Form, Head, router, usePage } from '@inertiajs/vue3';
-import { Plus, Trash2 } from 'lucide-vue-next';
 import { ref } from 'vue';
-import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -212,9 +218,8 @@ const cancelDelete = () => {
                         <Button
                             type="submit"
                             :disabled="processing"
-                            class="group bg-primary text-primary-foreground hover:bg-primary/90"
+                            class="bg-primary text-primary-foreground hover:bg-primary/90"
                         >
-                            <Plus class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90" />
                             {{
                                 processing
                                     ? 'Creant...'
@@ -360,14 +365,19 @@ const cancelDelete = () => {
 
                                     <!-- Actions -->
                                     <td class="px-6 py-4">
-                                        <div class="flex justify-end">
+                                        <div
+                                            class="flex justify-end"
+                                        >
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-red-50 hover:text-red-600"
-                                                aria-label="Eliminar farmàcia"
-                                                @click="removePharmacy(pharmacy.id)"
+                                                class="inline-flex items-center rounded-xl border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 transition hover:bg-red-100"
+                                                @click="
+                                                    removePharmacy(
+                                                        pharmacy.id,
+                                                    )
+                                                "
                                             >
-                                                <Trash2 class="h-4 w-4" />
+                                                Eliminar
                                             </button>
                                         </div>
                                     </td>
@@ -391,12 +401,41 @@ const cancelDelete = () => {
             </div>
         </div>
 
-        <ConfirmDeleteDialog
+        <!-- Delete Dialog -->
+        <Dialog
             :open="pharmacyToDelete !== null"
-            title="Eliminar farmàcia"
-            description="Segur que vols eliminar aquesta farmàcia? Aquesta acció no es pot desfer."
-            @confirm="confirmDelete"
-            @cancel="cancelDelete"
-        />
+            @update:open="cancelDelete"
+        >
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>
+                        Eliminar farmàcia
+                    </DialogTitle>
+
+                    <DialogDescription>
+                        Segur que vols eliminar aquesta farmàcia?
+                        Aquesta acció no es pot desfer.
+                    </DialogDescription>
+                </DialogHeader>
+
+                <DialogFooter>
+                    <button
+                        type="button"
+                        class="inline-flex items-center rounded-xl border border-sidebar-border/80 bg-background px-4 py-2 text-sm font-medium transition hover:bg-muted"
+                        @click="cancelDelete"
+                    >
+                        Cancel·lar
+                    </button>
+
+                    <button
+                        type="button"
+                        class="inline-flex items-center rounded-xl bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700"
+                        @click="confirmDelete"
+                    >
+                        Eliminar
+                    </button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     </AppLayout>
 </template>

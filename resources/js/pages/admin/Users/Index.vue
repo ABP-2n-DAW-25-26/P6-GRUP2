@@ -1,16 +1,10 @@
 <script setup lang="ts">
-import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import { ListFilter, SquarePen, Trash2 } from 'lucide-vue-next';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
-import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { admindashboard as dashboard } from '@/routes';
-import {
-    create as usersCreate,
-    destroy as usersDestroy,
-    edit as usersEdit,
-} from '@/routes/users';
+import { create as usersCreate } from '@/routes/users';
 
 type User = {
     id: number;
@@ -114,22 +108,6 @@ const roleLabel = (role?: string | null) => {
 
     return '—';
 };
-
-const userToDelete = ref<User | null>(null);
-
-const deleteUser = (user: User) => {
-    userToDelete.value = user;
-};
-
-const confirmDelete = () => {
-    if (userToDelete.value === null) return;
-    router.delete(usersDestroy(userToDelete.value.id).url);
-    userToDelete.value = null;
-};
-
-const cancelDelete = () => {
-    userToDelete.value = null;
-};
 </script>
 
 <template>
@@ -214,7 +192,11 @@ const cancelDelete = () => {
                     <div class="relative w-full sm:w-auto">
                         <span
                             class="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground">
-                            <ListFilter class="h-4 w-4" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z" />
+                            </svg>
                         </span>
                         <select v-model="selectedRole" @change="resetPage"
                             class="w-full appearance-none rounded-xl border border-sidebar-border/80 bg-background py-2 pr-9 pl-9 text-sm shadow-xs transition focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none sm:w-auto">
@@ -269,10 +251,6 @@ const cancelDelete = () => {
                                     class="px-4 py-3 text-left text-[11px] font-semibold tracking-wider text-foreground/80 uppercase">
                                     Creat el
                                 </th>
-                                <th
-                                    class="px-4 py-3 text-right text-[11px] font-semibold tracking-wider text-foreground/80 uppercase">
-                                    Accions
-                                </th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-sidebar-border/60">
@@ -323,29 +301,10 @@ const cancelDelete = () => {
                                             : '—'
                                     }}
                                 </td>
-                                <td class="px-4 py-3 text-right">
-                                    <div class="flex items-center justify-end gap-2">
-                                        <Link
-                                            :href="usersEdit(user.id).url"
-                                            class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-orange-50 hover:text-orange-600"
-                                            aria-label="Editar usuari"
-                                        >
-                                            <SquarePen class="h-4 w-4" />
-                                        </Link>
-                                        <button
-                                            type="button"
-                                            @click="deleteUser(user)"
-                                            class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-red-50 hover:text-red-600"
-                                            aria-label="Eliminar usuari"
-                                        >
-                                            <Trash2 class="h-4 w-4" />
-                                        </button>
-                                    </div>
-                                </td>
                             </tr>
 
                             <tr v-if="visibleUsers.length === 0">
-                                <td colspan="6" class="px-4 py-12 text-center">
+                                <td colspan="5" class="px-4 py-12 text-center">
                                     <div
                                         class="mx-auto flex max-w-xs flex-col items-center gap-3 text-muted-foreground">
                                         <span
@@ -408,12 +367,5 @@ const cancelDelete = () => {
                 </div>
             </div>
         </div>
-        <ConfirmDeleteDialog
-            :open="userToDelete !== null"
-            title="Eliminar usuari"
-            :description="`Segur que vols eliminar l'usuari &quot;${userToDelete?.name}&quot;? Aquesta acció no es pot desfer.`"
-            @confirm="confirmDelete"
-            @cancel="cancelDelete"
-        />
     </AppLayout>
 </template>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Link, Head, useForm } from '@inertiajs/vue3';
-import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import { SquarePen, Trash2, Plus, CalendarPlus } from 'lucide-vue-next';
 import {
     Pill,
@@ -220,9 +219,9 @@ function changePage(newPage: number) {
 
                     <Link
                         :href="`/admin/services/create`"
-                        class="group inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto"
+                        class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto"
                     >
-                        <Plus class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90" />
+                        <Plus class="mr-2 h-4 w-4" />
                         Nou servei
                     </Link>
                 </div>
@@ -399,12 +398,62 @@ function changePage(newPage: number) {
             </div>
         </div>
 
-        <ConfirmDeleteDialog
-            :open="showDeleteModal"
-            title="Eliminar servei"
-            :description="`Segur que vols eliminar el servei &quot;${selectedService.name}&quot;? Aquesta acció no es pot desfer.`"
-            @confirm="deleteService(selectedService.id)"
-            @cancel="showDeleteModal = false"
-        />
+        <!-- Delete Modal -->
+        <div
+            v-show="showDeleteModal"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+        >
+            <div
+                class="w-full max-w-md rounded-2xl border border-sidebar-border/70 bg-background p-6 shadow-xl"
+            >
+                <div
+                    class="flex items-center justify-between"
+                >
+                    <h2
+                        class="text-lg font-semibold text-foreground"
+                    >
+                        Eliminar servei
+                    </h2>
+
+                    <button
+                        @click="showDeleteModal = false"
+                        type="button"
+                        class="rounded-lg p-1 text-muted-foreground transition hover:bg-muted"
+                    >
+                        ✕
+                    </button>
+                </div>
+
+                <p class="mt-4 text-sm text-muted-foreground">
+                    Estàs segur que vols eliminar aquest servei?
+                </p>
+
+                <p
+                    class="mt-2 font-medium text-foreground"
+                >
+                    {{ selectedService.name }}
+                </p>
+
+                <div
+                    class="mt-6 flex justify-end gap-3"
+                >
+                    <button
+                        @click="showDeleteModal = false"
+                        class="rounded-xl border border-sidebar-border px-4 py-2 text-sm transition hover:bg-muted"
+                    >
+                        Cancel·lar
+                    </button>
+
+                    <button
+                        @click="
+                            deleteService(selectedService.id)
+                        "
+                        class="rounded-xl bg-red-600 px-4 py-2 text-sm text-white transition hover:bg-red-700"
+                    >
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
     </AppLayout>
 </template>
