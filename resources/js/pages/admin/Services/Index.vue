@@ -1,45 +1,11 @@
 <script setup lang="ts">
 import { Link, Head, useForm } from '@inertiajs/vue3';
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
-import { SquarePen, Trash2, Plus, CalendarPlus } from 'lucide-vue-next';
-import {
-    Pill,
-    HeartPulse,
-    FlaskConical,
-    ShieldCheck,
-    ScanFace,
-    Droplet,
-    Activity,
-    Stethoscope,
-    Syringe,
-    Microscope,
-    Apple,
-    Brain,
-    Bandage,
-    Thermometer,
-} from 'lucide-vue-next';
+import { CalendarPlus, Plus, SquarePen, Trash2 } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { admindashboard as dashboard } from '@/routes';
-
-// ICON MAP
-const iconMap: Record<string, any> = {
-    pill: Pill,
-    heart: HeartPulse,
-    flask: FlaskConical,
-    shield: ShieldCheck,
-    scan: ScanFace,
-    droplet: Droplet,
-    activity: Activity,
-    stethoscope: Stethoscope,
-    syringe: Syringe,
-    microscope: Microscope,
-    apple: Apple,
-    brain: Brain,
-    bandage: Bandage,
-    thermometer: Thermometer,
-};
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Administració de serveis', href: dashboard().url },
