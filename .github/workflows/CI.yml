@@ -51,7 +51,7 @@ jobs:
           git config user.email "bot@gmail.com"
           git add .
           git commit -m "Laravel Pint" || exit 0
-          git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.head_ref }}
+          git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.head_ref || github.ref_name }}
 
   tests:
     runs-on: ubuntu-latest
