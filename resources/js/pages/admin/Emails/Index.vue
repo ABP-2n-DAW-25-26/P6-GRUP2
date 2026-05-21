@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useForm, Link } from '@inertiajs/vue3';
+import { ListFilter, Plus, Trash2 } from 'lucide-vue-next';
 import { ref, watch } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
-import { Trash2 } from 'lucide-vue-next';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Administració dels Correus', href: 'admin/emails' },
@@ -123,15 +123,28 @@ const handleChange = (emailId: number) => {
                     <input v-model="search" @input="doSearch" type="text" placeholder="Cercar correu..."
                         class="w-full rounded-xl border border-sidebar-border/80 bg-background px-4 py-2 text-sm shadow-xs transition focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none sm:max-w-xs" />
 
-                    <select @change="handleFilterChange"
-                        class="rounded-xl border border-sidebar-border/80 bg-background px-4 py-2 text-sm shadow-xs transition focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none">
-                        <option>Tot</option>
-                        <option>Actiu</option>
-                        <option>Inactiu</option>
-                    </select>
+                    <div class="relative w-full sm:w-auto">
+                        <span class="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground">
+                            <ListFilter class="h-4 w-4" />
+                        </span>
+                        <select @change="handleFilterChange"
+                            class="w-full appearance-none rounded-xl border border-sidebar-border/80 bg-background py-2 pr-9 pl-9 text-sm shadow-xs transition focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none sm:w-auto">
+                            <option>Tot</option>
+                            <option>Actiu</option>
+                            <option>Inactiu</option>
+                        </select>
+                        <span class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </span>
+                    </div>
 
                     <Link href="/admin/emails/create"
-                        class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto">
+                        class="group inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto">
+                        <Plus class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90" />
                         Crear correu
                     </Link>
                 </div>

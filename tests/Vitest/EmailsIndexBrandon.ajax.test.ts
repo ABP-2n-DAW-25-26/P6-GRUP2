@@ -1,4 +1,4 @@
-// @vitest-environment node
+// @vitest-environment nodeF
 import { describe, it, expect } from 'vitest';
 
 const baseUrl = 'http://localhost';

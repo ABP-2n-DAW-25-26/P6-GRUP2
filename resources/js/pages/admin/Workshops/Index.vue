@@ -1,16 +1,9 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { Pencil, Plus, Trash2 } from 'lucide-vue-next';
+import { Plus, SquarePen, Trash2 } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
+import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog';
 import type { BreadcrumbItem } from '@/types';
 import {
     create as workshopsCreate,
@@ -126,8 +119,8 @@ const formatTime = (time: string) => time.slice(0, 5);
                         class="w-full rounded-xl border border-sidebar-border/80 bg-background px-4 py-2 text-sm shadow-xs transition focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none sm:max-w-xs" />
 
                     <Link :href="workshopsCreate().url"
-                        class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto">
-                        <Plus class="mr-2 h-4 w-4" />
+                        class="group inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto">
+                        <Plus class="mr-2 h-4 w-4 transition-transform group-hover:rotate-90" />
                         Crear taller
                     </Link>
                 </div>
@@ -235,18 +228,16 @@ const formatTime = (time: string) => time.slice(0, 5);
                                     <!-- Actions -->
                                     <td class="px-6 py-4">
                                         <div class="flex items-center justify-end gap-2">
-                                            <Link :href="workshopsEdit(workshop.id)
-                                                    .url
-                                                "
-                                                class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-muted hover:text-foreground">
-                                                <Pencil class="h-4 w-4" />
+                                            <Link :href="workshopsEdit(workshop.id).url"
+                                                class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-orange-50 hover:text-orange-600"
+                                                aria-label="Editar taller">
+                                                <SquarePen class="h-4 w-4" />
                                             </Link>
 
                                             <button type="button"
                                                 class="inline-flex cursor-pointer items-center rounded-lg p-2 text-muted-foreground transition hover:bg-red-50 hover:text-red-600"
-                                                @click="
-                                                    deleteWorkshop(workshop.id)
-                                                    ">
+                                                aria-label="Eliminar taller"
+                                                @click="deleteWorkshop(workshop.id)">
                                                 <Trash2 class="h-4 w-4" />
                                             </button>
                                         </div>
@@ -266,34 +257,12 @@ const formatTime = (time: string) => time.slice(0, 5);
             </div>
         </div>
 
-        <!-- Delete Dialog -->
-        <Dialog :open="workshopToDelete !== null" @update:open="cancelDelete">
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>
-                        Eliminar taller
-                    </DialogTitle>
-
-                    <DialogDescription>
-                        Segur que vols eliminar aquest taller?
-                        Aquesta acció no es pot desfer.
-                    </DialogDescription>
-                </DialogHeader>
-
-                <DialogFooter>
-                    <button type="button"
-                        class="inline-flex cursor-pointer items-center rounded-xl border border-sidebar-border/80 bg-background px-4 py-2 text-sm font-medium transition hover:bg-muted"
-                        @click="cancelDelete">
-                        Cancel·lar
-                    </button>
-
-                    <button type="button"
-                        class="inline-flex cursor-pointer items-center rounded-xl bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700"
-                        @click="confirmDelete">
-                        Eliminar
-                    </button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+        <ConfirmDeleteDialog
+            :open="workshopToDelete !== null"
+            title="Eliminar taller"
+            description="Segur que vols eliminar aquest taller? Aquesta acció no es pot desfer."
+            @confirm="confirmDelete"
+            @cancel="cancelDelete"
+        />
     </AppLayout>
 </template>

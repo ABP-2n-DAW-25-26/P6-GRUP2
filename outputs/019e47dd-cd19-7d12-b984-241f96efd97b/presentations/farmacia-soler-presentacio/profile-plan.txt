@@ -1,0 +1,21 @@
+task mode: create
+primary deck-profile: consumer-retail
+secondary profile gates: product-platform
+required proof objects:
+- 6-slide oral narrative for a 5-7 minute academic/client presentation
+- visual explanation of business problem, solution modules, value, and technical quality
+- explicit bridge into a live product demo
+source/asset requirements:
+- use verified project assets only
+- no invented logos or brand marks
+- use Farmacia Soler logo and store/workshop images from storage/app/public
+brand authenticity constraints:
+- preserve the pharmacy identity through official logo, store photo, and project terminology
+- avoid pseudo-pharmacy iconography that looks like a brand mark
+profile-specific QA gates:
+- strong thumbnail rhythm across 6 slides
+- low text density for mixed audience
+- clear business story before technical proof
+known missing inputs:
+- no official screenshot pack was provided
+- no client brand guidelines document was provided

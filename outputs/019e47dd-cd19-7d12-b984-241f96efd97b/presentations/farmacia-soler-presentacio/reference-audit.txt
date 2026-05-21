@@ -1,0 +1,9 @@
+No reference deck was supplied.
+
+Narrative target
+- Short live presentation for mixed audience: professors, students, and client-facing stakeholders.
+
+Anti-patterns avoided
+- Dense academic wall-of-text slides
+- Generic startup feature-card grids on every slide
+- Overly technical architecture explanations before the demo
