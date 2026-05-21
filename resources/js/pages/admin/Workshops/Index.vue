@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { Plus, SquarePen, Trash2 } from 'lucide-vue-next';
+import { Plus, SquarePen, Trash2, Users } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -228,6 +228,12 @@ const formatTime = (time: string) => time.slice(0, 5);
                                     <!-- Actions -->
                                     <td class="px-6 py-4">
                                         <div class="flex items-center justify-end gap-2">
+                                            <Link :href="`/admin/workshops/${workshop.id}/inscriptions`"
+                                                class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-blue-50 hover:text-blue-600"
+                                                aria-label="Veure inscripcions">
+                                                <Users class="h-4 w-4" />
+                                            </Link>
+
                                             <Link :href="workshopsEdit(workshop.id).url"
                                                 class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-orange-50 hover:text-orange-600"
                                                 aria-label="Editar taller">
