@@ -2,6 +2,7 @@
 import { Icon } from '@iconify/vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, onUnmounted, watch, nextTick, ref } from 'vue';
+import ConfirmWorkshopInscriptionModal from '@/components/ConfirmWorkshopInscriptionModal.vue';
 import WebAppLayout from '@/layouts/WebAppLayout.vue';
 
 type Workshop = {
@@ -15,6 +16,7 @@ type Workshop = {
     max_attendees: number | null;
     inscriptions_count: number;
     is_full: boolean;
+    is_past: boolean;
 };
 
 type FlashSuccess = {
@@ -85,27 +87,6 @@ const form = useForm<{
     'cf-turnstile-response': '',
 });
 
-function submit() {
-    // Pick up the turnstile token from the hidden input rendered by the widget
-    const tokenInput = document.querySelector<HTMLInputElement>(
-        'input[name="cf-turnstile-response"]',
-    );
-
-    if (tokenInput) {
-        form['cf-turnstile-response'] = tokenInput.value;
-    }
-
-    form.post(`/workshops/${props.workshop.id}/inscribe`, {
-        preserveScroll: true,
-        onSuccess: () => {
-            form.reset();
-            // Re-render turnstile so the user gets a fresh token if they try again
-            renderTurnstile();
-        },
-        onError: () => onError(),
-    });
-}
-
 // ---------------------------------------------------------------------------
 // Turnstile loading & rendering
 // ---------------------------------------------------------------------------
@@ -171,15 +152,49 @@ watch(flashSuccess, (v) => {
 });
 
 const showForm = ref(false);
+const showConfirmModal = ref(false);
 
-function openForm() {
+const formattedDate = computed(() => formatDate(props.workshop.workshop_date));
+
+function openForm(): void {
     showForm.value = true;
     // Wait for the form to be visible before rendering turnstile, otherwise it might not render correctly
     nextTick(() => renderTurnstile());
 }
 
-function closeForm() {
+function closeForm(): void {
     showForm.value = false;
+}
+
+function openConfirmModal(): void {
+    showConfirmModal.value = true;
+}
+
+function cancelConfirm(): void {
+    showConfirmModal.value = false;
+}
+
+function submit(): void {
+    const tokenInput = document.querySelector<HTMLInputElement>(
+        'input[name="cf-turnstile-response"]',
+    );
+
+    if (tokenInput) {
+        form['cf-turnstile-response'] = tokenInput.value;
+    }
+
+    form.post(`/workshops/${props.workshop.id}/inscribe`, {
+        preserveScroll: true,
+        onSuccess: () => {
+            showConfirmModal.value = false;
+            form.reset();
+            renderTurnstile();
+        },
+        onError: () => {
+            showConfirmModal.value = false;
+            onError();
+        },
+    });
 }
 </script>
 
@@ -425,9 +440,27 @@ function closeForm() {
                             </div>
                         </div>
 
+                        <!-- Past notice -->
+                        <div
+                            v-if="workshop.is_past"
+                            class="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600"
+                        >
+                            <Icon
+                                icon="mdi:clock-remove-outline"
+                                class="mt-0.5 shrink-0 text-slate-400"
+                                width="20"
+                                height="20"
+                            />
+                            <p>
+                                Aquest taller ja ha tingut lloc. Consulta els
+                                <a href="/workshops" class="font-semibold text-[#01617F] hover:underline">propers tallers</a>
+                                disponibles.
+                            </p>
+                        </div>
+
                         <!-- Full notice -->
                         <div
-                            v-if="workshop.is_full"
+                            v-else-if="workshop.is_full"
                             class="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800"
                         >
                             <Icon
@@ -460,7 +493,7 @@ function closeForm() {
                         <!-- STATUS 2: open form -->
                         <form
                             v-else
-                            @submit.prevent="submit"
+                            @submit.prevent="openConfirmModal"
                             class="space-y-4"
                             novalidate
                         >
@@ -568,30 +601,20 @@ function closeForm() {
                                 </p>
                             </div>
 
+                            <!-- Privacy notice -->
+                            <p class="text-xs leading-relaxed text-slate-400">
+                                En enviar aquest formulari acceptes el tractament de les teves dades tal com s'explica a la
+                                <a href="/privacy-policy" class="font-semibold text-[#00617E] underline-offset-2 hover:underline">política de privacitat</a>.
+                            </p>
+
                             <!-- Buttons: submit + cancel -->
                             <div class="flex flex-col gap-2 sm:flex-row">
                                 <button
                                     type="submit"
-                                    :disabled="form.processing"
-                                    class="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#01617F] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#01789E] disabled:cursor-not-allowed disabled:opacity-50"
+                                    class="flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#01617F] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#01789E]"
                                 >
-                                    <Icon
-                                        :icon="
-                                            form.processing
-                                                ? 'mdi:loading'
-                                                : 'mdi:check'
-                                        "
-                                        :class="{
-                                            'animate-spin': form.processing,
-                                        }"
-                                        width="18"
-                                        height="18"
-                                    />
-                                    {{
-                                        form.processing
-                                            ? 'Enviant…'
-                                            : 'Confirmar inscripció'
-                                    }}
+                                    <Icon icon="mdi:check" width="18" height="18" />
+                                    Revisar inscripció
                                 </button>
                                 <button
                                     type="button"
@@ -607,5 +630,18 @@ function closeForm() {
                 </div>
             </div>
         </section>
+        <ConfirmWorkshopInscriptionModal
+            :show="showConfirmModal"
+            :workshop-name="workshop.name"
+            :date="formattedDate"
+            :start-time="workshop.start_time"
+            :end-time="workshop.end_time"
+            :name="form.name"
+            :email="form.email"
+            :phone="form.phone"
+            :is-submitting="form.processing"
+            @confirm="submit"
+            @cancel="cancelConfirm"
+        />
     </WebAppLayout>
 </template>

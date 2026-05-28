@@ -17,7 +17,7 @@ class public_workshops_controller extends Controller
     public function index()
     {
         return Inertia::render('workshops/index', [
-            'workshops' => Inertia::scroll(fn () => Workshop::getActiveWorkshops()),
+            'workshops' => Inertia::scroll(fn() => Workshop::getActiveWorkshops()),
         ]);
     }
 
@@ -39,6 +39,7 @@ class public_workshops_controller extends Controller
                 'max_attendees' => $workshop->max_attendees,
                 'inscriptions_count' => $inscriptionsCount,
                 'is_full' => $isFull,
+                'is_past' => $workshop->workshop_date->lt(today()),
             ],
             'turnstileSiteKey' => config('services.turnstile.site_key'),
         ]);
@@ -50,6 +51,7 @@ class public_workshops_controller extends Controller
         CreateWorkshopInscriptionAction $action,
     ) {
         abort_if(! $workshop->is_active, 404);
+        abort_if($workshop->workshop_date->lt(today()), 403);
 
         // Re-check capacity at write time to avoid a race condition between
         // two simultaneous registrations on the very last seat.

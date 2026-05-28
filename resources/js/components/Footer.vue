@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
 import { Link } from '@inertiajs/vue3';
+import { useCookieConsent } from '@/composables/useCookieConsent';
+
+const { openBanner } = useCookieConsent();
 </script>
 
 <template>
@@ -126,12 +129,22 @@ import { Link } from '@inertiajs/vue3';
             >
                 <span>© 2026 Farmàcia Soler. Tots els drets reservats.</span>
                 <div class="flex items-center gap-4">
-                    <a href="#" class="transition hover:text-white"
-                        >Política de privacitat</a
+                    <Link href="/avis-legal" class="transition hover:text-white"
+                        >Avís legal</Link
                     >
-                    <a href="#" class="transition hover:text-white"
-                        >Avís legal</a
+                    <Link href="/privacy-policy" class="transition hover:text-white"
+                        >Política de privacitat</Link
                     >
+                    <Link href="/cookie-policy" class="transition hover:text-white"
+                        >Política de cookies</Link
+                    >
+                    <button
+                        type="button"
+                        class="transition hover:text-white"
+                        @click="openBanner"
+                    >
+                        Gestionar cookies
+                    </button>
                 </div>
             </div>
         </div>

@@ -25,8 +25,8 @@
         }
     </style>
 
-    <link rel="icon" href="/storage/FarmaciaSolerLogo.jpg" type="image/jpeg">
-    <link rel="apple-touch-icon" href="/storage/FarmaciaSolerLogo.jpg">
+    <link rel="icon" href="/storage/FarmaciaSolerLogo.webp" type="image/webp">
+    <link rel="apple-touch-icon" href="/storage/FarmaciaSolerLogo.webp">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />

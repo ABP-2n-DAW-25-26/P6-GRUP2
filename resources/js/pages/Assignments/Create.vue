@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Form, Link } from '@inertiajs/vue3';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { Form, Link, usePage } from '@inertiajs/vue3';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
+import ConfirmAssignmentModal from '@/components/ConfirmAssignmentModal.vue';
 import PublicFlashToast from '@/components/PublicFlashToast.vue';
 import WebAppLayout from '@/layouts/WebAppLayout.vue';
 import { store } from '@/routes/assignments';
@@ -32,12 +33,15 @@ function renderTurnstile() {
 }
 
 // On error reset the widget so the user can try again without refreshing the page
-function onError() {
+function onError(): void {
     const t = (window as any).turnstile;
 
     if (t && turnstileWidgetId.value) {
         t.reset(turnstileWidgetId.value);
     }
+
+    showConfirmModal.value = false;
+    isSubmitting.value = false;
 }
 
 // Load Turnstile script on mount and render the widget, and remove it on unmount
@@ -68,19 +72,49 @@ onUnmounted(() => {
 });
 
 const formRef = ref<HTMLFormElement | null>(null);
+const submitRef = ref<HTMLButtonElement | null>(null);
+const showConfirmModal = ref(false);
 const showModal = ref(false);
+const isSubmitting = ref(false);
 const descriptionLength = ref(0);
 const focusedField = ref<string | null>(null);
 
+const formName = ref('');
+const formAddress = ref('');
+const formPhone = ref('');
+const formDescription = ref('');
+
+const page = usePage<{ flash?: { pdfUrl?: string } }>();
+const pdfUrl = computed(() => page.props.flash?.pdfUrl ?? null);
+
+function openConfirmModal(): void {
+    showConfirmModal.value = true;
+}
+
+function cancelConfirm(): void {
+    showConfirmModal.value = false;
+}
+
+function confirmAndSubmit(): void {
+    isSubmitting.value = true;
+    submitRef.value?.click();
+}
+
 // Reset form and show success modal on successful submission
-function onSuccess() {
+function onSuccess(): void {
+    showConfirmModal.value = false;
+    isSubmitting.value = false;
     showModal.value = true;
     formRef.value?.reset();
+    formName.value = '';
+    formAddress.value = '';
+    formPhone.value = '';
+    formDescription.value = '';
     descriptionLength.value = 0;
 }
 
 // Update description length counter on input
-function onDescriptionInput(e: Event) {
+function onDescriptionInput(e: Event): void {
     descriptionLength.value = (e.target as HTMLTextAreaElement).value.length;
 }
 </script>
@@ -250,6 +284,7 @@ function onDescriptionInput(e: Event) {
                                         </span>
                                         <input
                                             id="name"
+                                            v-model="formName"
                                             type="text"
                                             name="name"
                                             autocomplete="name"
@@ -337,6 +372,7 @@ function onDescriptionInput(e: Event) {
                                             </span>
                                             <input
                                                 id="address"
+                                                v-model="formAddress"
                                                 type="text"
                                                 name="address"
                                                 autocomplete="email-address"
@@ -419,6 +455,7 @@ function onDescriptionInput(e: Event) {
                                             </span>
                                             <input
                                                 id="phone_number"
+                                                v-model="formPhone"
                                                 type="tel"
                                                 name="phone_number"
                                                 autocomplete="tel"
@@ -497,6 +534,7 @@ function onDescriptionInput(e: Event) {
                                     </div>
                                     <textarea
                                         id="description"
+                                        v-model="formDescription"
                                         name="description"
                                         rows="6"
                                         maxlength="500"
@@ -539,34 +577,15 @@ function onDescriptionInput(e: Event) {
                                     </p>
                                 </div>
 
-                                <!-- Terms -->
-                                <div
-                                    class="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-4"
-                                >
-                                    <input
-                                        id="terms"
-                                        required
-                                        type="checkbox"
-                                        class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-slate-300 text-[#00617E] focus:ring-2 focus:ring-[#00617E]/30"
-                                    />
-                                    <label
-                                        for="terms"
-                                        class="text-sm leading-relaxed text-slate-700"
-                                    >
-                                        He llegit i accepto les
-                                        <a
-                                            href="#"
-                                            class="font-semibold text-[#00617E] underline-offset-2 hover:underline"
-                                            >condicions d'ús</a
-                                        >
-                                        i la
-                                        <a
-                                            href="#"
-                                            class="font-semibold text-[#00617E] underline-offset-2 hover:underline"
-                                            >política de privacitat</a
-                                        >.
-                                    </label>
-                                </div>
+                                <!-- Privacy notice -->
+                                <p class="text-xs leading-relaxed text-slate-500">
+                                    En enviar aquest formulari acceptes el tractament de les teves dades tal com s'explica a la
+                                    <Link
+                                        href="/privacy-policy"
+                                        class="font-semibold text-[#00617E] underline-offset-2 hover:underline"
+                                        >política de privacitat</Link
+                                    >.
+                                </p>
 
                                 <!-- Turnstile -->
                                 <div v-if="props.turnstileSiteKey">
@@ -637,37 +656,19 @@ function onDescriptionInput(e: Event) {
                                         Les teves dades estan protegides
                                     </p>
                                     <button
+                                        ref="submitRef"
                                         type="submit"
-                                        :disabled="validating"
-                                        class="group inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-[#00617E] to-[#004e66] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#00617E]/25 transition hover:shadow-xl hover:shadow-[#00617E]/30 focus:ring-4 focus:ring-[#00617E]/30 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none"
+                                        class="hidden"
+                                        aria-hidden="true"
+                                        tabindex="-1"
+                                    />
+                                    <button
+                                        type="button"
+                                        class="group inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-[#00617E] to-[#004e66] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#00617E]/25 transition hover:shadow-xl hover:shadow-[#00617E]/30 focus:ring-4 focus:ring-[#00617E]/30 focus:outline-none"
+                                        @click="openConfirmModal"
                                     >
+                                        Revisar encàrrec
                                         <svg
-                                            v-if="validating"
-                                            class="h-4 w-4 animate-spin"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                        >
-                                            <circle
-                                                class="opacity-25"
-                                                cx="12"
-                                                cy="12"
-                                                r="10"
-                                                stroke="currentColor"
-                                                stroke-width="4"
-                                            />
-                                            <path
-                                                class="opacity-75"
-                                                fill="currentColor"
-                                                d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
-                                            />
-                                        </svg>
-                                        {{
-                                            validating
-                                                ? 'Enviant…'
-                                                : 'Enviar encàrrec'
-                                        }}
-                                        <svg
-                                            v-if="!validating"
                                             class="h-4 w-4 transition group-hover:translate-x-0.5"
                                             viewBox="0 0 24 24"
                                             fill="none"
@@ -676,15 +677,8 @@ function onDescriptionInput(e: Event) {
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
                                         >
-                                            <line
-                                                x1="5"
-                                                y1="12"
-                                                x2="19"
-                                                y2="12"
-                                            />
-                                            <polyline
-                                                points="12 5 19 12 12 19"
-                                            />
+                                            <line x1="5" y1="12" x2="19" y2="12" />
+                                            <polyline points="12 5 19 12 12 19" />
                                         </svg>
                                     </button>
                                 </div>
@@ -820,6 +814,18 @@ function onDescriptionInput(e: Event) {
             </div>
         </div>
 
+        <!-- Confirm modal -->
+        <ConfirmAssignmentModal
+            :show="showConfirmModal"
+            :name="formName"
+            :address="formAddress"
+            :phone="formPhone"
+            :description="formDescription"
+            :is-submitting="isSubmitting"
+            @confirm="confirmAndSubmit"
+            @cancel="cancelConfirm"
+        />
+
         <!-- Success modal -->
         <transition
             enter-active-class="transition duration-200 ease-out"
@@ -905,61 +911,9 @@ function onDescriptionInput(e: Event) {
 
                         <!-- Body -->
                         <div class="px-6 py-5 sm:px-8">
-                            <p class="text-sm text-slate-600">
-                                Confirma que aquestes dades són correctes:
+                            <p class="text-sm leading-relaxed text-slate-600">
+                                Hem rebut la teva sol·licitud. T'avisarem quan l'encàrrec estigui a punt per recollir.
                             </p>
-                            <dl
-                                class="mt-4 divide-y divide-slate-100 rounded-xl bg-slate-50 ring-1 ring-slate-200/60"
-                            >
-                                <div class="grid grid-cols-3 gap-4 px-4 py-3">
-                                    <dt
-                                        class="text-xs font-semibold tracking-wide text-slate-500 uppercase"
-                                    >
-                                        Nom
-                                    </dt>
-                                    <dd
-                                        class="col-span-2 text-sm font-medium text-slate-900"
-                                    >
-                                        {{ props.name }}
-                                    </dd>
-                                </div>
-                                <div class="grid grid-cols-3 gap-4 px-4 py-3">
-                                    <dt
-                                        class="text-xs font-semibold tracking-wide text-slate-500 uppercase"
-                                    >
-                                        Adreça
-                                    </dt>
-                                    <dd
-                                        class="col-span-2 text-sm text-slate-900"
-                                    >
-                                        {{ props.address }}
-                                    </dd>
-                                </div>
-                                <div class="grid grid-cols-3 gap-4 px-4 py-3">
-                                    <dt
-                                        class="text-xs font-semibold tracking-wide text-slate-500 uppercase"
-                                    >
-                                        Telèfon
-                                    </dt>
-                                    <dd
-                                        class="col-span-2 text-sm text-slate-900"
-                                    >
-                                        {{ props.phone_number }}
-                                    </dd>
-                                </div>
-                                <div class="grid grid-cols-3 gap-4 px-4 py-3">
-                                    <dt
-                                        class="text-xs font-semibold tracking-wide text-slate-500 uppercase"
-                                    >
-                                        Encàrrec
-                                    </dt>
-                                    <dd
-                                        class="col-span-2 text-sm [overflow-wrap:anywhere] whitespace-pre-line text-slate-900"
-                                    >
-                                        {{ props.description }}
-                                    </dd>
-                                </div>
-                            </dl>
                             <div
                                 class="mt-4 flex items-start gap-2 rounded-lg bg-blue-50 px-3 py-2.5 text-xs text-blue-800 ring-1 ring-blue-100"
                             >
@@ -972,9 +926,7 @@ function onDescriptionInput(e: Event) {
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                 >
-                                    <path
-                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                                    />
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                                     <polyline points="22,6 12,13 2,6" />
                                 </svg>
                                 Rebràs una confirmació al teu correu electrònic.
@@ -987,11 +939,24 @@ function onDescriptionInput(e: Event) {
                         >
                             <button
                                 type="button"
-                                class="inline-flex items-center justify-center rounded-lg bg-gradient-to-br from-[#00617E] to-[#004e66] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#00617E]/20 transition hover:shadow-lg hover:shadow-[#00617E]/30 focus:ring-4 focus:ring-[#00617E]/30 focus:outline-none"
+                                class="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 focus:ring-4 focus:ring-slate-200 focus:outline-none"
                                 @click="showModal = false"
                             >
-                                Entès, gràcies
+                                Tancar
                             </button>
+                            <a
+                                v-if="pdfUrl"
+                                :href="pdfUrl"
+                                target="_blank"
+                                class="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-[#00617E] to-[#004e66] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#00617E]/20 transition hover:shadow-lg hover:shadow-[#00617E]/30 focus:ring-4 focus:ring-[#00617E]/30 focus:outline-none"
+                            >
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                Descarregar PDF
+                            </a>
                         </div>
                     </div>
                 </transition>

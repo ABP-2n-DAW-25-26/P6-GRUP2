@@ -9,10 +9,12 @@ use App\Mail\AssignmentCreatedAdmin;
 use App\Mail\AssignmentListCode;
 use App\Models\assignments as Assignment;
 use App\Models\Email;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 
 class AssignmentsController extends Controller
@@ -61,12 +63,16 @@ class AssignmentsController extends Controller
             $flashMessage = 'No hem pogut enviar el correu de confirmació.';
         }
 
+        $pdfUrl = URL::temporarySignedRoute('assignments.pdf', now()->addHour(), [
+            'assignment' => $assignment->id,
+        ]);
+
         return to_route('assignments.create', [
             'name' => $validated['name'] ?? null,
             'address' => $validated['address'] ?? null,
             'phone_number' => $validated['phone_number'] ?? null,
             'description' => $validated['description'] ?? null,
-        ])->with($flashKey, $flashMessage);
+        ])->with($flashKey, $flashMessage)->with('pdfUrl', $pdfUrl);
     }
 
     /**
@@ -99,6 +105,31 @@ class AssignmentsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function downloadPdf(Request $request)
+    {
+        if (! $request->hasValidSignature()) {
+            abort(403);
+        }
+
+        $assignment = Assignment::findOrFail($request->query('assignment'));
+
+        $data = [
+            'name' => $assignment->name,
+            'address' => $assignment->address,
+            'phone_number' => $assignment->phone_number,
+            'description' => $assignment->description,
+            'pharmacy' => 'Farmàcia Soler',
+            'pharmacy_address' => 'Carrer Nou, 22, 17600 Figueres, Girona',
+            'phone' => '688 466 225',
+        ];
+
+        $pdf = Pdf::loadView('pdf.assignment', $data)->setPaper('a4', 'portrait');
+
+        $filename = 'encarrec-'.str_replace(' ', '-', $assignment->name).'.pdf';
+
+        return $pdf->download($filename);
     }
 
     public function code(Request $request)
