@@ -14,6 +14,7 @@ use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\AssignmentsController;
 use App\Http\Controllers\Contactans;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LegalController;
 use App\Http\Controllers\public_workshops_controller;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 // MAIN HOME ROUTE
 //
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/privacy-policy', [LegalController::class, 'privacyPolicy'])->name('privacy-policy');
+Route::get('/cookie-policy', [LegalController::class, 'cookiePolicy'])->name('cookie-policy');
+Route::get('/avis-legal', [LegalController::class, 'legalNotice'])->name('avis-legal');
 
 Route::get('/pharmacyguard/{data}', [HomeController::class, 'getpg'])->name('getpg');
 
@@ -62,9 +66,10 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(funct
 //
 // ASSIGNMENTS
 //
+Route::get('/assignments/pdf', [AssignmentsController::class, 'downloadPdf'])->name('assignments.pdf');
+Route::post('/assignments/code', [AssignmentsController::class, 'code'])->name('assignments.code')->middleware('throttle:3,10');
+Route::post('/assignments/verify-code', [AssignmentsController::class, 'verifyCode'])->name('assignments.verify-code')->middleware('throttle:5,10');
 Route::resource('assignments', AssignmentsController::class);
-Route::post('/assignments/code', [AssignmentsController::class, 'code'])->name('assignments.code');
-Route::post('/assignments/verify-code', [AssignmentsController::class, 'verifyCode'])->name('assignments.verify-code');
 
 //
 // WORKSHOPS

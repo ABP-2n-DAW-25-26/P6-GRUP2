@@ -1305,7 +1305,7 @@ onUnmounted(() => {
                                             {{
                                                 form.processing
                                                     ? 'Confirmant…'
-                                                    : 'Confirmar reserva'
+                                                    : 'Revisar reserva'
                                             }}
                                         </button>
                                     </div>
@@ -1335,6 +1335,18 @@ onUnmounted(() => {
                                     </svg>
                                     Les teves dades estan protegides
                                 </div>
+                                <p
+                                    class="mt-2 text-xs leading-relaxed text-slate-400"
+                                >
+                                    En enviar aquest formulari acceptes el
+                                    tractament de les teves dades tal com
+                                    s'explica a la
+                                    <a
+                                        href="/privacy-policy"
+                                        class="font-semibold text-[#00617E] underline-offset-2 hover:underline"
+                                        >política de privacitat</a
+                                    >.
+                                </p>
                             </aside>
                         </div>
                     </div>

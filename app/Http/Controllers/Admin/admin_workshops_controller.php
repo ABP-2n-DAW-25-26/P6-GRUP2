@@ -28,8 +28,8 @@ class admin_workshops_controller extends Controller
                 'max_attendees',
                 'is_active',
             ])
-            ->orderBy('workshop_date')
-            ->orderBy('start_time')
+            ->orderBy('workshop_date', 'desc')
+            ->orderBy('start_time', 'desc')
             ->get();
 
         return Inertia::render('admin/Workshops/Index', [
