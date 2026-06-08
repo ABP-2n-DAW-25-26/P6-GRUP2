@@ -44,9 +44,11 @@ Route::get('/appointments/schedule', [AppointmentsController::class, 'getSchedul
 Route::prefix('gestio-interna')->middleware(['auth', 'verified', 'isAdmin'])->group(function () {
     Route::get('/', [admin_index_controller::class, 'index'])->name('admindashboard');
 
-    Route::resource('users', admin_users_controller::class);
-    Route::resource('mail', MailController::class);
-    Route::resource('emails', EmailsController::class);
+    Route::middleware('isSuperAdmin')->group(function () {
+        Route::resource('users', admin_users_controller::class);
+        Route::resource('mail', MailController::class);
+        Route::resource('emails', EmailsController::class);
+    });
 
     Route::get('pharmacyguards/filter', [admin_pharmacyguards_controller::class, 'filter'])->name('pharmacyguards.filter');
     Route::resource('pharmacyguards', admin_pharmacyguards_controller::class);

@@ -135,7 +135,12 @@ class admin_users_controller extends Controller
             'email.unique' => 'Aquest correu electrònic ja està en ús.',
             'password.required' => 'La contrasenya és obligatòria.',
             'password.confirmed' => 'Les contrasenyes no coincideixen.',
-            'password.min' => 'La contrasenya ha de tenir almenys 8 caràcters.',
+            'password.min' => 'La contrasenya ha de tenir almenys 12 caràcters.',
+            'password.mixed' => 'La contrasenya ha de contenir majúscules i minúscules.',
+            'password.letters' => 'La contrasenya ha de contenir almenys una lletra.',
+            'password.numbers' => 'La contrasenya ha de contenir almenys un número.',
+            'password.symbols' => 'La contrasenya ha de contenir almenys un símbol.',
+            'password.uncompromised' => 'Aquesta contrasenya ha aparegut en filtracions de dades. Si us plau, tria\'n una altra.',
             'role.required' => 'El rol és obligatori.',
             'role.in' => 'El rol seleccionat no és vàlid.',
         ];
