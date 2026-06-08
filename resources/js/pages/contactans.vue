@@ -47,16 +47,22 @@ onMounted(async () => {
         },
     ).addTo(map.value);
 
-    L.marker([42.2655267, 2.9631527], { icon: pharmacyIcon })
+    const mapMarker = L.marker([42.2655267, 2.9631527], {
+        icon: pharmacyIcon,
+        title: 'Ubicació de la Farmàcia Soler',
+    })
         .addTo(map.value)
         .bindPopup('<b>Farmàcia Soler</b><br>Carrer Nou, 22 · Figueres')
         .openPopup();
+
+    mapMarker.getElement()?.setAttribute('aria-label', 'Ubicació de la Farmàcia Soler');
 
     const leafletPopupClose = document.querySelector(
         '.leaflet-popup-close-button',
     );
     leafletPopupClose?.removeAttribute('href');
     leafletPopupClose?.classList.add('cursor-pointer');
+    leafletPopupClose?.setAttribute('aria-label', 'Tanca la finestra emergent');
 });
 </script>
 
@@ -197,7 +203,7 @@ onMounted(async () => {
                                         Diumenge
                                     </span>
                                     <span
-                                        class="text-sm font-semibold text-rose-500"
+                                        class="text-sm font-semibold text-rose-800"
                                     >
                                         Tancat
                                     </span>
@@ -264,7 +270,7 @@ onMounted(async () => {
                                 />
                             </a>
                             <div
-                                class="mt-4 flex items-start gap-2 text-xs text-white/70"
+                                class="mt-4 flex items-start gap-2 text-xs text-white"
                             >
                                 <Icon
                                     icon="mdi:map-marker"
@@ -281,7 +287,7 @@ onMounted(async () => {
                             class="flex justify-between overflow-hidden rounded-2xl bg-gradient-to-br from-[#00617E] to-[#004e66] px-24 py-6 text-white shadow-xl"
                         >
                             <a
-                                aria-label="fs_facebook"
+                                aria-label="Facebook de Farmàcia Soler"
                                 href="https://www.facebook.com/farmaciasolerfigueres"
                                 class="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm transition-all duration-75 hover:scale-110 hover:bg-white/25"
                             >
@@ -292,7 +298,7 @@ onMounted(async () => {
                                 />
                             </a>
                             <a
-                                aria-label="fs_instagram"
+                                aria-label="Instagram de Farmàcia Soler"
                                 href="https://www.instagram.com/farmaciasolerfigueres"
                                 class="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm transition-all duration-75 hover:scale-110 hover:bg-white/25"
                             >
@@ -303,7 +309,7 @@ onMounted(async () => {
                                 />
                             </a>
                             <a
-                                aria-label="fs_tiktok"
+                                aria-label="TikTok de Farmàcia Soler"
                                 href="https://www.tiktok.com/@farmaciasoler"
                                 class="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm transition-all duration-75 hover:scale-110 hover:bg-white/25"
                             >
@@ -338,5 +344,13 @@ onMounted(async () => {
 }
 :deep(.leaflet-popup-content b) {
     color: #0e3c4d;
+}
+:deep(.leaflet-control-attribution) {
+    background-color: #015873 !important;
+    color: #feffff !important;
+}
+:deep(.leaflet-control-attribution a),
+:deep(.leaflet-control-attribution span) {
+    color: #feffff !important;
 }
 </style>

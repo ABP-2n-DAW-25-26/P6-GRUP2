@@ -73,7 +73,10 @@ onMounted(async () => {
 
     marker.value = L.marker([pharmacy.lat.value, pharmacy.long.value], {
         icon: pharmacyIcon,
+        title: 'Ubicació de la Farmàcia',
     }).addTo(map.value);
+
+    marker.value.getElement()?.setAttribute('aria-label', 'Ubicació de la Farmàcia');
 
     // Pharmacy Info
     getPharmacyInfo(
@@ -81,17 +84,6 @@ onMounted(async () => {
         selectedDate.month.value + 1,
         selectedDate.year.value,
     );
-
-    // Leaflet accessibility
-    document
-        .querySelector('.leaflet-marker-pane > img')
-        ?.setAttribute('aria-label', 'Ubicació de la Farmàcia');
-    document
-        .querySelector('.leaflet-control-attribution')
-        ?.classList.add('!bg-[#015873]');
-    document
-        .querySelector('.leaflet-control-attribution > a')
-        ?.classList.add('!text-white');
 });
 
 const pharmacy = {
@@ -714,5 +706,13 @@ function setNextWeek() {
 <style scoped>
 :deep(.leaflet-tile-pane) {
     filter: saturate(0.55) brightness(1.06);
+}
+:deep(.leaflet-control-attribution) {
+    background-color: #015873 !important;
+    color: #feffff !important;
+}
+:deep(.leaflet-control-attribution a),
+:deep(.leaflet-control-attribution span) {
+    color: #feffff !important;
 }
 </style>
