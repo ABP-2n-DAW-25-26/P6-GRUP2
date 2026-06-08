@@ -11,6 +11,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import {
     destroy as destroyPharmacyGuard,
+    filter as pharmacyguardsFilter,
     index as pharmacyguardsIndex,
     store as storePharmacyGuard,
 } from '@/routes/pharmacyguards';
@@ -102,7 +103,7 @@ const filterGuards = () => {
 
     const queryString = params.toString();
 
-    fetch(`/admin/pharmacyguards/filter${queryString ? `?${queryString}` : ''}`)
+    fetch(`${pharmacyguardsFilter().url}${queryString ? `?${queryString}` : ''}`)
         .then((response) => response.json())
         .then((data) => {
             pharmacyguardsData.value = data.pharmacyguards ?? [];

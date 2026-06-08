@@ -19,8 +19,8 @@ function adminUser(): User
 
 test('guest cannot reach the services index', function () {
     $this->withoutVite()
-        ->get('/admin/services')
-        ->assertRedirect('/login');
+        ->get('/gestio-interna/services')
+        ->assertRedirect();
 });
 
 test('admin can list services', function () {
@@ -33,7 +33,7 @@ test('admin can list services', function () {
         'icon' => 'pill',
     ]);
 
-    $response = $this->withoutVite()->get('/admin/services');
+    $response = $this->withoutVite()->get('/gestio-interna/services');
 
     $response->assertOk();
 });
@@ -41,14 +41,14 @@ test('admin can list services', function () {
 test('admin can create a valid service', function () {
     $this->actingAs(adminUser());
 
-    $response = $this->post('/admin/services', [
+    $response = $this->post('/gestio-interna/services', [
         'name' => 'Consulta General',
         'description' => 'Atencio general per a tots els pacients.',
         'duration_minutes' => 30,
         'icon' => 'stethoscope',
     ]);
 
-    $response->assertRedirect('/admin/services');
+    $response->assertRedirect('/gestio-interna/services');
 
     $this->assertDatabaseHas('services', [
         'name' => 'Consulta General',
@@ -60,9 +60,7 @@ test('admin can create a valid service', function () {
 test('service creation fails with invalid name (special characters not allowed)', function () {
     $this->actingAs(adminUser());
 
-    // The name regex only allows letters, numbers, spaces, hyphens and parentheses,
-    // so characters like "@" or "!" must be rejected.
-    $response = $this->from('/admin/services/create')->post('/admin/services', [
+    $response = $this->from('/gestio-interna/services/create')->post('/gestio-interna/services', [
         'name' => 'Consulta @!',
         'description' => 'Bad service name',
         'duration_minutes' => 30,
@@ -73,10 +71,24 @@ test('service creation fails with invalid name (special characters not allowed)'
     $this->assertDatabaseMissing('services', ['name' => 'Consulta @!']);
 });
 
+test('service name with catalan middle dot is accepted', function () {
+    $this->actingAs(adminUser());
+
+    $response = $this->post('/gestio-interna/services', [
+        'name' => 'Dermoanalisi Capil·lar',
+        'description' => 'Anàlisi capil·lar amb punt volat.',
+        'duration_minutes' => 30,
+        'icon' => 'pill',
+    ]);
+
+    $response->assertRedirect('/gestio-interna/services');
+    $this->assertDatabaseHas('services', ['name' => 'Dermoanalisi Capil·lar']);
+});
+
 test('service creation fails with non-integer duration', function () {
     $this->actingAs(adminUser());
 
-    $response = $this->from('/admin/services/create')->post('/admin/services', [
+    $response = $this->from('/gestio-interna/services/create')->post('/gestio-interna/services', [
         'name' => 'Consulta',
         'description' => 'OK',
         'duration_minutes' => 'not-a-number',
@@ -96,14 +108,14 @@ test('admin can update a service', function () {
         'icon' => 'pill',
     ]);
 
-    $response = $this->put("/admin/services/{$service->id}", [
+    $response = $this->put("/gestio-interna/services/{$service->id}", [
         'name' => 'Nou Nom',
         'description' => 'Updated description',
         'duration_minutes' => 45,
         'icon' => 'heart',
     ]);
 
-    $response->assertRedirect('/admin/services');
+    $response->assertRedirect('/gestio-interna/services');
 
     $this->assertDatabaseHas('services', [
         'id' => $service->id,
@@ -123,7 +135,7 @@ test('admin can delete a service', function () {
         'icon' => 'pill',
     ]);
 
-    $this->delete("/admin/services/{$service->id}")->assertRedirect();
+    $this->delete("/gestio-interna/services/{$service->id}")->assertRedirect();
 
     $this->assertDatabaseMissing('services', ['id' => $service->id]);
 });

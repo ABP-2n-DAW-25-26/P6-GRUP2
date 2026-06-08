@@ -24,34 +24,39 @@ onMounted(async () => {
     const LModule = await import('leaflet');
     const L = LModule.default ?? LModule;
 
+    const pharmacyIcon = L.divIcon({
+        html: `<div style="width:28px;height:38px;display:block"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 38" width="28" height="38" style="display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))"><path d="M14 0C6.27 0 0 6.27 0 14c0 10.5 14 24 14 24S28 24.5 28 14C28 6.27 21.73 0 14 0z" fill="#015873"/><rect x="12" y="8" width="4" height="12" rx="1" fill="white"/><rect x="8" y="12" width="12" height="4" rx="1" fill="white"/></svg></div>`,
+        iconSize: [28, 38],
+        iconAnchor: [14, 38],
+        popupAnchor: [1, -36],
+        className: '',
+    });
+
     map.value = L.map('map', {
         zoomControl: true,
         scrollWheelZoom: false,
     }).setView([42.2655267, 2.9631527], 18);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-    }).addTo(map.value);
-    L.marker([42.2655267, 2.9631527])
+
+    L.tileLayer(
+        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20,
+        },
+    ).addTo(map.value);
+
+    L.marker([42.2655267, 2.9631527], { icon: pharmacyIcon })
         .addTo(map.value)
         .bindPopup('<b>Farmàcia Soler</b><br>Carrer Nou, 22 · Figueres')
         .openPopup();
 
-    // For accessibility (nothing important)
-    document
-        .querySelector('.leaflet-marker-pane > img')
-        ?.setAttribute('aria-label', 'Ubicació de la Farmàcia');
-    document
-        .querySelector('.leaflet-control-attribution')
-        ?.classList.add('!bg-[#015873]');
-    document
-        .querySelector('.leaflet-control-attribution > a')
-        ?.classList.add('!text-white');
     const leafletPopupClose = document.querySelector(
         '.leaflet-popup-close-button',
     );
     leafletPopupClose?.removeAttribute('href');
     leafletPopupClose?.classList.add('cursor-pointer');
-    console.dir(leafletPopupClose);
 });
 </script>
 
@@ -320,7 +325,18 @@ onMounted(async () => {
 :deep(.leaflet-container) {
     font-family: inherit;
 }
+:deep(.leaflet-tile-pane) {
+    filter: saturate(0.55) brightness(1.06);
+}
 :deep(.leaflet-popup-content-wrapper) {
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    border: 1px solid #e2e8f0;
+}
+:deep(.leaflet-popup-tip) {
+    box-shadow: none;
+}
+:deep(.leaflet-popup-content b) {
+    color: #0e3c4d;
 }
 </style>

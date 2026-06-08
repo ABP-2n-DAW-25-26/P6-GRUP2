@@ -2,6 +2,8 @@
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import { show as servicesShow } from '@/routes/services';
+import { store as serviceSchedulesStore } from '@/routes/service-schedules';
 
 interface Service {
     id: number;
@@ -40,7 +42,7 @@ const submit = () => {
         return;
     }
 
-    form.post('/admin/service-schedules');
+    form.post(serviceSchedulesStore().url);
 };
 </script>
 <template>
@@ -169,7 +171,7 @@ const submit = () => {
                                 class="flex justify-end gap-3 border-t border-sidebar-border/70 pt-5"
                             >
                                 <Link
-                                    :href="`/admin/services/${service.id}`"
+                                    :href="servicesShow(service.id).url"
                                     class="inline-flex items-center rounded-xl border border-sidebar-border px-4 py-2 text-sm transition hover:bg-muted"
                                 >
                                     Cancel·lar

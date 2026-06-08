@@ -50,14 +50,10 @@ class EmailsController extends Controller
      */
     public function store(CreateEmailRequest $request, CreateEmailAction $createEmail)
     {
-        $validated = $request->validated();
-        $createEmail->execute($validated);
+        $createEmail->execute($request->validated());
 
-        Inertia::flash([
-            'message' => 'Correu electrònic creat correctament.',
-        ]);
-
-        return redirect('/admin/emails/create');
+        return to_route('emails.index')
+            ->with('success', 'Correu electrònic creat correctament.');
     }
 
     /**

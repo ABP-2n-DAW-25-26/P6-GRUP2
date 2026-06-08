@@ -13,11 +13,14 @@ withDefaults(
         open: boolean;
         title?: string;
         description?: string;
+        confirmText?: string;
+        confirmClass?: string;
     }>(),
     {
         title: 'Eliminar element',
-        description:
-            'Segur que vols eliminar aquest element? Aquesta acció no es pot desfer.',
+        description: 'Segur que vols eliminar aquest element? Aquesta acció no es pot desfer.',
+        confirmText: 'Eliminar',
+        confirmClass: 'inline-flex cursor-pointer items-center rounded-xl bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700',
     },
 );
 
@@ -46,10 +49,10 @@ const emit = defineEmits<{
 
                 <button
                     type="button"
-                    class="inline-flex cursor-pointer items-center rounded-xl bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700"
+                    :class="confirmClass"
                     @click="emit('confirm')"
                 >
-                    Eliminar
+                    {{ confirmText }}
                 </button>
             </DialogFooter>
         </DialogContent>

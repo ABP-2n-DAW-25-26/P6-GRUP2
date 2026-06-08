@@ -86,7 +86,7 @@ return [
     |
     */
 
-    'prefix' => '',
+    'prefix' => 'rfk-portal-k9x',
 
     'domain' => null,
 

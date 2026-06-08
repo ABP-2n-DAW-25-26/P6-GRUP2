@@ -19,6 +19,7 @@ import {
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { admindashboard as dashboard } from '@/routes';
+import { index as servicesIndex, store as servicesStore } from '@/routes/services';
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Administració de serveis', href: dashboard().url },
     { title: 'Nou servei', href: '#' },
@@ -50,7 +51,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post('/admin/services');
+    form.post(servicesStore().url);
 };
 </script>
 <template>
@@ -219,7 +220,7 @@ const submit = () => {
                         class="flex justify-end gap-3 border-t border-sidebar-border/70 pt-5"
                     >
                         <Link
-                            href="/admin/services"
+                            :href="servicesIndex().url"
                             class="inline-flex items-center rounded-xl border border-sidebar-border px-4 py-2 text-sm transition hover:bg-muted"
                         >
                             Cancel·lar

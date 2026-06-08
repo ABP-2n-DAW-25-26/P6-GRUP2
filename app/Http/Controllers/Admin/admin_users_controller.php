@@ -48,7 +48,7 @@ class admin_users_controller extends Controller
             'email' => $this->emailRules(),
             'password' => $this->passwordRules(),
             'role' => ['required', 'string', 'in:admin,user'],
-        ]);
+        ], $this->userMessages());
 
         User::create([
             'name' => $validated['name'],
@@ -93,7 +93,7 @@ class admin_users_controller extends Controller
             $rules['password'] = ['required', 'string', Password::default(), 'confirmed'];
         }
 
-        $validated = $request->validate($rules);
+        $validated = $request->validate($rules, $this->userMessages());
 
         $data = [
             'name' => $validated['name'],
@@ -122,5 +122,22 @@ class admin_users_controller extends Controller
         $user->delete();
 
         return to_route('users.index')->with('success', 'Usuari eliminat correctament.');
+    }
+
+    private function userMessages(): array
+    {
+        return [
+            'name.required' => 'El nom és obligatori.',
+            'name.max' => 'El nom no pot superar els 255 caràcters.',
+            'email.required' => 'El correu electrònic és obligatori.',
+            'email.email' => 'El correu electrònic no té un format vàlid.',
+            'email.max' => 'El correu no pot superar els 255 caràcters.',
+            'email.unique' => 'Aquest correu electrònic ja està en ús.',
+            'password.required' => 'La contrasenya és obligatòria.',
+            'password.confirmed' => 'Les contrasenyes no coincideixen.',
+            'password.min' => 'La contrasenya ha de tenir almenys 8 caràcters.',
+            'role.required' => 'El rol és obligatori.',
+            'role.in' => 'El rol seleccionat no és vàlid.',
+        ];
     }
 }

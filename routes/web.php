@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\admin_pharmacies_controller;
 use App\Http\Controllers\Admin\admin_pharmacyguards_controller;
 use App\Http\Controllers\Admin\admin_users_controller;
 use App\Http\Controllers\Admin\admin_workshops_controller;
+use App\Http\Controllers\Admin\AdminCalendarExceptionController;
 use App\Http\Controllers\Admin\AdminServiceController;
 use App\Http\Controllers\Admin\AssignmentsController as AdminAssignmentsController;
 use App\Http\Controllers\Admin\EmailsController;
@@ -40,7 +41,7 @@ Route::get('/appointments/schedule', [AppointmentsController::class, 'getSchedul
 //
 // ADMIN ROUTES
 //
-Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(function () {
+Route::prefix('gestio-interna')->middleware(['auth', 'verified', 'isAdmin'])->group(function () {
     Route::get('/', [admin_index_controller::class, 'index'])->name('admindashboard');
 
     Route::resource('users', admin_users_controller::class);
@@ -61,6 +62,7 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'isAdmin'])->group(funct
     Route::resource('workshops', admin_workshops_controller::class);
     Route::resource('adminAssignments', AdminAssignmentsController::class);
     Route::resource('service-schedules', ServiceScheduleController::class);
+    Route::resource('calendar-exceptions', AdminCalendarExceptionController::class)->only(['index', 'store', 'destroy']);
 });
 
 //

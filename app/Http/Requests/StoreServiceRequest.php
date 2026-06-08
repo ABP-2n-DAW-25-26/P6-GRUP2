@@ -28,7 +28,7 @@ class StoreServiceRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                'regex:/^[\pL\pN\s\-\(\)]+$/u',
+                'regex:/^[\pL\pN\s\-\(\)·]+$/u',
             ],
 
             'description' => [
@@ -51,6 +51,18 @@ class StoreServiceRequest extends FormRequest
                 'string',
                 'max:50',
             ],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.regex' => 'El nom només pot contenir lletres, números, espais, guions, parèntesis i punt volat (·).',
+            'name.required' => 'El nom del servei és obligatori.',
+            'name.max' => 'El nom no pot superar els 255 caràcters.',
+            'duration_minutes.required' => 'La durada és obligatòria.',
+            'duration_minutes.integer' => 'La durada ha de ser un número enter de minuts.',
+            'duration_minutes.min' => 'La durada ha de ser d\'almenys 1 minut.',
         ];
     }
 }

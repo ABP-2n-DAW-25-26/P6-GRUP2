@@ -3,6 +3,8 @@ import { Head, Link, router } from '@inertiajs/vue3';
 import { CalendarPlus, Trash2 } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import { destroy as serviceSchedulesDestroy, create as serviceSchedulesCreate } from '@/routes/service-schedules';
+import { edit as servicesEdit } from '@/routes/services';
 
 const daysOfWeek: Record<number, string> = {
     1: 'Dilluns',
@@ -80,7 +82,7 @@ function deleteSchedule() {
 
     const id = selectedSchedule.value.id;
 
-    router.delete(`/admin/service-schedules/${id}`, {
+    router.delete(serviceSchedulesDestroy(id).url, {
         preserveScroll: true,
         onSuccess: () => {
             closeDeleteModal();
@@ -144,7 +146,7 @@ function deleteSchedule() {
                     </div>
 
                     <Link
-                        :href="`/admin/services/${props.service.id}/edit`"
+                        :href="servicesEdit(props.service.id).url"
                         class="inline-flex items-center rounded-xl border border-sidebar-border bg-background px-4 py-2 text-sm transition hover:bg-muted"
                     >
                         Editar servei
@@ -171,7 +173,7 @@ function deleteSchedule() {
                     </div>
 
                     <Link
-                        :href="`/admin/service-schedules/create?service_id=${props.service.id}`"
+                        :href="serviceSchedulesCreate({ query: { service_id: props.service.id } }).url"
                         class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto"
                     >
                         <CalendarPlus class="mr-2 h-4 w-4" />

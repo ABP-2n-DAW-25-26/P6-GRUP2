@@ -19,7 +19,7 @@ onMounted(async () => {
     const date = new Date();
 
     // Set Week
-    selectedDate.week.value = date.getDay() - 1;
+    selectedDate.week.value = (date.getDay() + 6) % 7;
 
     for (let i = 0; i < week.length; i++) {
         week[i].id.value =
@@ -48,16 +48,32 @@ onMounted(async () => {
     });
 
     // Setup Map
+    const pharmacyIcon = L.divIcon({
+        html: `<div style="width:28px;height:38px;display:block"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 38" width="28" height="38" style="display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))"><path d="M14 0C6.27 0 0 6.27 0 14c0 10.5 14 24 14 24S28 24.5 28 14C28 6.27 21.73 0 14 0z" fill="#015873"/><rect x="12" y="8" width="4" height="12" rx="1" fill="white"/><rect x="8" y="12" width="12" height="4" rx="1" fill="white"/></svg></div>`,
+        iconSize: [28, 38],
+        iconAnchor: [14, 38],
+        popupAnchor: [1, -36],
+        className: '',
+    });
+
     map.value = L.map('map').setView(
         [pharmacy.lat.value, pharmacy.long.value],
         19,
     );
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
+
+    L.tileLayer(
+        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20,
+        },
+    ).addTo(map.value);
+
+    marker.value = L.marker([pharmacy.lat.value, pharmacy.long.value], {
+        icon: pharmacyIcon,
     }).addTo(map.value);
-    marker.value = L.marker([pharmacy.lat.value, pharmacy.long.value]).addTo(
-        map.value,
-    );
 
     // Pharmacy Info
     getPharmacyInfo(
@@ -694,3 +710,9 @@ function setNextWeek() {
         </section>
     </WebAppLayout>
 </template>
+
+<style scoped>
+:deep(.leaflet-tile-pane) {
+    filter: saturate(0.55) brightness(1.06);
+}
+</style>

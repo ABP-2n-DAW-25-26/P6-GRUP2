@@ -10,6 +10,7 @@ import {
     destroy as workshopsDestroy,
     edit as workshopsEdit,
     index as workshopsIndex,
+    inscriptions as workshopsInscriptions,
 } from '@/routes/workshops';
 
 const workshopToDelete = ref<number | null>(null);
@@ -280,7 +281,7 @@ const formatTime = (time: string) => time.slice(0, 5);
                                             class="flex items-center justify-end gap-2"
                                         >
                                             <Link
-                                                :href="`/admin/workshops/${workshop.id}/inscriptions`"
+                                                :href="workshopsInscriptions(workshop.id).url"
                                                 class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-blue-50 hover:text-blue-600"
                                                 aria-label="Veure inscripcions"
                                             >

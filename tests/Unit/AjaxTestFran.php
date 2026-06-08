@@ -12,7 +12,7 @@ it('returns JSON with all pharmacys', function () {
     Pharmacy::create(['name' => 'farmacia_dia', 'latitude' => 1, 'longitude' => 2]);
     Pharmacy::create(['name' => 'farmacia_nit', 'latitude' => 2, 'longitude' => 3]);
 
-    $request = Request::create('/admin/pharmacies', 'GET', [], [], [], [
+    $request = Request::create('/gestio-interna/pharmacies', 'GET', [], [], [], [
         'HTTP_ACCEPT' => 'application/json',
     ]);
 
@@ -25,7 +25,7 @@ it('returns one pharmacy searched by name', function () {
     Pharmacy::create(['name' => 'farmacia_migdia', 'latitude' => 1, 'longitude' => 4]);
     Pharmacy::create(['name' => 'farmacia_tarda', 'latitude' => 1, 'longitude' => 3]);
 
-    $request = Request::create('/admin/pharmacies/filter', 'GET', ['search' => 'farmacia_migdia'], [], [], [
+    $request = Request::create('/gestio-interna/pharmacies/filter', 'GET', ['search' => 'farmacia_migdia'], [], [], [
         'HTTP_ACCEPT' => 'application/json',
     ]);
 

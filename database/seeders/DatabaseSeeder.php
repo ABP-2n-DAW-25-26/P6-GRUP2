@@ -18,11 +18,6 @@ class DatabaseSeeder extends Seeder
             ServicesSeeder::class,
             CalendarExceptionsSeeder::class,
             PharmaciesSeeder::class,
-            UserSeeder::class,
-            AssignmentsSeeder::class,
-            ServiceSchedulesSeeder::class,
-            PharmacyGuardSeeder::class,
-            EmailsSeeder::class,
         ]);
     }
 }

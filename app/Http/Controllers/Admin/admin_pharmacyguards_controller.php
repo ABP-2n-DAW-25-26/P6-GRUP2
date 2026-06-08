@@ -37,7 +37,7 @@ class admin_pharmacyguards_controller extends Controller
         }
 
         $guards = $query
-            ->orderBy('pharmacy_guards.date')
+            ->orderBy('pharmacy_guards.date', 'desc')
             ->get();
 
         return response()->json([
@@ -60,7 +60,7 @@ class admin_pharmacyguards_controller extends Controller
                 'pharmacy_guards.pharmacy_id',
                 'pharmacies.name as pharmacy_name',
             )
-            ->orderBy('pharmacy_guards.date')
+            ->orderBy('pharmacy_guards.date', 'desc')
             ->get();
 
         return Inertia::render('admin/PharmacyGuards/Index', [
@@ -85,6 +85,12 @@ class admin_pharmacyguards_controller extends Controller
         $validated = $request->validate([
             'date' => ['required', 'date', 'unique:pharmacy_guards,date'],
             'pharmacy_id' => ['required', 'exists:pharmacies,id'],
+        ], [
+            'date.required' => 'La data de la guàrdia és obligatòria.',
+            'date.date' => 'La data no té un format vàlid.',
+            'date.unique' => 'Ja hi ha una guàrdia registrada en aquesta data.',
+            'pharmacy_id.required' => 'Cal seleccionar una farmàcia.',
+            'pharmacy_id.exists' => 'La farmàcia seleccionada no existeix.',
         ]);
 
         PharmacyGuard::create($validated);

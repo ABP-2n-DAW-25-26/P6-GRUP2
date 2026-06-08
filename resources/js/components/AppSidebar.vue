@@ -2,6 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import {
+    CalendarX,
     Globe,
     GraduationCap,
     HeartPulse,
@@ -37,6 +38,7 @@ import { index as pharmaciesIndex } from '@/routes/pharmacies';
 import { index as pharmacyguardsIndex } from '@/routes/pharmacyguards';
 import { index as servicesIndex } from '@/routes/services';
 import { index as usersIndex } from '@/routes/users';
+import { index as calendarExceptionsIndex } from '@/routes/calendar-exceptions';
 import { index as workshopsIndex } from '@/routes/workshops';
 
 const page = usePage();
@@ -73,6 +75,11 @@ const mainNavItems: NavItem[] = [
         title: 'Tallers',
         href: workshopsIndex(),
         icon: GraduationCap,
+    },
+    {
+        title: 'Dies festius',
+        href: calendarExceptionsIndex(),
+        icon: CalendarX,
     },
 ];
 

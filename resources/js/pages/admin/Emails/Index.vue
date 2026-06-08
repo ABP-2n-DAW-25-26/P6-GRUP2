@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { useForm, Link } from '@inertiajs/vue3';
+import { useForm, Link, router } from '@inertiajs/vue3';
 import { ListFilter, Plus, Trash2 } from 'lucide-vue-next';
 import { ref, watch } from 'vue';
+import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
+import { create as emailsCreate, destroy as emailsDestroy, index as emailsIndex, update as emailsUpdate } from '@/routes/emails';
 
 const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Administració dels Correus', href: 'admin/emails' },
+    { title: 'Administració dels Correus', href: emailsIndex().url },
 ];
 
 const props = defineProps<{
@@ -47,10 +49,10 @@ const handleFilterChange = async (event: Event) => {
     const filter = (event.target as HTMLSelectElement).value;
     const url =
         {
-            Tot: '/admin/emails',
-            Actiu: '/admin/emails?filter=active',
-            Inactiu: '/admin/emails?filter=inactive',
-        }[filter] ?? '/admin/emails';
+            Tot: emailsIndex().url,
+            Actiu: emailsIndex({ query: { filter: 'active' } }).url,
+            Inactiu: emailsIndex({ query: { filter: 'inactive' } }).url,
+        }[filter] ?? emailsIndex().url;
     const response = await fetch(url, {
         headers: { Accept: 'application/json' },
     });
@@ -70,7 +72,15 @@ const form = useForm({
 const handleChange = (emailId: number) => {
     const isActive = selectedEmailIds.value.includes(emailId);
     form.active = isActive ? 1 : 0;
-    form.patch(`/admin/emails/${emailId}`, { preserveScroll: true });
+    form.patch(emailsUpdate(emailId).url, { preserveScroll: true });
+};
+
+const emailToDelete = ref<number | null>(null);
+
+const confirmDelete = () => {
+    if (emailToDelete.value === null) return;
+    router.delete(emailsDestroy(emailToDelete.value).url, { preserveScroll: true });
+    emailToDelete.value = null;
 };
 </script>
 <template>
@@ -175,7 +185,7 @@ const handleChange = (emailId: number) => {
                     </div>
 
                     <Link
-                        href="/admin/emails/create"
+                        :href="emailsCreate().url"
                         class="group inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto"
                     >
                         <Plus
@@ -253,17 +263,15 @@ const handleChange = (emailId: number) => {
 
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-4">
-                                            <Link
-                                                :href="`/admin/emails/${email.id}`"
-                                                method="delete"
-                                                as="button"
-                                                preserve-scroll
+                                            <button
+                                                type="button"
                                                 class="transition hover:scale-105"
+                                                @click="emailToDelete = email.id"
                                             >
                                                 <Trash2
                                                     class="h-4 w-4 text-muted-foreground hover:text-red-500"
                                                 />
-                                            </Link>
+                                            </button>
 
                                             <input
                                                 type="checkbox"
@@ -303,5 +311,13 @@ const handleChange = (emailId: number) => {
                 </div>
             </div>
         </div>
+
+        <ConfirmDeleteDialog
+            :open="emailToDelete !== null"
+            title="Eliminar correu"
+            description="Segur que vols eliminar aquesta adreça? Deixarà de rebre notificacions del sistema."
+            @confirm="confirmDelete"
+            @cancel="emailToDelete = null"
+        />
     </AppLayout>
 </template>

@@ -27,4 +27,14 @@ class CreateEmailRequest extends FormRequest
             'active' => 'nullable|boolean',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'L\'adreça de correu és obligatòria.',
+            'email.email' => 'L\'adreça de correu no té un format vàlid.',
+            'email.unique' => 'Aquesta adreça de correu ja està registrada.',
+            'email.max' => 'L\'adreça de correu no pot superar els 255 caràcters.',
+        ];
+    }
 }

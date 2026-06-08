@@ -65,6 +65,16 @@ class admin_pharmacies_controller extends Controller
             'name' => ['required', 'string', 'max:255', 'unique:pharmacies,name'],
             'latitude' => ['required', 'numeric', 'between:-90,90'],
             'longitude' => ['required', 'numeric', 'between:-180,180'],
+        ], [
+            'name.required' => 'El nom de la farmàcia és obligatori.',
+            'name.max' => 'El nom no pot superar els 255 caràcters.',
+            'name.unique' => 'Ja existeix una farmàcia amb aquest nom.',
+            'latitude.required' => 'La latitud és obligatòria.',
+            'latitude.numeric' => 'La latitud ha de ser un número.',
+            'latitude.between' => 'La latitud ha d\'estar entre -90 i 90.',
+            'longitude.required' => 'La longitud és obligatòria.',
+            'longitude.numeric' => 'La longitud ha de ser un número.',
+            'longitude.between' => 'La longitud ha d\'estar entre -180 i 180.',
         ]);
 
         DB::table('pharmacies')->insert([

@@ -64,7 +64,13 @@ class AssignmentsController extends Controller
 
         assignments::findOrFail($id)->update(['status' => $request->status]);
 
-        return back();
+        $messages = [
+            'completed' => 'Encàrrec marcat com a completat.',
+            'cancelled' => 'Encàrrec cancel·lat correctament.',
+            'pending' => 'Encàrrec marcat com a pendent.',
+        ];
+
+        return back()->with('success', $messages[$request->status]);
     }
 
     /**

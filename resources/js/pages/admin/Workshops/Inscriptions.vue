@@ -5,7 +5,8 @@ import { computed, ref, watch } from 'vue';
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
-import { index as workshopsIndex } from '@/routes/workshops';
+import { index as workshopsIndex, inscriptions as workshopsInscriptions } from '@/routes/workshops';
+import { destroy as workshopsInscriptionsDestroy } from '@/routes/workshops/inscriptions';
 
 type Workshop = {
     id: number;
@@ -34,7 +35,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Tallers', href: workshopsIndex().url },
     {
         title: `Inscripcions: ${props.workshop.name}`,
-        href: `/admin/workshops/${props.workshop.id}/inscriptions`,
+        href: workshopsInscriptions(props.workshop.id).url,
     },
 ];
 
@@ -99,7 +100,7 @@ function confirmDelete() {
         return;
     }
 
-    const url = `/admin/workshops/${props.workshop.id}/inscriptions/${inscriptionToDelete.value}`;
+    const url = workshopsInscriptionsDestroy({ workshop: props.workshop.id, inscription: inscriptionToDelete.value! }).url;
 
     useForm({}).delete(url, {
         preserveScroll: true,

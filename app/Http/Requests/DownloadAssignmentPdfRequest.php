@@ -29,4 +29,12 @@ class DownloadAssignmentPdfRequest extends FormRequest
             'description' => ['required', 'string', 'max:2000'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'phone_number.regex' => 'El telèfon ha de tenir 9 dígits.',
+            'phone_number.required' => 'El número de telèfon és obligatori.',
+        ];
+    }
 }

@@ -12,6 +12,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import {
     destroy as pharmaciesDestroy,
+    filter as pharmaciesFilter,
     index as pharmaciesIndex,
     store as pharmaciesStore,
 } from '@/routes/pharmacies';
@@ -49,7 +50,7 @@ const filterPharmacies = () => {
         ? `?search=${encodeURIComponent(searchquery.value)}`
         : '';
 
-    fetch(`/admin/pharmacies/filter${searchqueryquery}`)
+    fetch(`${pharmaciesFilter().url}${searchqueryquery}`)
         .then((response) => response.json())
         .then((data) => {
             pharmaciesData.value = data.pharmacies ?? [];

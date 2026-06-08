@@ -6,6 +6,7 @@ import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { admindashboard as dashboard } from '@/routes';
+import { create as servicesCreate, destroy as servicesDestroy, edit as servicesEdit, show as servicesShow } from '@/routes/services';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Administració de serveis', href: dashboard().url },
@@ -69,7 +70,7 @@ function deleteService(id: number) {
     const form = useForm({});
     const serviceId = selectedService.value.id;
 
-    form.delete('/admin/services/' + id, {
+    form.delete(servicesDestroy(id).url, {
         onSuccess: () => {
             filteredServices.value = filteredServices.value.filter(
                 (s) => s.id !== serviceId,
@@ -184,7 +185,7 @@ function changePage(newPage: number) {
                     />
 
                     <Link
-                        :href="`/admin/services/create`"
+                        :href="servicesCreate().url"
                         class="group inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:ml-auto"
                     >
                         <Plus
@@ -268,7 +269,7 @@ function changePage(newPage: number) {
                                     <td class="px-6 py-4">
                                         <div class="flex justify-end gap-2">
                                             <Link
-                                                :href="`/admin/services/${service.id}`"
+                                                :href="servicesShow(service.id).url"
                                                 class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-blue-50 hover:text-blue-600"
                                                 aria-label="Gestionar horaris"
                                             >
@@ -276,7 +277,7 @@ function changePage(newPage: number) {
                                             </Link>
 
                                             <Link
-                                                :href="`/admin/services/${service.id}/edit`"
+                                                :href="servicesEdit(service.id).url"
                                                 class="inline-flex items-center rounded-lg p-2 text-muted-foreground transition hover:bg-orange-50 hover:text-orange-600"
                                                 aria-label="Editar servei"
                                             >

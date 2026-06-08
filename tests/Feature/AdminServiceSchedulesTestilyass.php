@@ -29,14 +29,14 @@ test('admin can create a schedule for a service', function () {
     $this->actingAs(adminForSchedules());
     $service = sampleService();
 
-    $response = $this->post('/admin/service-schedules', [
+    $response = $this->post('/gestio-interna/service-schedules', [
         'service_id' => $service->id,
-        'day_of_week' => 1, // Monday
+        'day_of_week' => 1,
         'start_time' => '09:00',
         'end_time' => '12:00',
     ]);
 
-    $response->assertRedirect("/admin/services/{$service->id}");
+    $response->assertRedirect("/gestio-interna/services/{$service->id}");
 
     $this->assertDatabaseHas('service_schedules', [
         'service_id' => $service->id,
@@ -48,8 +48,8 @@ test('schedule creation fails when end_time is before start_time', function () {
     $this->actingAs(adminForSchedules());
     $service = sampleService();
 
-    $response = $this->from('/admin/service-schedules/create?service_id='.$service->id)
-        ->post('/admin/service-schedules', [
+    $response = $this->from('/gestio-interna/service-schedules/create?service_id='.$service->id)
+        ->post('/gestio-interna/service-schedules', [
             'service_id' => $service->id,
             'day_of_week' => 1,
             'start_time' => '12:00',
@@ -63,10 +63,10 @@ test('schedule creation fails for invalid day_of_week', function () {
     $this->actingAs(adminForSchedules());
     $service = sampleService();
 
-    $response = $this->from('/admin/service-schedules/create?service_id='.$service->id)
-        ->post('/admin/service-schedules', [
+    $response = $this->from('/gestio-interna/service-schedules/create?service_id='.$service->id)
+        ->post('/gestio-interna/service-schedules', [
             'service_id' => $service->id,
-            'day_of_week' => 9, // out of 1..7
+            'day_of_week' => 9,
             'start_time' => '09:00',
             'end_time' => '10:00',
         ]);
@@ -85,8 +85,8 @@ test('admin can delete a schedule', function () {
         'end_time' => '12:00:00',
     ]);
 
-    $this->delete("/admin/service-schedules/{$schedule->id}")
-        ->assertRedirect("/admin/services/{$service->id}");
+    $this->delete("/gestio-interna/service-schedules/{$schedule->id}")
+        ->assertRedirect("/gestio-interna/services/{$service->id}");
 
     $this->assertDatabaseMissing('service_schedules', ['id' => $schedule->id]);
 });

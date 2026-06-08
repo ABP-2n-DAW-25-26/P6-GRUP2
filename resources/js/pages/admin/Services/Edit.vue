@@ -21,6 +21,7 @@ import TiptapEditor from '@/components/TiptapEditor.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { admindashboard as dashboard } from '@/routes';
+import { index as servicesIndex, update as servicesUpdate } from '@/routes/services';
 
 const iconOptions = [
     { value: 'pill', label: 'Medicació', icon: Pill },
@@ -64,7 +65,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.put(`/admin/services/${service.id}`, {
+    form.put(servicesUpdate(service.id).url, {
         preserveScroll: true,
     });
 };
@@ -249,7 +250,7 @@ const selectedIconComponent = computed(
                                 class="flex justify-end gap-3 border-t border-sidebar-border/70 pt-5"
                             >
                                 <Link
-                                    href="/admin/services"
+                                    :href="servicesIndex().url"
                                     class="inline-flex items-center rounded-xl border border-sidebar-border px-4 py-2 text-sm transition hover:bg-muted"
                                 >
                                     Cancel·lar
