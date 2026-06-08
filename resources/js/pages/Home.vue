@@ -5,13 +5,14 @@ import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Swiper from 'swiper';
 import { Pagination, Autoplay } from 'swiper/modules';
-import { onMounted, ref } from 'vue';
+import { nextTick, onMounted, ref, watch } from 'vue';
 import Brands from '@/components/Brands.vue';
 import Card from '@/components/Card.vue';
 import WebAppLayout from '@/layouts/WebAppLayout.vue';
 
 const map = ref();
 const marker = ref();
+const hasPharmacy = ref(true);
 
 onMounted(async () => {
     const LModule = await import('leaflet');
@@ -94,6 +95,12 @@ const pharmacy = {
     long: ref('2.9631527'),
 };
 
+watch(hasPharmacy, (visible) => {
+    if (visible) {
+        nextTick(() => map.value?.invalidateSize());
+    }
+});
+
 // ID's
 const selectedDate = {
     week: ref(),
@@ -150,6 +157,7 @@ async function getPharmacyInfo(day: number, month: number, year: number) {
     const data = await reponse.json();
 
     if (data.success) {
+        hasPharmacy.value = true;
         pharmacy.name.value = data.response.name;
         pharmacy.description.value = data.response.description;
         pharmacy.lat.value = data.response.latitude;
@@ -158,8 +166,9 @@ async function getPharmacyInfo(day: number, month: number, year: number) {
         marker.value.setLatLng([pharmacy.lat.value, pharmacy.long.value]);
         map.value.flyTo([pharmacy.lat.value, pharmacy.long.value], 19);
     } else {
+        hasPharmacy.value = false;
         pharmacy.description.value = '';
-        pharmacy.name.value = "No s'ha trobat cap farmacia.";
+        pharmacy.name.value = "No hi ha farmàcia de guàrdia aquest dia.";
         pharmacy.lat.value = '';
         pharmacy.long.value = '';
     }
@@ -609,8 +618,23 @@ function setNextWeek() {
                 <!-- Map + info -->
                 <div class="flex w-full flex-col bg-white md:flex-row">
                     <!-- Map -->
-                    <div class="md:w-2/3">
+                    <div v-show="hasPharmacy" class="md:w-2/3">
                         <div id="map" class="z-0 h-80 w-full md:h-full"></div>
+                    </div>
+                    <!-- No pharmacy empty state -->
+                    <div
+                        v-show="!hasPharmacy"
+                        class="flex h-80 flex-col items-center justify-center gap-3 bg-[#F7FBFE] text-[#335B69] md:h-auto md:w-2/3"
+                    >
+                        <Icon
+                            icon="mdi:map-marker-off"
+                            width="48"
+                            height="48"
+                            class="text-[#01789E]/40"
+                        />
+                        <p class="text-sm font-medium">
+                            No hi ha farmàcia de guàrdia aquest dia.
+                        </p>
                     </div>
 
                     <!-- Info panel -->
