@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import {
     ArrowRight,
-    CalendarDays,
-    ClipboardList,
+    CalendarX,
+    ClipboardPen,
+    GraduationCap,
     Mail,
-    MapPin,
-    Send,
+    Mails,
+    Pill,
     Shield,
-    Stethoscope,
-    Users,
+    UserCog,
+    UsersRound,
 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 import { admindashboard as dashboard } from '@/routes';
 import { index as assignmentsIndex } from '@/routes/adminAssignments';
+import { index as calendarExceptionsIndex } from '@/routes/calendar-exceptions';
 import { index as emailsIndex } from '@/routes/emails';
 import { index as mailIndex } from '@/routes/mail';
 import { index as pharmaciesIndex } from '@/routes/pharmacies';
@@ -23,60 +26,82 @@ import { index as servicesIndex } from '@/routes/services';
 import { index as usersIndex } from '@/routes/users';
 import { index as workshopsIndex } from '@/routes/workshops';
 
+const page = usePage();
+const isSuperAdmin = page.props.auth.user.role === 'superadmin';
+
 const breadcrumbs: BreadcrumbItem[] = [
     { title: "Pantalla d'inici", href: dashboard().url },
 ];
 
-const sections = [
+const allSections = [
     {
-        title: 'Usuaris',
-        description: 'Gestiona els comptes i rols dels administradors.',
-        href: usersIndex().url,
-        icon: Users,
+        title: 'Serveis',
+        description: 'Configura els serveis i els seus horaris disponibles.',
+        href: servicesIndex().url,
+        icon: Pill,
+        superAdminOnly: false,
     },
     {
-        title: 'Tallers',
-        description: 'Crea, edita i programa els tallers de la farmàcia.',
-        href: workshopsIndex().url,
-        icon: CalendarDays,
-    },
-    {
-        title: 'Farmàcies',
-        description: "Administra les farmàcies associades a l'aplicació.",
-        href: pharmaciesIndex().url,
-        icon: MapPin,
+        title: 'Encàrrecs',
+        description: 'Gestiona els encàrrecs de serveis als usuaris.',
+        href: assignmentsIndex().url,
+        icon: ClipboardPen,
+        superAdminOnly: false,
     },
     {
         title: 'Guàrdies',
         description: 'Consulta i gestiona les guàrdies programades.',
         href: pharmacyguardsIndex().url,
         icon: Shield,
+        superAdminOnly: false,
     },
     {
-        title: 'Serveis',
-        description: 'Configura els serveis i els seus horaris disponibles.',
-        href: servicesIndex().url,
-        icon: Stethoscope,
+        title: 'Farmàcies',
+        description: "Administra les farmàcies associades a l'aplicació.",
+        href: pharmaciesIndex().url,
+        icon: UserCog,
+        superAdminOnly: false,
+    },
+    {
+        title: 'Tallers',
+        description: 'Crea, edita i programa els tallers de la farmàcia.',
+        href: workshopsIndex().url,
+        icon: GraduationCap,
+        superAdminOnly: false,
+    },
+    {
+        title: 'Dies festius',
+        description: 'Gestiona els dies festius i excepcions del calendari.',
+        href: calendarExceptionsIndex().url,
+        icon: CalendarX,
+        superAdminOnly: false,
+    },
+    {
+        title: 'Usuaris',
+        description: 'Gestiona els comptes i rols dels administradors.',
+        href: usersIndex().url,
+        icon: UsersRound,
+        superAdminOnly: true,
     },
     {
         title: 'Correus',
         description: 'Gestiona els correus de notificació actius.',
         href: emailsIndex().url,
-        icon: Mail,
+        icon: Mails,
+        superAdminOnly: true,
     },
     {
-        title: 'Correu massiu',
+        title: 'Missatges',
         description: 'Envia comunicacions als usuaris registrats.',
         href: mailIndex().url,
-        icon: Send,
+        icon: Mail,
+        superAdminOnly: true,
     },
-    {
-        title: 'Assignacions',
-        description: 'Gestiona les assignacions de serveis als usuaris.',
-        href: assignmentsIndex().url,
-        icon: ClipboardList,
-    },
-] as const;
+];
+
+const sections = computed(() =>
+    allSections.filter((s) => !s.superAdminOnly || isSuperAdmin),
+);
 </script>
 
 <template>

@@ -112,7 +112,7 @@ pantalla d'èxit.
 | **Migracions** | `2026_04_10_135414_create_services_table.php`, `…_create_service_schedules_table.php`, `…_create_service_appointments_table.php`, `…_add_icon_to_services_table.php`, `…_create_calendar_exceptions.php` |
 | **FormRequests** | `StoreAppointmentRequest.php` (regex telèfon, Turnstile), `GetBookedTimesRequest.php`, `GetScheduleRequest.php`, `DownloadAppointmentPdfRequest.php`, `StoreServiceRequest.php`, `UpdateServiceRequest.php` |
 | **Controllers** | `AppointmentsController.php` (públic), `Admin/AdminServiceController.php`, `Admin/ServiceScheduleController.php` |
-| **Models** | `Service.php` (hasMany schedules), `ServiceSchedule.php` (belongsTo Service), `ServiceAppointment.php`, `calendar_exceptions.php` |
+| **Models** | `Service.php` (hasMany schedules), `ServiceSchedule.php` (belongsTo Service), `ServiceAppointment.php`, `CalendarException.php` |
 | **Vistes** | `resources/js/pages/Appointments/Create.vue`, `admin/Services/{Index,Create,Edit}.vue`, `admin/ServiceSchedules/{Create,Show}.vue` |
 | **Mail + Blade** | `ReservationCreated.php`, `ReservationCreatedAdmin.php` + plantilles a `resources/views/mail/` |
 | **PDF** | `resources/views/pdf/appointment.blade.php` (DomPDF) |
@@ -130,7 +130,7 @@ de confirmació al client i a l'administrador.
 | **Migracions** | `2026_05_08_000000_create_workshops_table.php`, `2026_05_18_134310_create_workshops_appointment_table.php` (taula `workshop_inscriptions`) |
 | **FormRequest** | `StoreWorkshopInscriptionRequest.php` (regex nom, email + `Rule::unique` per workshop_id, telèfon 9 dígits opcionalment +34, Turnstile condicional) |
 | **Action** | `app/Actions/Workshops/CreateWorkshopInscriptionAction.php` |
-| **Controllers** | `public_workshops_controller.php` (mètode `inscribe` amb doble check de capacitat), `Admin/admin_workshops_controller.php` |
+| **Controllers** | `public_workshops_controller.php` (mètode `inscribe` amb doble check de capacitat), `Admin/gestio-interna_workshops_controller.php` |
 | **Models** | `Workshop.php` (hasMany Inscriptions), `WorkshopInscription.php` (belongsTo Workshop) |
 | **Vistes** | `resources/js/pages/workshops/index.vue`, `workshops/workshopdetails.vue` (formulari amb botó expandible), `admin/Workshops/{Index,Create,Edit}.vue` |
 | **Mail + Blade** | `WorkshopInscripted.php`, `WorkshopInscriptedAdmin.php` + plantilles a `resources/views/mail/workshop-inscribed*.blade.php` |
@@ -161,7 +161,7 @@ calendari de guàrdies. El llistat té un endpoint AJAX per filtrar.
 | Capa | Fitxer |
 |---|---|
 | **Migracions** | `2026_04_10_132013_create_pharmacies_table.php`, `2026_04_10_132021_create_shifts_table.php`, `2026_04_23_143311_add_table_pharmacyguards.php` |
-| **Controllers** | `Admin/admin_pharmacies_controller.php` (+ mètode `filter` AJAX), `Admin/admin_pharmacyguards_controller.php` (+ mètode `filter` AJAX) |
+| **Controllers** | `Admin/gestio-interna_pharmacies_controller.php` (+ mètode `filter` AJAX), `Admin/gestio-interna_pharmacyguards_controller.php` (+ mètode `filter` AJAX) |
 | **Models** | `Pharmacy.php` (hasMany PharmacyGuard), `PharmacyGuard.php` (belongsTo Pharmacy) |
 | **Vistes** | `admin/Pharmacies/Index.vue`, `admin/PharmacyGuards/Index.vue` |
 | **Rutes** | `Route::resource('admin/pharmacies', …)`, `GET admin/pharmacies/filter` (AJAX), idem per `pharmacyguards` |
@@ -177,12 +177,12 @@ autenticació de dos factors.
 | **Auth** | Laravel Fortify (registre, login, reset, verify email, 2FA) |
 | **Settings controllers** | `Settings/ProfileController.php`, `Settings/SecurityController.php` |
 | **FormRequests Settings** | `Settings/ProfileUpdateRequest.php`, `ProfileDeleteRequest.php`, `PasswordUpdateRequest.php`, `TwoFactorAuthenticationRequest.php` |
-| **Admin controller** | `Admin/admin_users_controller.php` |
+| **Admin controller** | `Admin/gestio-interna_users_controller.php` |
 | **Model** | `User.php` (amb camps de 2FA i rol) |
 | **Vistes auth** | `resources/js/pages/auth/{Login,Register,ForgotPassword,ResetPassword,VerifyEmail,ConfirmPassword,TwoFactorChallenge}.vue` |
 | **Vistes settings** | `resources/js/pages/settings/{Profile,Security,Appearance}.vue` |
 | **Vistes admin** | `admin/Users/{Index,Create}.vue` |
-| **Middleware** | `isAdmin` (al grup de rutes `/admin`) |
+| **Middleware** | `isAdmin` (al grup de rutes `/gestio-interna`), Fortify auth a `/rfk-portal-k9x` |
 | **Tests** | `tests/Feature/Auth/*.php`, `tests/Feature/Settings/*.php` |
 
 ### 7. Correus (Emails + Mail)
@@ -201,7 +201,21 @@ compondre i enviar correus massius.
 | **Vistes** | `admin/Emails/{Index,Create}.vue`, `admin/Mail/Index.vue` |
 | **WYSIWYG** | `resources/js/components/TiptapEditor.vue` |
 
-### 8. Contacte
+### 8. Dies festius (CalendarExceptions)
+
+Gestió dels dies en què la farmàcia no ofereix servei de cita prèvia.
+L'administrador pot afegir i eliminar dies sense tocar el codi.
+
+| Capa | Fitxer |
+|---|---|
+| **Migració** | `2026_04_10_130229_create_calendar_exceptions.php` |
+| **Controller** | `Admin/AdminCalendarExceptionController.php` |
+| **Model** | `CalendarException.php` |
+| **Vista** | `admin/CalendarExceptions/Index.vue` |
+| **Rutes** | `GET/POST /gestio-interna/calendar-exceptions`, `DELETE /gestio-interna/calendar-exceptions/{id}` |
+| **Tests** | `tests/Feature/AdminCalendarExceptionsTest.php` |
+
+### 9. Contacte
 
 Pàgina informativa amb formulari de contacte.
 
@@ -220,9 +234,9 @@ Pàgina informativa amb formulari de contacte.
 | `/pharmacyguard/{data}` | GET | `HomeController` | `getpg` | Farmàcies de guàrdia d'una data |
 | `/appointments/booked-times` | GET | `AppointmentsController` | `getBookedTimes` | Hores ja reservades d'un servei en una data |
 | `/appointments/schedule` | GET | `AppointmentsController` | `getSchedule` | Slots disponibles d'un servei per dia de la setmana |
-| `/admin/pharmacies/filter` | GET | `admin_pharmacies_controller` | `filter` | Filtra el llistat de farmàcies sense recàrrega |
-| `/admin/pharmacyguards/filter` | GET | `admin_pharmacyguards_controller` | `filter` | Filtra el llistat de guàrdies sense recàrrega |
-| `/admin/emails` | GET | `EmailsController` | `index` | Filtra correus per estat (actiu/inactiu) |
+| `/gestio-interna/pharmacies/filter` | GET | `admin_pharmacies_controller` | `filter` | Filtra el llistat de farmàcies sense recàrrega |
+| `/gestio-interna/pharmacyguards/filter` | GET | `admin_pharmacyguards_controller` | `filter` | Filtra el llistat de guàrdies sense recàrrega |
+| `/gestio-interna/emails` | GET | `EmailsController` | `index` | Filtra correus per estat (actiu/inactiu) |
 
 Tots passen per un FormRequest que filtra les dades d'entrada.
 
@@ -236,7 +250,7 @@ app/
     Assignments/  Emails/  Fortify/  Workshops/
   Http/
     Controllers/           ← controllers prims
-      Admin/               ← rutes /admin (middleware isAdmin)
+      Admin/               ← rutes /gestio-interna/* (middleware isAdmin)
       Settings/            ← perfil + seguretat de l'usuari logat
     Requests/              ← FormRequests (validació + autorització)
       Settings/

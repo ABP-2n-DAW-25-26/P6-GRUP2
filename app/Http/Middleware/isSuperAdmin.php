@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
 
 class isSuperAdmin
@@ -18,14 +17,8 @@ class isSuperAdmin
     {
         $user = $request->user();
 
-        if (! $user || ! in_array($user->role, ['admin', 'superadmin'], true)) {
-            Inertia::flash([
-                'unauthorized' => true,
-                'title' => 'Accés Denegat',
-                'message' => 'No tens permisos per accedir a aquesta pàgina.',
-            ]);
-
-            return to_route('home');
+        if (! $user || $user->role !== 'superadmin') {
+            return to_route('admindashboard');
         }
 
         return $next($request);
